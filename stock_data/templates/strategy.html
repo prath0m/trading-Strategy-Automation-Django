@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Strategy - Zerodha Automation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { 
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0d1117 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: rgba(13, 17, 23, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+            color: #ffffff;
+        }
+        
+        .navbar-brand, .nav-link {
+            color: #ffffff !important;
+        }
+        
+        .card {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid rgba(48, 54, 61, 0.5);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+        }
+        
+        .card-body {
+            color: #ffffff;
+        }
+        
+        .card-header {
+            color: #ffffff;
+        }
+        
+        .form-control, .form-select {
+            background-color: rgba(13, 17, 23, 0.8);
+            border: 1px solid rgba(48, 54, 61, 0.5);
+            color: #ffffff;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: rgba(13, 17, 23, 0.9);
+            border-color: #2ea043;
+            color: #ffffff;
+            box-shadow: 0 0 0 0.2rem rgba(46, 160, 67, 0.25);
+        }
+        
+        .form-label {
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff;
+        }
+        
+        p {
+            color: #ffffff;
+        }
+        
+        .text-info {
+            color: #58a6ff !important;
+        }
+        
+        .text-muted {
+            color: #8b949e !important;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #238636, #2ea043);
+            border: 1px solid rgba(46, 160, 67, 0.3);
+            color: #ffffff;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2ea043, #238636);
+            transform: translateY(-1px);
+            color: #ffffff;
+        }
+        
+        .btn-outline-primary {
+            border-color: #2ea043;
+            color: #2ea043;
+            background-color: transparent;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: #2ea043;
+            border-color: #2ea043;
+            color: #ffffff;
+        }
+        
+        .btn-outline-secondary {
+            border-color: #6e7681;
+            color: #ffffff;
+            background-color: transparent;
+        }
+        
+        .btn-outline-secondary:hover {
+            background-color: #6e7681;
+            border-color: #6e7681;
+            color: #ffffff;
+        }
+        
+        .strategy-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .strategy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(46, 160, 67, 0.2);
+        }
+        
+        .signal-card {
+            border-left: 4px solid;
+            color: #ffffff;
+        }
+        
+        .signal-card.buy {
+            border-left-color: #238636;
+            background-color: rgba(35, 134, 54, 0.1);
+        }
+        
+        .signal-card.sell {
+            border-left-color: #da3633;
+            background-color: rgba(218, 54, 51, 0.1);
+        }
+        
+        .signal-card .card-body {
+            color: #ffffff;
+        }
+        
+        .signal-card h6 {
+            color: #ffffff;
+        }
+        
+        .signal-card p {
+            color: #ffffff;
+        }
+        
+        .signal-card strong {
+            color: #ffffff;
+        }
+        
+        .signal-card small {
+            color: #8b949e;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, rgba(35, 134, 54, 0.1), rgba(46, 160, 67, 0.1));
+            border: 1px solid rgba(46, 160, 67, 0.3);
+            color: #ffffff;
+        }
+        
+        .metric-card .card-body {
+            color: #ffffff;
+        }
+        
+        .metric-card h6 {
+            color: #ffffff;
+        }
+        
+        .metric-card small {
+            color: #8b949e;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2ea043;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 17, 23, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(46, 160, 67, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #2ea043;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <i class="fas fa-chart-line me-2"></i>
+                Trading Strategy
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{% url 'index' %}">Dashboard</a>
+                <a class="nav-link" href="{% url 'data_view' %}">Data</a>
+                <a class="nav-link active" href="{% url 'strategy_view' %}">Strategy</a>
+                <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="text-center">
+                <div class="spinner mb-3"></div>
+                <h5>Executing Strategy...</h5>
+                <p class="text-muted">This may take a few minutes</p>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col">
+                <h2><i class="fas fa-robot me-2"></i>MACD MA CrossOver Strategy</h2>
+                <p class="text-muted">Multi-timeframe trading strategy with MACD and Moving Average indicators</p>
+            </div>
+        </div>
+
+        <!-- Strategy Execution -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-play me-2"></i>Execute Strategy
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="form-label">Select Data File:</label>
+                        <select class="form-select" id="dataFileSelect">
+                            <option value="">-- Select a data file --</option>
+                            {% for file in available_files %}
+                            <option value="{{ file.filepath }}" data-symbol="{{ file.symbol }}">
+                                {{ file.symbol }} - {{ file.interval }} ({{ file.from_date }} to {{ file.to_date }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button class="btn btn-primary w-100" onclick="executeStrategy()">
+                            <i class="fas fa-play me-2"></i>Execute Strategy
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Strategy Parameters -->
+                <div class="mt-4">
+                    <h6>Strategy Parameters:</h6>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <small class="text-muted">Moving Average Period:</small>
+                            <div class="text-info">5</div>
+                        </div>
+                        <div class="col-md-3">
+                            <small class="text-muted">MACD Fast:</small>
+                            <div class="text-info">12</div>
+                        </div>
+                        <div class="col-md-3">
+                            <small class="text-muted">MACD Slow:</small>
+                            <div class="text-info">26</div>
+                        </div>
+                        <div class="col-md-3">
+                            <small class="text-muted">MACD Signal:</small>
+                            <div class="text-info">9</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Backtest Results -->
+        {% if recent_backtests %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>Recent Backtest Results
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for backtest in recent_backtests|slice:":3" %}
+                    <div class="col-md-4 mb-3">
+                        <div class="metric-card card h-100">
+                            <div class="card-body text-center">
+                                <h6>{{ backtest.symbol }}</h6>
+                                <div class="metric-value">{{ backtest.strategy_return|floatformat:2 }}%</div>
+                                <small class="text-muted">Strategy Return</small>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <small>Trades: {{ backtest.total_trades }}</small>
+                                    </div>
+                                    <div class="col-6">
+                                        <small>Win Rate: {{ backtest.win_rate|floatformat:1 }}%</small>
+                                    </div>
+                                </div>
+                                <a href="{% url 'backtest_view' %}?id={{ backtest.id }}" class="btn btn-sm btn-outline-primary mt-2 me-2">
+                                    View Details
+                                </a>
+                                <a href="{% url 'charts_view' %}?backtest={{ backtest.id }}" class="btn btn-sm btn-outline-success mt-2">
+                                    <i class="fas fa-chart-line me-1"></i>Charts
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Recent Signals -->
+        {% if recent_signals %}
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-signal me-2"></i>Recent Trading Signals
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for signal in recent_signals|slice:":6" %}
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="signal-card card h-100 {% if signal.signal_type == 'BUY' %}buy{% else %}sell{% endif %}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="mb-0" style="color: #ffffff;">{{ signal.symbol }}</h6>
+                                    <span class="badge {% if signal.signal_type == 'BUY' %}bg-success{% else %}bg-danger{% endif %}">
+                                        {{ signal.signal_type }}
+                                    </span>
+                                </div>
+                                <p class="mb-1" style="color: #e6edf3;">
+                                    <strong style="color: #ffffff;">₹{{ signal.price|floatformat:2 }}</strong>
+                                </p>
+                                <small class="text-muted" style="color: #7d8590 !important;">
+                                    {{ signal.timestamp|date:"M d, H:i" }}
+                                </small>
+                                <div class="mt-2">
+                                    <small class="text-muted" style="color: #7d8590 !important;">Confidence: {{ signal.confidence|floatformat:0 }}%</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{% url 'signals_view' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-list me-2"></i>View All Signals
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function executeStrategy() {
+            const fileSelect = document.getElementById('dataFileSelect');
+            const selectedOption = fileSelect.options[fileSelect.selectedIndex];
+            
+            if (!selectedOption.value) {
+                alert('Please select a data file');
+                return;
+            }
+            
+            const filePath = selectedOption.value;
+            const symbol = selectedOption.dataset.symbol;
+            
+            // Show loading overlay
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            // Execute strategy
+            fetch('/execute-strategy/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    file_path: filePath,
+                    symbol: symbol
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').style.display = 'none';
+                
+                if (data.success) {
+                    alert(`Strategy executed successfully!\n\nSignals Created: ${data.signals_created}\nStrategy Return: ${data.backtest_results.strategy_return.toFixed(2)}%\nTotal Trades: ${data.backtest_results.total_trades}`);
+                    
+                    // Refresh page to show new results
+                    window.location.reload();
+                } else {
+                    alert(`Strategy execution failed: ${data.message}`);
+                }
+            })
+            .catch(error => {
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').style.display = 'none';
+                console.error('Error:', error);
+                alert('An error occurred while executing the strategy');
+            });
+        }
+    </script>
+</body>
+</html>

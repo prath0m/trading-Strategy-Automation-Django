@@ -1,0 +1,374 @@
+{% extends 'base.html' %}
+
+{% block title %}Strategy Charts - Zerodha Automation{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chart-container {
+        background: rgba(13, 17, 23, 0.8);
+        border: 1px solid #30363d;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .chart-title {
+        color: #58a6ff;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    
+    .chart-controls {
+        background: rgba(22, 27, 34, 0.8);
+        border: 1px solid #30363d;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2><i class="fas fa-chart-line me-2"></i>Strategy Analysis Charts</h2>
+                <p class="text-muted">Visual analysis of OHLC data, trading signals, and technical indicators</p>
+            </div>
+            <a href="{% url 'strategy_view' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Strategy
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Chart Controls -->
+<div class="chart-controls">
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Select Backtest Result:</label>
+            <select class="form-select" id="backtestSelect">
+                <option value="">-- Select a backtest result --</option>
+                {% for backtest in backtests %}
+                <option value="{{ backtest.id }}" data-symbol="{{ backtest.symbol }}">
+                    {{ backtest.symbol }} - {{ backtest.strategy.name }} ({{ backtest.from_date }} to {{ backtest.to_date }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6 d-flex align-items-end">
+            <button class="btn btn-primary w-100" onclick="loadCharts()">
+                <i class="fas fa-chart-bar me-2"></i>Load Charts
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div id="chartsSection" style="display: none;">
+    <!-- OHLC Candlestick Chart -->
+    <div class="chart-container">
+        <h5 class="chart-title">
+            <i class="fas fa-chart-candlestick me-2"></i>
+            OHLC Candlestick Chart
+        </h5>
+        <div id="candlestickChart" style="height: 500px;"></div>
+    </div>
+
+    <!-- Buy/Sell Signals Chart -->
+    <div class="chart-container">
+        <h5 class="chart-title">
+            <i class="fas fa-signal me-2"></i>
+            Buy & Sell Signals
+        </h5>
+        <div id="signalsChart" style="height: 400px;"></div>
+    </div>
+
+    <!-- Technical Indicators Chart -->
+    <div class="chart-container">
+        <h5 class="chart-title">
+            <i class="fas fa-chart-line me-2"></i>
+            Technical Indicators (MACD & Moving Average)
+        </h5>
+        <div id="indicatorsChart" style="height: 400px;"></div>
+    </div>
+</div>
+
+<!-- No Data Message -->
+<div id="noDataMessage" class="text-center py-5" style="display: none;">
+    <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+    <h5>No Chart Data Available</h5>
+    <p class="text-muted">Please execute a strategy first to generate chart data</p>
+    <a href="{% url 'strategy_view' %}" class="btn btn-primary">
+        <i class="fas fa-robot me-2"></i>Go to Strategy
+    </a>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Plotly.js for interactive charts -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>
+let currentChartData = null;
+
+function loadCharts() {
+    const backtestSelect = document.getElementById('backtestSelect');
+    const selectedOption = backtestSelect.options[backtestSelect.selectedIndex];
+    
+    if (!selectedOption.value) {
+        alert('Please select a backtest result');
+        return;
+    }
+    
+    const backtestId = selectedOption.value;
+    const symbol = selectedOption.dataset.symbol;
+    
+    // Show loading state
+    document.getElementById('chartsSection').style.display = 'none';
+    document.getElementById('noDataMessage').style.display = 'none';
+    
+    // Fetch chart data
+    fetch(`/api/chart-data/${backtestId}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                currentChartData = data;
+                renderCharts(data);
+                document.getElementById('chartsSection').style.display = 'block';
+            } else {
+                document.getElementById('noDataMessage').style.display = 'block';
+                alert('Error loading chart data: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('noDataMessage').style.display = 'block';
+            alert('An error occurred while loading chart data');
+        });
+}
+
+function renderCharts(data) {
+    renderCandlestickChart(data.ohlc_data);
+    renderSignalsChart(data.ohlc_data, data.signals);
+    renderIndicatorsChart(data.indicators);
+}
+
+function renderCandlestickChart(ohlcData) {
+    const trace = {
+        x: ohlcData.map(d => d.date),
+        close: ohlcData.map(d => d.close),
+        decreasing: {line: {color: '#ff7b72'}},
+        high: ohlcData.map(d => d.high),
+        increasing: {line: {color: '#7ee787'}},
+        line: {color: 'rgba(31,119,180,1)'},
+        low: ohlcData.map(d => d.low),
+        open: ohlcData.map(d => d.open),
+        type: 'candlestick',
+        xaxis: 'x',
+        yaxis: 'y'
+    };
+
+    const layout = {
+        dragmode: 'zoom',
+        margin: {
+            r: 10,
+            t: 25,
+            b: 40,
+            l: 60
+        },
+        showlegend: false,
+        xaxis: {
+            autorange: true,
+            domain: [0, 1],
+            range: [ohlcData[0]?.date, ohlcData[ohlcData.length - 1]?.date],
+            rangeslider: {range: [ohlcData[0]?.date, ohlcData[ohlcData.length - 1]?.date]},
+            title: 'Date',
+            type: 'date',
+            gridcolor: '#30363d',
+            color: '#c9d1d9'
+        },
+        yaxis: {
+            autorange: true,
+            domain: [0, 1],
+            range: [Math.min(...ohlcData.map(d => d.low)), Math.max(...ohlcData.map(d => d.high))],
+            type: 'linear',
+            title: 'Price',
+            gridcolor: '#30363d',
+            color: '#c9d1d9'
+        },
+        plot_bgcolor: 'rgba(13, 17, 23, 0.8)',
+        paper_bgcolor: 'rgba(13, 17, 23, 0.8)',
+        font: {
+            color: '#c9d1d9'
+        }
+    };
+
+    Plotly.newPlot('candlestickChart', [trace], layout, {responsive: true});
+}
+
+function renderSignalsChart(ohlcData, signals) {
+    // Price line
+    const priceTrace = {
+        x: ohlcData.map(d => d.date),
+        y: ohlcData.map(d => d.close),
+        type: 'scatter',
+        mode: 'lines',
+        name: 'Close Price',
+        line: {color: '#58a6ff', width: 2}
+    };
+
+    // Buy signals
+    const buySignals = signals.filter(s => s.signal_type === 'BUY');
+    const buyTrace = {
+        x: buySignals.map(s => s.timestamp),
+        y: buySignals.map(s => s.price),
+        type: 'scatter',
+        mode: 'markers',
+        name: 'Buy Signals',
+        marker: {
+            color: '#7ee787',
+            size: 10,
+            symbol: 'triangle-up'
+        }
+    };
+
+    // Sell signals
+    const sellSignals = signals.filter(s => s.signal_type === 'SELL');
+    const sellTrace = {
+        x: sellSignals.map(s => s.timestamp),
+        y: sellSignals.map(s => s.price),
+        type: 'scatter',
+        mode: 'markers',
+        name: 'Sell Signals',
+        marker: {
+            color: '#ff7b72',
+            size: 10,
+            symbol: 'triangle-down'
+        }
+    };
+
+    const layout = {
+        title: '',
+        xaxis: {
+            title: 'Date',
+            type: 'date',
+            gridcolor: '#30363d',
+            color: '#c9d1d9'
+        },
+        yaxis: {
+            title: 'Price',
+            gridcolor: '#30363d',
+            color: '#c9d1d9'
+        },
+        plot_bgcolor: 'rgba(13, 17, 23, 0.8)',
+        paper_bgcolor: 'rgba(13, 17, 23, 0.8)',
+        font: {
+            color: '#c9d1d9'
+        },
+        legend: {
+            bgcolor: 'rgba(13, 17, 23, 0.8)',
+            bordercolor: '#30363d',
+            borderwidth: 1
+        }
+    };
+
+    Plotly.newPlot('signalsChart', [priceTrace, buyTrace, sellTrace], layout, {responsive: true});
+}
+
+function renderIndicatorsChart(indicators) {
+    const traces = [];
+
+    // MACD Line
+    if (indicators.macd) {
+        traces.push({
+            x: indicators.macd.map(d => d.date),
+            y: indicators.macd.map(d => d.macd),
+            type: 'scatter',
+            mode: 'lines',
+            name: 'MACD',
+            line: {color: '#58a6ff', width: 2},
+            yaxis: 'y'
+        });
+
+        traces.push({
+            x: indicators.macd.map(d => d.date),
+            y: indicators.macd.map(d => d.signal),
+            type: 'scatter',
+            mode: 'lines',
+            name: 'MACD Signal',
+            line: {color: '#f7cc47', width: 2},
+            yaxis: 'y'
+        });
+
+        traces.push({
+            x: indicators.macd.map(d => d.date),
+            y: indicators.macd.map(d => d.histogram),
+            type: 'bar',
+            name: 'MACD Histogram',
+            marker: {color: '#7c3aed'},
+            yaxis: 'y'
+        });
+    }
+
+    // Moving Average
+    if (indicators.ma) {
+        traces.push({
+            x: indicators.ma.map(d => d.date),
+            y: indicators.ma.map(d => d.value),
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Moving Average (5)',
+            line: {color: '#2ea043', width: 2},
+            yaxis: 'y2'
+        });
+    }
+
+    const layout = {
+        title: '',
+        xaxis: {
+            title: 'Date',
+            type: 'date',
+            gridcolor: '#30363d',
+            color: '#c9d1d9'
+        },
+        yaxis: {
+            title: 'MACD',
+            side: 'left',
+            gridcolor: '#30363d',
+            color: '#c9d1d9'
+        },
+        yaxis2: {
+            title: 'Price / MA',
+            side: 'right',
+            overlaying: 'y',
+            color: '#c9d1d9'
+        },
+        plot_bgcolor: 'rgba(13, 17, 23, 0.8)',
+        paper_bgcolor: 'rgba(13, 17, 23, 0.8)',
+        font: {
+            color: '#c9d1d9'
+        },
+        legend: {
+            bgcolor: 'rgba(13, 17, 23, 0.8)',
+            bordercolor: '#30363d',
+            borderwidth: 1
+        }
+    };
+
+    Plotly.newPlot('indicatorsChart', traces, layout, {responsive: true});
+}
+
+// Load charts on page load if there's only one backtest
+document.addEventListener('DOMContentLoaded', function() {
+    const backtestSelect = document.getElementById('backtestSelect');
+    if (backtestSelect.options.length === 2) { // Only default option + 1 backtest
+        backtestSelect.selectedIndex = 1;
+        loadCharts();
+    } else if (backtestSelect.options.length === 1) {
+        document.getElementById('noDataMessage').style.display = 'block';
+    }
+});
+</script>
+{% endblock %}

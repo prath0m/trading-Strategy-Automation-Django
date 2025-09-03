@@ -1,0 +1,209 @@
+{% extends 'stock_data/base.html' %}
+
+{% block title %}Settings - Zerodha Stock Data Fetcher{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-cog me-2"></i>API Settings</h2>
+                <p class="mb-0 text-muted">Configure your Zerodha Kite API credentials</p>
+            </div>
+            <div class="card-body">
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <h6>Please correct the following errors:</h6>
+                        <ul class="mb-0">
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li>{{ field }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="credentials_form" value="1">
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">
+                            <i class="fas fa-tag me-1"></i>Configuration Name
+                        </label>
+                        {{ form.name }}
+                        {% if form.name.help_text %}
+                            <div class="form-text">{{ form.name.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.api_key.id_for_label }}" class="form-label">
+                            <i class="fas fa-key me-1"></i>API Key
+                        </label>
+                        {{ form.api_key }}
+                        {% if form.api_key.help_text %}
+                            <div class="form-text">{{ form.api_key.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.api_secret.id_for_label }}" class="form-label">
+                            <i class="fas fa-lock me-1"></i>API Secret
+                        </label>
+                        {{ form.api_secret }}
+                        {% if form.api_secret.help_text %}
+                            <div class="form-text">{{ form.api_secret.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>How to get API credentials:</strong>
+                        <ol class="mb-0 mt-2">
+                            <li>Login to <a href="https://kite.trade" target="_blank">Kite Connect</a></li>
+                            <li>Go to Apps section and create a new app</li>
+                            <li>Copy the API Key and API Secret from your app settings</li>
+                            <li>Paste them in the fields above</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'stock_data:index' %}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-1"></i>Back
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Save Settings
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Authentication Section -->
+        {% if current_credentials and not current_credentials.is_authenticated %}
+        <div class="card mt-4">
+            <div class="card-header bg-warning text-dark">
+                <h5><i class="fas fa-exclamation-triangle me-2"></i>Authentication Required</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <strong>Step 2: Complete Authentication</strong><br>
+                    Your API credentials are saved, but you need to authenticate with Zerodha to start fetching data.
+                </div>
+                
+                {% if login_url %}
+                <div class="mb-3">
+                    <p><strong>1. Click the login button below to authenticate with Zerodha:</strong></p>
+                    <a href="{{ login_url }}" target="_blank" class="btn btn-primary btn-lg">
+                        <i class="fas fa-external-link-alt me-2"></i>Login to Zerodha Kite
+                    </a>
+                </div>
+                
+                <div class="mb-3">
+                    <p><strong>2. After successful login, you'll be redirected to a URL like:</strong></p>
+                    <code>http://127.0.0.1:8000/?request_token=XXXXXX&action=login&status=success</code>
+                </div>
+                
+                <div class="mb-3">
+                    <p><strong>3. Copy the request_token value and paste it below:</strong></p>
+                    {% if auth_form %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="auth_form" value="1">
+                        
+                        <div class="mb-3">
+                            <label for="{{ auth_form.request_token.id_for_label }}" class="form-label">
+                                Request Token
+                            </label>
+                            {{ auth_form.request_token }}
+                            {% if auth_form.request_token.help_text %}
+                                <div class="form-text">{{ auth_form.request_token.help_text }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check me-1"></i>Complete Authentication
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> Could not generate login URL. Please check your API credentials.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Current Settings -->
+        {% if current_credentials %}
+        <div class="card mt-4">
+            <div class="card-header {% if current_credentials.is_authenticated %}bg-success text-white{% else %}bg-warning text-dark{% endif %}">
+                <h5><i class="fas fa-{% if current_credentials.is_authenticated %}check-circle{% else %}clock{% endif %} me-2"></i>Current Configuration</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Name:</strong> {{ current_credentials.name }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>API Key:</strong> {{ current_credentials.api_key|truncatechars:20 }}...
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <strong>Created:</strong> {{ current_credentials.created_at|date:"M d, Y H:i" }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Status:</strong> 
+                        {% if current_credentials.is_authenticated %}
+                            <span class="badge bg-success">Authenticated</span>
+                        {% else %}
+                            <span class="badge bg-warning">Not Authenticated</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if current_credentials.is_authenticated %}
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <strong>User ID:</strong> {{ current_credentials.user_id|default:"N/A" }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Token Expires:</strong> {{ current_credentials.token_expires_at|date:"M d, Y H:i"|default:"N/A" }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Help Section -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-question-circle me-2"></i>Need Help?</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>API Documentation</h6>
+                        <p>Learn more about Kite Connect API and how to use it effectively.</p>
+                        <a href="https://kite.trade/docs/connect/" target="_blank" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-external-link-alt me-1"></i>View Documentation
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Support</h6>
+                        <p>Having trouble with API setup? Contact Zerodha support for assistance.</p>
+                        <a href="https://support.zerodha.com/" target="_blank" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-life-ring me-1"></i>Get Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

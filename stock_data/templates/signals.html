@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Signals - Zerodha Automation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { 
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0d1117 100%);
+            color: #e6edf3;
+            min-height: 100vh;
+        }
+        .card {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid rgba(48, 54, 61, 0.5);
+            backdrop-filter: blur(10px);
+            color: #e6edf3;
+        }
+        .card-body {
+            color: #e6edf3;
+        }
+        .table {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .table td, .table th {
+            background-color: #000000;
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .table-hover tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        .table tbody tr {
+            background-color: #000000;
+        }
+        .signal-buy {
+            border-left: 4px solid #238636;
+            background-color: rgba(35, 134, 54, 0.1);
+        }
+        .signal-sell {
+            border-left: 4px solid #da3633;
+            background-color: rgba(218, 54, 51, 0.1);
+        }
+        .text-muted {
+            color: #7d8590 !important;
+        }
+        .small, small {
+            color: #7d8590;
+        }
+        .navbar {
+            background: rgba(13, 17, 23, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+        }
+        .form-control, .form-select {
+            background-color: rgba(13, 17, 23, 0.8);
+            border: 1px solid rgba(48, 54, 61, 0.5);
+            color: #e6edf3;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: rgba(13, 17, 23, 0.9);
+            border-color: #2ea043;
+            color: #e6edf3;
+            box-shadow: 0 0 0 0.2rem rgba(46, 160, 67, 0.25);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #238636, #2ea043);
+            border: 1px solid rgba(46, 160, 67, 0.3);
+            color: #ffffff;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2ea043, #238636);
+            transform: translateY(-1px);
+            color: #ffffff;
+        }
+        .page-link {
+            background-color: rgba(13, 17, 23, 0.8);
+            border: 1px solid rgba(48, 54, 61, 0.5);
+            color: #e6edf3;
+        }
+        .page-link:hover {
+            background-color: rgba(46, 160, 67, 0.2);
+            border-color: #2ea043;
+            color: #ffffff;
+        }
+        .page-item.active .page-link {
+            background-color: #2ea043;
+            border-color: #2ea043;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <i class="fas fa-signal me-2"></i>Trading Signals
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{% url 'index' %}">Dashboard</a>
+                <a class="nav-link" href="{% url 'data_view' %}">Data</a>
+                <a class="nav-link" href="{% url 'strategy_view' %}">Strategy</a>
+                <a class="nav-link active" href="{% url 'signals_view' %}">Signals</a>
+                <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col">
+                <h2><i class="fas fa-signal me-2"></i>Trading Signals</h2>
+                <p class="text-muted">Generated buy and sell signals from trading strategies</p>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="GET" class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Symbol</label>
+                        <select name="symbol" class="form-select">
+                            <option value="">All Symbols</option>
+                            {% for symbol in symbols %}
+                            <option value="{{ symbol }}" {% if symbol == selected_symbol %}selected{% endif %}>
+                                {{ symbol }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Strategy</label>
+                        <select name="strategy" class="form-select">
+                            <option value="">All Strategies</option>
+                            {% for strategy in strategies %}
+                            <option value="{{ strategy.id }}" {% if strategy.id|stringformat:"s" == selected_strategy %}selected{% endif %}>
+                                {{ strategy.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-filter me-2"></i>Filter
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Signals List -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Signals ({{ signals.paginator.count }} total)</h5>
+            </div>
+            <div class="card-body p-0">
+                {% if signals %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead style="background-color: #000000;">
+                            <tr>
+                                <th style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);">Symbol</th>
+                                <th style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);">Signal</th>
+                                <th style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);">Price</th>
+                                <th style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);">Timestamp</th>
+                                <th style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);">Confidence</th>
+                                <th style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);">Strategy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for signal in signals %}
+                            <tr class="{% if signal.signal_type == 'BUY' %}signal-buy{% else %}signal-sell{% endif %}" style="background-color: #000000;">
+                                <td style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);"><strong>{{ signal.symbol }}</strong></td>
+                                <td style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);">
+                                    <span class="badge {% if signal.signal_type == 'BUY' %}bg-success{% else %}bg-danger{% endif %}">
+                                        {% if signal.signal_type == 'BUY' %}
+                                            <i class="fas fa-arrow-up me-1"></i>BUY
+                                        {% else %}
+                                            <i class="fas fa-arrow-down me-1"></i>SELL
+                                        {% endif %}
+                                    </span>
+                                </td>
+                                <td style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);"><strong>₹{{ signal.price|floatformat:2 }}</strong></td>
+                                <td style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);">{{ signal.timestamp|date:"M d, Y H:i" }}</td>
+                                <td style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);">{{ signal.confidence|floatformat:0 }}%</td>
+                                <td style="background-color: #000000; color: #ffffff; border-color: rgba(255, 255, 255, 0.2);">{{ signal.strategy.name }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                {% if signals.has_other_pages %}
+                <div class="card-footer">
+                    <nav>
+                        <ul class="pagination justify-content-center mb-0">
+                            {% if signals.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ signals.previous_page_number }}{% if selected_symbol %}&symbol={{ selected_symbol }}{% endif %}{% if selected_strategy %}&strategy={{ selected_strategy }}{% endif %}">Previous</a>
+                                </li>
+                            {% endif %}
+                            
+                            <li class="page-item active">
+                                <span class="page-link">
+                                    Page {{ signals.number }} of {{ signals.paginator.num_pages }}
+                                </span>
+                            </li>
+                            
+                            {% if signals.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ signals.next_page_number }}{% if selected_symbol %}&symbol={{ selected_symbol }}{% endif %}{% if selected_strategy %}&strategy={{ selected_strategy }}{% endif %}">Next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-signal fa-3x text-muted mb-3"></i>
+                    <h5>No Trading Signals Found</h5>
+                    <p class="text-muted">Execute a trading strategy to generate signals</p>
+                    <a href="{% url 'strategy_view' %}" class="btn btn-primary">
+                        <i class="fas fa-robot me-2"></i>Go to Strategy
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

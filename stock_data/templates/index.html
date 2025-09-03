@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zerodha Kite API - Stock Data Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0d1117 100%);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+        .container {
+            position: relative;
+            z-index: 2;
+        }
+        .navbar {
+            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.9) !important;
+            border-bottom: 1px solid #30363d;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #58a6ff !important;
+        }
+        .nav-link {
+            color: #c9d1d9 !important;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #58a6ff !important;
+        }
+        .dashboard-card {
+            transition: all 0.3s ease;
+            border: 1px solid #30363d;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            background: rgba(13, 17, 23, 0.8);
+            color: #c9d1d9;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(88, 166, 255, 0.2);
+            border-color: #58a6ff;
+        }
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #58a6ff 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stats-card {
+            background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+            color: white;
+            border: 1px solid #30363d;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            pointer-events: none;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(88, 166, 255, 0.3);
+            border-color: #58a6ff;
+        }
+        .auth-status {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .auth-success { 
+            background: linear-gradient(135deg, #0d1117 0%, #1c2128 100%); 
+            color: #7ee787; 
+            border-color: #238636; 
+            box-shadow: 0 4px 15px rgba(35, 134, 54, 0.3);
+        }
+        .auth-warning { 
+            background: linear-gradient(135deg, #0d1117 0%, #1c2128 100%); 
+            color: #f7cc47; 
+            border-color: #d29922; 
+            box-shadow: 0 4px 15px rgba(210, 153, 34, 0.3);
+        }
+        .auth-danger { 
+            background: linear-gradient(135deg, #0d1117 0%, #1c2128 100%); 
+            color: #ff7b72; 
+            border-color: #da3633; 
+            box-shadow: 0 4px 15px rgba(218, 54, 51, 0.3);
+        }
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #30363d;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #58a6ff 0%, #7c3aed 100%);
+            border-color: #58a6ff;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(88, 166, 255, 0.6);
+            border-color: #58a6ff;
+        }
+        .btn-outline-primary {
+            color: #58a6ff;
+            border-color: #58a6ff;
+            background: transparent;
+        }
+        .btn-outline-primary:hover {
+            background: #58a6ff;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .btn-outline-secondary {
+            color: #c9d1d9;
+            border-color: #30363d;
+            background: transparent;
+        }
+        .btn-outline-secondary:hover {
+            background: #30363d;
+            color: #ffffff;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 2px solid #30363d;
+            background: #0d1117;
+            color: #c9d1d9;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 0.2rem rgba(88, 166, 255, 0.25);
+            background: #161b22;
+            color: #ffffff;
+        }
+        .form-label {
+            color: #c9d1d9;
+            font-weight: 500;
+        }
+        .form-text {
+            color: #8b949e;
+        }
+        .display-4 {
+            font-weight: 700;
+            background: linear-gradient(135deg, #58a6ff 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .table {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #0d1117;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            color: #c9d1d9;
+        }
+        .table th {
+            background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+            color: #58a6ff;
+            border: none;
+            font-weight: 600;
+        }
+        .table td {
+            border-color: #30363d;
+            background: rgba(13, 17, 23, 0.5);
+        }
+        .table-hover tbody tr:hover {
+            background: rgba(88, 166, 255, 0.1);
+        }
+        .badge {
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .badge.bg-secondary {
+            background: #30363d !important;
+            color: #c9d1d9;
+        }
+        .badge.bg-success {
+            background: #238636 !important;
+            color: #ffffff;
+        }
+        .text-primary {
+            color: #58a6ff !important;
+        }
+        .text-muted {
+            color: #8b949e !important;
+        }
+        .bg-primary {
+            background: linear-gradient(135deg, #58a6ff 0%, #7c3aed 100%) !important;
+        }
+        .alert {
+            border-radius: 12px;
+            border: 1px solid;
+            font-weight: 500;
+            background: #0d1117;
+        }
+        .alert-success {
+            color: #7ee787;
+            border-color: #238636;
+            background: linear-gradient(135deg, #0d1117 0%, #1c2128 100%);
+        }
+        .alert-danger {
+            color: #ff7b72;
+            border-color: #da3633;
+            background: linear-gradient(135deg, #0d1117 0%, #1c2128 100%);
+        }
+        .alert-warning {
+            color: #f7cc47;
+            border-color: #d29922;
+            background: linear-gradient(135deg, #0d1117 0%, #1c2128 100%);
+        }
+        .alert-info {
+            color: #58a6ff;
+            border-color: #1f6feb;
+            background: linear-gradient(135deg, #0d1117 0%, #1c2128 100%);
+        }
+        .card {
+            background: rgba(13, 17, 23, 0.8);
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+        }
+        .card-header {
+            border-radius: 15px 15px 0 0 !important;
+            font-weight: 600;
+            background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+            border-bottom: 1px solid #30363d;
+            color: #58a6ff;
+        }
+        .animation-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .btn-close {
+            filter: invert(1);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #c9d1d9;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <i class="fas fa-chart-line me-2"></i>
+                Kite Stock Data
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'data_view' %}">
+                            <i class="fas fa-database me-1"></i>Data
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'strategy_view' %}">
+                            <i class="fas fa-robot me-1"></i>Strategy
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'settings' %}">
+                            <i class="fas fa-cog me-1"></i>Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="display-4">
+                        <i class="fas fa-chart-line text-primary me-2"></i>
+                        Stock Data Dashboard
+                    </h1>
+                    <button class="btn btn-primary pulse" onclick="testConnection()">
+                        <i class="fas fa-plug me-1"></i>Test Connection
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Authentication Status -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div id="auth-status" class="auth-status auth-warning">
+                    <strong>Status:</strong> Checking authentication status...
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="row mb-5">
+            <div class="col-md-4">
+                <div class="card stats-card h-100 animation-float">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-bar feature-icon text-white mb-3"></i>
+                        <h3 class="card-title">Real-time Data</h3>
+                        <p class="card-text">Fetch minute-wise stock data from Zerodha Kite API with lightning speed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stats-card h-100 animation-float" style="animation-delay: 0.2s;">
+                    <div class="card-body text-center">
+                        <i class="fas fa-database feature-icon text-white mb-3"></i>
+                        <h3 class="card-title">Smart Storage</h3>
+                        <p class="card-text">Automatically organize and store historical data in optimized JSON format</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stats-card h-100 animation-float" style="animation-delay: 0.4s;">
+                    <div class="card-body text-center">
+                        <i class="fas fa-search feature-icon text-white mb-3"></i>
+                        <h3 class="card-title">Advanced Analytics</h3>
+                        <p class="card-text">Powerful search, filter, and pagination for comprehensive data analysis</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Data Fetching Form -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card dashboard-card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-download me-2"></i>
+                            Fetch Stock Data
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if is_authenticated %}
+                            <form method="post" id="data-fetch-form">
+                                {% csrf_token %}
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label for="{{ fetch_form.symbol.id_for_label }}" class="form-label">
+                                            <i class="fas fa-chart-line me-1"></i>Stock Symbol
+                                        </label>
+                                        {{ fetch_form.symbol }}
+                                        {% if fetch_form.symbol.help_text %}
+                                            <div class="form-text">{{ fetch_form.symbol.help_text }}</div>
+                                        {% endif %}
+                                        {% if fetch_form.symbol.errors %}
+                                            <div class="text-danger">
+                                                {% for error in fetch_form.symbol.errors %}
+                                                    <small>{{ error }}</small>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="{{ fetch_form.interval.id_for_label }}" class="form-label">
+                                            <i class="fas fa-clock me-1"></i>Interval
+                                        </label>
+                                        {{ fetch_form.interval }}
+                                        {% if fetch_form.interval.help_text %}
+                                            <div class="form-text">{{ fetch_form.interval.help_text }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label for="{{ fetch_form.from_date.id_for_label }}" class="form-label">
+                                            <i class="fas fa-calendar-alt me-1"></i>From Date
+                                        </label>
+                                        {{ fetch_form.from_date }}
+                                        {% if fetch_form.from_date.help_text %}
+                                            <div class="form-text">{{ fetch_form.from_date.help_text }}</div>
+                                        {% endif %}
+                                        {% if fetch_form.from_date.errors %}
+                                            <div class="text-danger">
+                                                {% for error in fetch_form.from_date.errors %}
+                                                    <small>{{ error }}</small>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="{{ fetch_form.to_date.id_for_label }}" class="form-label">
+                                            <i class="fas fa-calendar-check me-1"></i>To Date
+                                        </label>
+                                        {{ fetch_form.to_date }}
+                                        {% if fetch_form.to_date.help_text %}
+                                            <div class="form-text">{{ fetch_form.to_date.help_text }}</div>
+                                        {% endif %}
+                                        {% if fetch_form.to_date.errors %}
+                                            <div class="text-danger">
+                                                {% for error in fetch_form.to_date.errors %}
+                                                    <small>{{ error }}</small>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                {% if fetch_form.non_field_errors %}
+                                    <div class="alert alert-danger">
+                                        {% for error in fetch_form.non_field_errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="fetch-btn">
+                                        <i class="fas fa-download me-2"></i>
+                                        Fetch Historical Data
+                                    </button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <div class="text-center py-4">
+                                <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                                <h5>Authentication Required</h5>
+                                <p class="text-muted">Please authenticate your Zerodha API to fetch stock data.</p>
+                                <a href="{% url 'settings' %}" class="btn btn-primary">
+                                    <i class="fas fa-cog me-1"></i>Configure API
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Data Files -->
+        {% if available_files %}
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-file-alt text-info me-2"></i>
+                            Recent Data Files
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Symbol</th>
+                                        <th>Date Range</th>
+                                        <th>Interval</th>
+                                        <th>Records</th>
+                                        <th>Fetched At</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for file in available_files %}
+                                    <tr>
+                                        <td><strong class="text-primary">{{ file.symbol }}</strong></td>
+                                        <td>
+                                            <small>{{ file.from_date }} to {{ file.to_date }}</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-secondary">{{ file.interval }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-success">{{ file.total_records|floatformat:0 }}</span>
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">{{ file.fetched_at|slice:":19"|date:"M d, H:i" }}</small>
+                                        </td>
+                                        <td>
+                                            <a href="/data/?file={{ file.filename }}" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye me-1"></i>View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="{% url 'data_view' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-list me-1"></i>View All Data Files
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check authentication status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            
+            // Add form submission handler
+            const fetchForm = document.getElementById('data-fetch-form');
+            if (fetchForm) {
+                fetchForm.addEventListener('submit', function(e) {
+                    const button = document.getElementById('fetch-btn');
+                    const originalText = button.innerHTML;
+                    
+                    // Show loading state
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Fetching Data...';
+                    button.disabled = true;
+                    
+                    // Add a timeout to reset button if form submission fails
+                    setTimeout(() => {
+                        if (button.disabled) {
+                            button.innerHTML = originalText;
+                            button.disabled = false;
+                        }
+                    }, 30000); // 30 seconds timeout
+                });
+            }
+        });
+
+        function checkAuthStatus() {
+            fetch('/test-connection/')
+                .then(response => response.json())
+                .then(data => {
+                    const statusDiv = document.getElementById('auth-status');
+                    if (data.success) {
+                        statusDiv.className = 'auth-status auth-success';
+                        statusDiv.innerHTML = '<strong>Status:</strong> ✅ Authenticated and connected to Kite API';
+                    } else {
+                        statusDiv.className = 'auth-status auth-danger';
+                        statusDiv.innerHTML = '<strong>Status:</strong> ❌ Not authenticated. Please configure your API in Settings.';
+                    }
+                })
+                .catch(error => {
+                    const statusDiv = document.getElementById('auth-status');
+                    statusDiv.className = 'auth-status auth-danger';
+                    statusDiv.innerHTML = '<strong>Status:</strong> ❌ Error checking authentication status.';
+                });
+        }
+
+        function testConnection() {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Testing...';
+            button.disabled = true;
+
+            fetch('/test-connection/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('✅ Connection successful!\nUser: ' + (data.user_data.user_name || 'Unknown'));
+                    } else {
+                        alert('❌ Connection failed:\n' + data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('❌ Error testing connection:\n' + error.message);
+                })
+                .finally(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                });
+        }
+    </script>
+</body>
+</html>

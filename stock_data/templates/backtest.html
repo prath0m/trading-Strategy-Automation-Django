@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backtest Results - Zerodha Automation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { 
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0d1117 100%);
+            color: #e6edf3;
+            min-height: 100vh;
+        }
+        .card {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid rgba(48, 54, 61, 0.5);
+            backdrop-filter: blur(10px);
+            color: #e6edf3;
+        }
+        .card-body {
+            color: #e6edf3;
+        }
+        .table {
+            color: #e6edf3;
+        }
+        .table td, .table th {
+            color: #e6edf3;
+            border-color: rgba(48, 54, 61, 0.5);
+        }
+        .table-hover tbody tr:hover {
+            background-color: rgba(48, 54, 61, 0.3);
+            color: #ffffff;
+        }
+        .table-borderless td {
+            color: #e6edf3;
+        }
+        .metric-card {
+            background: linear-gradient(135deg, rgba(35, 134, 54, 0.1), rgba(46, 160, 67, 0.1));
+            border: 1px solid rgba(46, 160, 67, 0.3);
+            color: #e6edf3;
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2ea043;
+        }
+        .text-muted {
+            color: #7d8590 !important;
+        }
+        .btn-outline-primary {
+            border-color: #2ea043;
+            color: #2ea043;
+        }
+        .btn-outline-primary:hover {
+            background-color: #2ea043;
+            border-color: #2ea043;
+            color: #ffffff;
+        }
+        .navbar {
+            background: rgba(13, 17, 23, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <i class="fas fa-chart-bar me-2"></i>Backtest Results
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{% url 'index' %}">Dashboard</a>
+                <a class="nav-link" href="{% url 'data_view' %}">Data</a>
+                <a class="nav-link" href="{% url 'strategy_view' %}">Strategy</a>
+                <a class="nav-link" href="{% url 'signals_view' %}">Signals</a>
+                <a class="nav-link active" href="{% url 'backtest_view' %}">Backtest</a>
+                <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% if detailed_view %}
+        <!-- Detailed Backtest View -->
+        <div class="row mb-4">
+            <div class="col">
+                <h2><i class="fas fa-chart-bar me-2"></i>{{ backtest.strategy.name }}</h2>
+                <p class="text-muted">{{ backtest.symbol }} - {{ backtest.from_date }} to {{ backtest.to_date }}</p>
+            </div>
+            <div class="col-auto">
+                <a href="{% url 'backtest_view' %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to List
+                </a>
+            </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="metric-card card h-100">
+                    <div class="card-body text-center">
+                        <div class="metric-value">{{ backtest.strategy_return|floatformat:2 }}%</div>
+                        <small class="text-muted">Strategy Return</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="metric-card card h-100">
+                    <div class="card-body text-center">
+                        <div class="metric-value">{{ backtest.market_return|floatformat:2 }}%</div>
+                        <small class="text-muted">Market Return</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="metric-card card h-100">
+                    <div class="card-body text-center">
+                        <div class="metric-value">{{ backtest.total_trades }}</div>
+                        <small class="text-muted">Total Trades</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="metric-card card h-100">
+                    <div class="card-body text-center">
+                        <div class="metric-value">{{ backtest.win_rate|floatformat:1 }}%</div>
+                        <small class="text-muted">Win Rate</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trade Statistics -->
+        <div class="card mb-4" style="background-color: #000000; border: 1px solid rgba(255, 255, 255, 0.2);">
+            <div class="card-header" style="background-color: #000000; color: #ffffff; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">
+                <h5 class="mb-0" style="color: #ffffff;">Trade Statistics</h5>
+            </div>
+            <div class="card-body" style="background-color: #000000; color: #ffffff;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-borderless" style="background-color: #000000; color: #ffffff;">
+                            <tr>
+                                <td style="background-color: #000000; color: #ffffff; border: none;">Winning Trades:</td>
+                                <td class="text-success" style="background-color: #000000; border: none;"><strong>{{ backtest.winning_trades }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #000000; color: #ffffff; border: none;">Losing Trades:</td>
+                                <td class="text-danger" style="background-color: #000000; border: none;"><strong>{{ backtest.losing_trades }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #000000; color: #ffffff; border: none;">Buy Signals:</td>
+                                <td class="text-info" style="background-color: #000000; border: none;"><strong>{{ backtest.buy_signals_count }}</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-borderless" style="background-color: #000000; color: #ffffff;">
+                            <tr>
+                                <td style="background-color: #000000; color: #ffffff; border: none;">Sell Signals:</td>
+                                <td class="text-warning" style="background-color: #000000; border: none;"><strong>{{ backtest.sell_signals_count }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #000000; color: #ffffff; border: none;">Max Drawdown:</td>
+                                <td style="background-color: #000000; color: #ffffff; border: none;"><strong>{{ backtest.max_drawdown|floatformat:2 }}%</strong></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #000000; color: #ffffff; border: none;">Sharpe Ratio:</td>
+                                <td style="background-color: #000000; color: #ffffff; border: none;"><strong>{{ backtest.sharpe_ratio|default:"N/A" }}</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <!-- Backtest List View -->
+        <div class="row mb-4">
+            <div class="col">
+                <h2><i class="fas fa-chart-bar me-2"></i>Backtest Results</h2>
+                <p class="text-muted">Historical performance of trading strategies</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">All Backtests</h5>
+            </div>
+            <div class="card-body p-0">
+                {% if backtests %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Strategy</th>
+                                <th>Symbol</th>
+                                <th>Period</th>
+                                <th>Strategy Return</th>
+                                <th>Market Return</th>
+                                <th>Total Trades</th>
+                                <th>Win Rate</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for backtest in backtests %}
+                            <tr>
+                                <td><strong>{{ backtest.strategy.name }}</strong></td>
+                                <td>{{ backtest.symbol }}</td>
+                                <td>{{ backtest.from_date }} to {{ backtest.to_date }}</td>
+                                <td>
+                                    <span class="{% if backtest.strategy_return > 0 %}text-success{% else %}text-danger{% endif %}">
+                                        {{ backtest.strategy_return|floatformat:2 }}%
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="{% if backtest.market_return > 0 %}text-success{% else %}text-danger{% endif %}">
+                                        {{ backtest.market_return|floatformat:2 }}%
+                                    </span>
+                                </td>
+                                <td>{{ backtest.total_trades }}</td>
+                                <td>{{ backtest.win_rate|floatformat:1 }}%</td>
+                                <td>
+                                    <a href="{% url 'backtest_view' %}?id={{ backtest.id }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-eye me-1"></i>View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+                    <h5>No Backtest Results Found</h5>
+                    <p class="text-muted">Execute a trading strategy to generate backtest results</p>
+                    <a href="{% url 'strategy_view' %}" class="btn btn-primary">
+                        <i class="fas fa-robot me-2"></i>Go to Strategy
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
