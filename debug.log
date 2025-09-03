@@ -330,3 +330,14 @@ INFO 2025-09-03 14:33:22,489 views 85115 6158626816 Extracted 7875 valid OHLC re
 INFO 2025-09-03 14:33:41,310 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
 INFO 2025-09-03 14:33:41,315 views 85115 6158626816 Loaded file with 7875 records
 INFO 2025-09-03 14:33:41,317 views 85115 6158626816 Extracted 7875 valid OHLC records
+INFO 2025-09-03 15:14:22,904 services 86096 6160478208 Fetching data for token 348929 from 2025-08-04 to 2025-09-03
+INFO 2025-09-03 15:14:23,549 services 86096 6160478208 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-03 15:14:56,343 strategy_service 86096 6160478208 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-03 15:14:56,503 strategy_service 86096 6160478208 Saved 23 signals for HINDALCO
+INFO 2025-09-03 15:14:56,504 strategy_service 86096 6160478208 Saved backtest results for HINDALCO
+INFO 2025-09-03 15:15:46,352 views 86096 6160478208 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-03 15:15:46,356 views 86096 6160478208 Loaded file with 7875 records
+INFO 2025-09-03 15:15:46,359 views 86096 6160478208 Extracted 7875 valid OHLC records
+INFO 2025-09-03 15:16:09,033 views 86096 6160478208 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-03 15:16:09,038 views 86096 6160478208 Loaded file with 7875 records
+INFO 2025-09-03 15:16:09,040 views 86096 6160478208 Extracted 7875 valid OHLC records
