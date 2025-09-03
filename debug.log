@@ -187,3 +187,146 @@ kiteconnect.exceptions.TokenException: Token is invalid or has expired.
 INFO 2025-09-03 08:20:52,355 strategy_service 79358 6191525888 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250803_to_20250902_20250902_152658.json
 INFO 2025-09-03 08:20:52,502 strategy_service 79358 6191525888 Saved 20 signals for TCS
 INFO 2025-09-03 08:20:52,503 strategy_service 79358 6191525888 Saved backtest results for TCS
+INFO 2025-09-03 12:48:27,670 views 82181 6197866496 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-03 12:48:27,671 views 82181 6197866496 Processing authentication with request_token: 9ZqnJlL4Wq...
+INFO 2025-09-03 12:48:27,671 views 82181 6197866496 Attempting to generate session...
+ERROR 2025-09-03 12:48:28,230 services 82181 6197866496 Session generation failed: Token is invalid or has expired.
+ERROR 2025-09-03 12:48:28,230 views 82181 6197866496 Authentication failed: Token is invalid or has expired.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 127, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 162, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Token is invalid or has expired.
+INFO 2025-09-03 12:48:38,122 views 82181 6197866496 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-03 12:48:38,123 views 82181 6197866496 Processing authentication with request_token: 9ZqnJlL4Wq...
+INFO 2025-09-03 12:48:38,123 views 82181 6197866496 Attempting to generate session...
+ERROR 2025-09-03 12:48:38,688 services 82181 6197866496 Session generation failed: Token is invalid or has expired.
+ERROR 2025-09-03 12:48:38,688 views 82181 6197866496 Authentication failed: Token is invalid or has expired.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 127, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 162, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Token is invalid or has expired.
+INFO 2025-09-03 12:49:06,988 views 82181 6197866496 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-03 12:49:06,988 views 82181 6197866496 Processing authentication with request_token: T9ZqnJlL4W...
+INFO 2025-09-03 12:49:06,988 views 82181 6197866496 Attempting to generate session...
+ERROR 2025-09-03 12:49:07,404 services 82181 6197866496 Session generation failed: Invalid `checksum`.
+ERROR 2025-09-03 12:49:07,405 views 82181 6197866496 Authentication failed: Invalid `checksum`.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 127, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 162, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Invalid `checksum`.
+INFO 2025-09-03 12:49:16,603 views 82181 6197866496 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-03 12:49:16,603 views 82181 6197866496 Processing authentication with request_token: T9ZqnJlL4W...
+INFO 2025-09-03 12:49:16,603 views 82181 6197866496 Attempting to generate session...
+ERROR 2025-09-03 12:49:17,258 services 82181 6197866496 Session generation failed: Invalid `checksum`.
+ERROR 2025-09-03 12:49:17,258 views 82181 6197866496 Authentication failed: Invalid `checksum`.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 127, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 162, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Invalid `checksum`.
+INFO 2025-09-03 12:51:16,290 views 82181 6197866496 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-03 12:51:16,290 views 82181 6197866496 Processing authentication with request_token: 6ImNiRVIhQ...
+INFO 2025-09-03 12:51:16,291 views 82181 6197866496 Attempting to generate session...
+INFO 2025-09-03 12:51:16,637 views 82181 6197866496 Session data received: {'user_type': 'individual/res_no_nn', 'email': 'bhatikares@gmail.com', 'user_name': 'Sourabh Vidhyadhar Bhatikare', 'user_shortname': 'Sourabh', 'broker': 'ZERODHA', 'exchanges': ['BFO', 'BSE', 'NSE', 'MF', 'NFO'], 'products': ['CNC', 'NRML', 'MIS', 'BO', 'CO'], 'order_types': ['MARKET', 'LIMIT', 'SL', 'SL-M'], 'avatar_url': None, 'user_id': 'WH8704', 'api_key': 'bd53m7sxfmjy2kbz', 'access_token': 'GyIT5cppuFHtrjLdN3IbieJzhzlL36ka', 'public_token': 'N0h72qhWwudx9f6VXwt6JFYiGdrhNbmn', 'refresh_token': '', 'enctoken': 'Oq8uxmuEvxip64OOTcVd2u89vDSPVGaHXgtGgAMXjzlyH+BXxWLt3N0NyM7belC5NEDJ89sTGx+41X0M/emwAzoTmFugmEvBylhwf8SJo80l84SkYFRQMljbVdZgkDk=', 'login_time': datetime.datetime(2025, 9, 3, 18, 18, 11), 'meta': {'demat_consent': 'consent'}}
+INFO 2025-09-03 12:51:16,639 views 82181 6197866496 Authentication successful for user: WH8704
+INFO 2025-09-03 12:52:57,717 services 82181 6197866496 Fetching data for token 2815745 from 2025-08-28 to 2025-09-03
+INFO 2025-09-03 12:52:58,285 services 82181 6197866496 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250828_to_20250903_20250903_125258.json
+INFO 2025-09-03 12:53:20,893 strategy_service 82181 6197866496 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250828_to_20250903_20250903_125258.json
+INFO 2025-09-03 12:53:20,978 strategy_service 82181 6197866496 Saved 9 signals for MARUTI
+INFO 2025-09-03 12:53:20,979 strategy_service 82181 6197866496 Saved backtest results for MARUTI
+INFO 2025-09-03 12:59:22,863 services 82181 6197866496 Fetching data for token 3787777 from 2025-08-04 to 2025-09-03
+ERROR 2025-09-03 12:59:23,359 services 82181 6197866496 Error fetching historical data: invalid token
+INFO 2025-09-03 12:59:23,366 services 82181 6197866496 Generated 1000 sample records
+INFO 2025-09-03 12:59:23,388 services 82181 6197866496 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250804_to_20250903_20250903_125923.json
+INFO 2025-09-03 12:59:40,609 strategy_service 82181 6197866496 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250804_to_20250903_20250903_125923.json
+INFO 2025-09-03 12:59:40,665 strategy_service 82181 6197866496 Saved 5 signals for WIPRO
+INFO 2025-09-03 12:59:40,666 strategy_service 82181 6197866496 Saved backtest results for WIPRO
+INFO 2025-09-03 13:45:45,278 services 82181 6197866496 Fetching data for token 2953217 from 2025-08-04 to 2025-09-03
+INFO 2025-09-03 13:45:47,161 services 82181 6197866496 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-03 13:45:58,877 strategy_service 82181 6197866496 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-03 13:45:59,034 strategy_service 82181 6197866496 Saved 20 signals for TCS
+INFO 2025-09-03 13:45:59,035 strategy_service 82181 6197866496 Saved backtest results for TCS
+INFO 2025-09-03 14:24:58,507 strategy_service 82181 6197866496 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-03 14:24:58,659 strategy_service 82181 6197866496 Saved 20 signals for TCS
+INFO 2025-09-03 14:24:58,660 strategy_service 82181 6197866496 Saved backtest results for TCS
+INFO 2025-09-03 14:29:38,658 services 85009 6129594368 Fetching data for token 738561 from 2025-08-04 to 2025-09-03
+INFO 2025-09-03 14:29:39,352 services 85009 6129594368 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:29:51,437 strategy_service 85009 6129594368 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:29:51,593 strategy_service 85009 6129594368 Saved 21 signals for RELIANCE
+INFO 2025-09-03 14:29:51,594 strategy_service 85009 6129594368 Saved backtest results for RELIANCE
+INFO 2025-09-03 14:31:07,860 views 85096 6136934400 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:31:07,865 views 85096 6136934400 Loaded file with 7875 records
+INFO 2025-09-03 14:31:49,864 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:31:49,869 views 85115 6158626816 Loaded file with 7875 records
+INFO 2025-09-03 14:31:49,871 views 85115 6158626816 Extracted 7875 valid OHLC records
+INFO 2025-09-03 14:32:29,467 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-03 14:32:29,472 views 85115 6158626816 Loaded file with 7875 records
+INFO 2025-09-03 14:32:29,474 views 85115 6158626816 Extracted 7875 valid OHLC records
+INFO 2025-09-03 14:32:36,822 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:32:36,827 views 85115 6158626816 Loaded file with 7875 records
+INFO 2025-09-03 14:32:36,830 views 85115 6158626816 Extracted 7875 valid OHLC records
+INFO 2025-09-03 14:33:22,481 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-03 14:33:22,487 views 85115 6158626816 Loaded file with 7875 records
+INFO 2025-09-03 14:33:22,489 views 85115 6158626816 Extracted 7875 valid OHLC records
+INFO 2025-09-03 14:33:41,310 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:33:41,315 views 85115 6158626816 Loaded file with 7875 records
+INFO 2025-09-03 14:33:41,317 views 85115 6158626816 Extracted 7875 valid OHLC records

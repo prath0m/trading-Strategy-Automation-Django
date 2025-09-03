@@ -498,70 +498,116 @@ def chart_data_api(request, backtest_id):
         
         # Find the data file for this backtest
         for file_info in available_files:
-            if (file_info['symbol'] == backtest.symbol and 
-                file_info['from_date'] <= backtest.from_date.strftime('%Y-%m-%d') and
-                file_info['to_date'] >= backtest.to_date.strftime('%Y-%m-%d')):
+            if file_info['symbol'] == backtest.symbol:
+                logger.info(f"Found matching symbol file: {file_info['filepath']}")
                 
                 try:
                     with open(file_info['filepath'], 'r') as f:
                         file_data = json.load(f)
                     
-                    # Extract OHLC data
+                    logger.info(f"Loaded file with {len(file_data.get('data', []))} records")
+                    
+                    # Extract OHLC data with validation
                     for record in file_data.get('data', []):
                         if isinstance(record, dict):
-                            ohlc_data.append({
-                                'date': record.get('date') or record.get('timestamp'),
-                                'open': float(record.get('open', 0)),
-                                'high': float(record.get('high', 0)),
-                                'low': float(record.get('low', 0)),
-                                'close': float(record.get('close', 0)),
-                                'volume': int(record.get('volume', 0))
-                            })
+                            try:
+                                # Validate and convert data
+                                open_val = float(record.get('open', 0))
+                                high_val = float(record.get('high', 0))
+                                low_val = float(record.get('low', 0))
+                                close_val = float(record.get('close', 0))
+                                volume_val = int(record.get('volume', 0))
+                                date_val = record.get('date') or record.get('timestamp')
+                                
+                                # Basic validation - only skip obviously invalid data
+                                if (date_val and open_val > 0 and high_val > 0 and 
+                                    low_val > 0 and close_val > 0):
+                                    
+                                    ohlc_data.append({
+                                        'date': date_val,
+                                        'open': open_val,
+                                        'high': high_val,
+                                        'low': low_val,
+                                        'close': close_val,
+                                        'volume': volume_val
+                                    })
+                            except (ValueError, TypeError):
+                                # Skip invalid records
+                                continue
                     
-                    # Calculate indicators (simplified version)
+                    logger.info(f"Extracted {len(ohlc_data)} valid OHLC records")
+                    
+                    # Calculate indicators with improved validation
                     if len(ohlc_data) >= 26:  # Minimum required for MACD
                         close_prices = [d['close'] for d in ohlc_data]
                         
-                        # Simple Moving Average (5 period)
+                        # Simple Moving Average (5 period) with validation
                         for i in range(4, len(ohlc_data)):
-                            ma_value = sum(close_prices[i-4:i+1]) / 5
-                            indicators_data['ma'].append({
-                                'date': ohlc_data[i]['date'],
-                                'value': ma_value
-                            })
+                            try:
+                                ma_prices = close_prices[i-4:i+1]
+                                if all(p > 0 for p in ma_prices):  # Ensure all prices are valid
+                                    ma_value = sum(ma_prices) / 5
+                                    indicators_data['ma'].append({
+                                        'date': ohlc_data[i]['date'],
+                                        'value': ma_value
+                                    })
+                            except (IndexError, ZeroDivisionError):
+                                continue
                         
-                        # Simplified MACD calculation
+                        # Improved MACD calculation with validation
                         for i in range(25, len(ohlc_data)):
-                            # Calculate EMAs (simplified)
-                            ema12 = sum(close_prices[i-11:i+1]) / 12
-                            ema26 = sum(close_prices[i-25:i+1]) / 26
-                            macd_line = ema12 - ema26
-                            
-                            # Signal line (9-period EMA of MACD)
-                            signal_line = macd_line * 0.2 + (macd_line * 0.8) if i > 25 else macd_line
-                            histogram = macd_line - signal_line
-                            
-                            indicators_data['macd'].append({
-                                'date': ohlc_data[i]['date'],
-                                'macd': macd_line,
-                                'signal': signal_line,
-                                'histogram': histogram
-                            })
+                            try:
+                                # Calculate EMAs with validation
+                                ema12_prices = close_prices[i-11:i+1]
+                                ema26_prices = close_prices[i-25:i+1]
+                                
+                                if (all(p > 0 for p in ema12_prices) and 
+                                    all(p > 0 for p in ema26_prices)):
+                                    
+                                    ema12 = sum(ema12_prices) / 12
+                                    ema26 = sum(ema26_prices) / 26
+                                    macd_line = ema12 - ema26
+                                    
+                                    # Signal line (simplified 9-period EMA of MACD)
+                                    if i > 33:  # Ensure we have enough data for signal
+                                        recent_macd = [indicators_data['macd'][j]['macd'] 
+                                                     for j in range(max(0, len(indicators_data['macd'])-8), 
+                                                                   len(indicators_data['macd']))]
+                                        recent_macd.append(macd_line)
+                                        signal_line = sum(recent_macd) / len(recent_macd)
+                                    else:
+                                        signal_line = macd_line
+                                    
+                                    histogram = macd_line - signal_line
+                                    
+                                    indicators_data['macd'].append({
+                                        'date': ohlc_data[i]['date'],
+                                        'macd': macd_line,
+                                        'signal': signal_line,
+                                        'histogram': histogram
+                                    })
+                            except (IndexError, ZeroDivisionError, TypeError):
+                                continue
                     
                     break
                 except Exception as e:
                     logger.error(f"Error loading data file: {e}")
                     continue
         
-        # Format signals data
+        # Format signals data with validation
         signals_data = []
         for signal in signals:
-            signals_data.append({
-                'timestamp': signal.timestamp.isoformat(),
-                'signal_type': signal.signal_type,
-                'price': float(signal.price),
-                'confidence': signal.confidence
-            })
+            try:
+                price_val = float(signal.price)
+                if price_val > 0:  # Only include valid prices
+                    signals_data.append({
+                        'timestamp': signal.timestamp.isoformat(),
+                        'signal_type': signal.signal_type,
+                        'price': price_val,
+                        'confidence': signal.confidence
+                    })
+            except (ValueError, TypeError):
+                continue
         
         return JsonResponse({
             'success': True,

@@ -5,104 +5,353 @@
 {% block extra_css %}
 <style>
     .chart-container {
-        background: rgba(13, 17, 23, 0.8);
+        background: rgba(13, 17, 23, 0.95);
         border: 1px solid #30363d;
         border-radius: 15px;
         padding: 20px;
         margin-bottom: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+    
+    .chart-container:hover {
+        border-color: #58a6ff;
+        box-shadow: 0 12px 40px rgba(88, 166, 255, 0.2);
+        transform: translateY(-2px);
     }
     
     .chart-title {
         color: #58a6ff;
         font-weight: 600;
         margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     
     .chart-controls {
+        background: rgba(22, 27, 34, 0.95);
+        border: 1px solid #30363d;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .fullscreen-btn {
+        background: rgba(88, 166, 255, 0.1);
+        border: 1px solid #58a6ff;
+        color: #58a6ff;
+        border-radius: 8px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.8rem;
+    }
+    
+    .fullscreen-btn:hover {
+        background: #58a6ff;
+        color: #ffffff;
+    }
+    
+    .chart-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .chart-grid.horizontal-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    
+    .main-chart {
+        grid-column: 1 / -1;
+    }
+    
+    .main-chart .chart-container {
+        min-height: 70vh;
+    }
+    
+    .main-chart #candlestickChart {
+        height: calc(70vh - 80px) !important;
+    }
+    
+    @media (min-width: 1200px) {
+        .chart-grid.horizontal-layout {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto auto;
+        }
+        
+        .chart-grid.compact-layout {
+            grid-template-columns: 2fr 1fr;
+        }
+        
+        .chart-grid.compact-layout .main-chart {
+            grid-column: 1 / -1;
+        }
+    }
+    
+    .chart-wrapper {
+        position: relative;
+        min-height: 500px;
+    }
+    
+    .chart-wrapper.fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+        background: rgba(13, 17, 23, 0.98);
+        backdrop-filter: blur(15px);
+        padding: 20px;
+    }
+    
+    .chart-wrapper.fullscreen .chart-container {
+        height: calc(100vh - 40px);
+        margin: 0;
+    }
+    
+    .chart-wrapper.fullscreen .chart-title {
+        position: absolute;
+        top: 30px;
+        left: 40px;
+        right: 40px;
+        z-index: 10;
+        background: rgba(13, 17, 23, 0.9);
+        padding: 10px 20px;
+        border-radius: 10px;
+        margin: 0;
+    }
+    
+    .loading-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        flex-direction: column;
+        color: #58a6ff;
+    }
+    
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #30363d;
+        border-top: 4px solid #58a6ff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 15px;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .chart-error {
+        background: rgba(218, 54, 51, 0.1);
+        border: 1px solid #da3633;
+        color: #ff7b72;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        margin: 20px 0;
+    }
+    
+    .chart-empty {
+        background: rgba(139, 148, 158, 0.1);
+        border: 1px solid #8b949e;
+        color: #8b949e;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        margin: 20px 0;
+    }
+    
+    .chart-loading {
+        background: rgba(88, 166, 255, 0.1);
+        border: 1px solid #58a6ff;
+        color: #58a6ff;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .stats-bar {
         background: rgba(22, 27, 34, 0.8);
         border: 1px solid #30363d;
         border-radius: 10px;
         padding: 15px;
         margin-bottom: 20px;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .stat-item {
+        text-align: center;
+        color: #c9d1d9;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #58a6ff;
+        display: block;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        color: #8b949e;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h2><i class="fas fa-chart-line me-2"></i>Strategy Analysis Charts</h2>
-                <p class="text-muted">Visual analysis of OHLC data, trading signals, and technical indicators</p>
+<div class="container-fluid px-4">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2><i class="fas fa-chart-line me-2"></i>Strategy Analysis Charts</h2>
+                    <p class="text-muted">Visual analysis of OHLC data, trading signals, and technical indicators</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-primary" onclick="toggleChartLayout()">
+                        <i class="fas fa-th-large me-2"></i><span id="layoutToggleText">Compact View</span>
+                    </button>
+                    <a href="{% url 'strategy_view' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Strategy
+                    </a>
+                </div>
             </div>
-            <a href="{% url 'strategy_view' %}" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-2"></i>Back to Strategy
-            </a>
         </div>
     </div>
-</div>
 
-<!-- Chart Controls -->
-<div class="chart-controls">
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Select Backtest Result:</label>
-            <select class="form-select" id="backtestSelect">
-                <option value="">-- Select a backtest result --</option>
-                {% for backtest in backtests %}
-                <option value="{{ backtest.id }}" data-symbol="{{ backtest.symbol }}">
-                    {{ backtest.symbol }} - {{ backtest.strategy.name }} ({{ backtest.from_date }} to {{ backtest.to_date }})
-                </option>
-                {% endfor %}
-            </select>
+    <!-- Chart Controls -->
+    <div class="chart-controls">
+        <div class="row">
+            <div class="col-lg-8">
+                <label class="form-label">Select Backtest Result:</label>
+                <select class="form-select" id="backtestSelect">
+                    <option value="">-- Select a backtest result --</option>
+                    {% for backtest in backtests %}
+                    <option value="{{ backtest.id }}" data-symbol="{{ backtest.symbol }}">
+                        {{ backtest.symbol }} - {{ backtest.strategy.name }} ({{ backtest.from_date }} to {{ backtest.to_date }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-4 d-flex align-items-end">
+                <button class="btn btn-primary w-100" onclick="loadCharts()">
+                    <i class="fas fa-chart-bar me-2"></i>Load Charts
+                </button>
+            </div>
         </div>
-        <div class="col-md-6 d-flex align-items-end">
-            <button class="btn btn-primary w-100" onclick="loadCharts()">
-                <i class="fas fa-chart-bar me-2"></i>Load Charts
-            </button>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading chart data...</p>
+    </div>
+
+    <!-- Statistics Bar -->
+    <div id="statsBar" class="stats-bar" style="display: none;">
+        <div class="stat-item">
+            <span class="stat-value" id="totalTrades">-</span>
+            <span class="stat-label">Total Trades</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value" id="profitTrades">-</span>
+            <span class="stat-label">Profit Trades</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value" id="lossTrades">-</span>
+            <span class="stat-label">Loss Trades</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value" id="winRate">-</span>
+            <span class="stat-label">Win Rate</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value" id="totalPnL">-</span>
+            <span class="stat-label">Total P&L</span>
         </div>
     </div>
-</div>
 
-<!-- Charts Section -->
-<div id="chartsSection" style="display: none;">
-    <!-- OHLC Candlestick Chart -->
-    <div class="chart-container">
-        <h5 class="chart-title">
-            <i class="fas fa-chart-candlestick me-2"></i>
-            OHLC Candlestick Chart
-        </h5>
-        <div id="candlestickChart" style="height: 500px;"></div>
+    <!-- Charts Section -->
+    <div id="chartsSection" style="display: none;">
+        <div class="chart-grid horizontal-layout" id="chartGrid">
+            <!-- Main OHLC Candlestick Chart -->
+            <div class="chart-wrapper main-chart" id="candlestickWrapper">
+                <div class="chart-container">
+                    <h5 class="chart-title">
+                        <span>
+                            <i class="fas fa-chart-candlestick me-2"></i>
+                            OHLC Candlestick Chart
+                        </span>
+                        <button class="fullscreen-btn" onclick="toggleFullscreen('candlestickWrapper')">
+                            <i class="fas fa-expand"></i> Fullscreen
+                        </button>
+                    </h5>
+                    <div id="candlestickChart" style="height: calc(70vh - 80px);"></div>
+                </div>
+            </div>
+
+            <!-- Buy/Sell Signals Chart -->
+            <div class="chart-wrapper" id="signalsWrapper">
+                <div class="chart-container">
+                    <h5 class="chart-title">
+                        <span>
+                            <i class="fas fa-signal me-2"></i>
+                            Buy & Sell Signals
+                        </span>
+                        <button class="fullscreen-btn" onclick="toggleFullscreen('signalsWrapper')">
+                            <i class="fas fa-expand"></i> Fullscreen
+                        </button>
+                    </h5>
+                    <div id="signalsChart" style="height: 400px;"></div>
+                </div>
+            </div>
+
+            <!-- Technical Indicators Chart -->
+            <div class="chart-wrapper" id="indicatorsWrapper">
+                <div class="chart-container">
+                    <h5 class="chart-title">
+                        <span>
+                            <i class="fas fa-chart-line me-2"></i>
+                            Technical Indicators (MACD & Moving Average)
+                        </span>
+                        <button class="fullscreen-btn" onclick="toggleFullscreen('indicatorsWrapper')">
+                            <i class="fas fa-expand"></i> Fullscreen
+                        </button>
+                    </h5>
+                    <div id="indicatorsChart" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Buy/Sell Signals Chart -->
-    <div class="chart-container">
-        <h5 class="chart-title">
-            <i class="fas fa-signal me-2"></i>
-            Buy & Sell Signals
-        </h5>
-        <div id="signalsChart" style="height: 400px;"></div>
+    <!-- No Data Message -->
+    <div id="noDataMessage" class="text-center py-5" style="display: none;">
+        <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+        <h5>No Chart Data Available</h5>
+        <p class="text-muted">Please execute a strategy first to generate chart data</p>
+        <a href="{% url 'strategy_view' %}" class="btn btn-primary">
+            <i class="fas fa-robot me-2"></i>Go to Strategy
+        </a>
     </div>
-
-    <!-- Technical Indicators Chart -->
-    <div class="chart-container">
-        <h5 class="chart-title">
-            <i class="fas fa-chart-line me-2"></i>
-            Technical Indicators (MACD & Moving Average)
-        </h5>
-        <div id="indicatorsChart" style="height: 400px;"></div>
-    </div>
-</div>
-
-<!-- No Data Message -->
-<div id="noDataMessage" class="text-center py-5" style="display: none;">
-    <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
-    <h5>No Chart Data Available</h5>
-    <p class="text-muted">Please execute a strategy first to generate chart data</p>
-    <a href="{% url 'strategy_view' %}" class="btn btn-primary">
-        <i class="fas fa-robot me-2"></i>Go to Strategy
-    </a>
 </div>
 {% endblock %}
 
@@ -112,6 +361,130 @@
 
 <script>
 let currentChartData = null;
+let isHorizontalLayout = true;
+
+// Utility function to synchronize chart zoom across all charts
+function synchronizeChartZoom() {
+    if (!currentChartData) return;
+    
+    try {
+        const candlestickElement = document.getElementById('candlestickChart');
+        const signalsElement = document.getElementById('signalsChart');
+        const indicatorsElement = document.getElementById('indicatorsChart');
+        
+        // Get the current x-axis range from the main chart
+        const candlestickData = candlestickElement.data;
+        if (candlestickData && candlestickData.length > 0) {
+            const xRange = candlestickElement.layout.xaxis.range;
+            
+            // Apply the same range to other charts
+            Plotly.relayout(signalsElement, {'xaxis.range': xRange});
+            Plotly.relayout(indicatorsElement, {'xaxis.range': xRange});
+        }
+    } catch (error) {
+        console.warn('Chart synchronization failed:', error);
+    }
+}
+
+// Add chart crossfilter functionality
+function addChartInteractivity() {
+    const chartIds = ['candlestickChart', 'signalsChart', 'indicatorsChart'];
+    
+    chartIds.forEach(chartId => {
+        const element = document.getElementById(chartId);
+        if (element) {
+            element.on('plotly_relayout', function(eventData) {
+                if (eventData['xaxis.range[0]'] && eventData['xaxis.range[1]']) {
+                    const newRange = [eventData['xaxis.range[0]'], eventData['xaxis.range[1]']];
+                    
+                    // Update other charts with the same zoom level
+                    chartIds.forEach(otherId => {
+                        if (otherId !== chartId) {
+                            const otherElement = document.getElementById(otherId);
+                            if (otherElement && otherElement.layout) {
+                                Plotly.relayout(otherElement, {'xaxis.range': newRange});
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
+function toggleChartLayout() {
+    isHorizontalLayout = !isHorizontalLayout;
+    const chartGrid = document.getElementById('chartGrid');
+    const toggleText = document.getElementById('layoutToggleText');
+    
+    if (isHorizontalLayout) {
+        chartGrid.classList.remove('compact-layout');
+        chartGrid.classList.add('horizontal-layout');
+        toggleText.textContent = 'Compact View';
+        
+        // Resize candlestick chart to full height
+        document.getElementById('candlestickChart').style.height = 'calc(70vh - 80px)';
+    } else {
+        chartGrid.classList.remove('horizontal-layout');
+        chartGrid.classList.add('compact-layout');
+        toggleText.textContent = 'Full Width View';
+        
+        // Reset candlestick chart height
+        document.getElementById('candlestickChart').style.height = '500px';
+    }
+    
+    // Resize all charts
+    setTimeout(() => {
+        if (currentChartData) {
+            Plotly.Plots.resize('candlestickChart');
+            Plotly.Plots.resize('signalsChart');
+            Plotly.Plots.resize('indicatorsChart');
+        }
+    }, 300);
+}
+
+function toggleFullscreen(wrapperId) {
+    const wrapper = document.getElementById(wrapperId);
+    const isFullscreen = wrapper.classList.contains('fullscreen');
+    
+    // Remove fullscreen from all charts
+    document.querySelectorAll('.chart-wrapper').forEach(w => {
+        w.classList.remove('fullscreen');
+    });
+    
+    if (!isFullscreen) {
+        wrapper.classList.add('fullscreen');
+        
+        // Add escape key listener
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                wrapper.classList.remove('fullscreen');
+                document.removeEventListener('keydown', escHandler);
+                
+                // Resize chart after exiting fullscreen
+                setTimeout(() => {
+                    const chartId = wrapper.querySelector('[id$="Chart"]').id;
+                    Plotly.Plots.resize(chartId);
+                }, 300);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+        
+        // Update fullscreen button text
+        const btn = wrapper.querySelector('.fullscreen-btn');
+        btn.innerHTML = '<i class="fas fa-compress"></i> Exit Fullscreen';
+        
+        // Resize chart for fullscreen
+        setTimeout(() => {
+            const chartId = wrapper.querySelector('[id$="Chart"]').id;
+            Plotly.Plots.resize(chartId);
+        }, 300);
+    } else {
+        // Reset button text
+        const btn = wrapper.querySelector('.fullscreen-btn');
+        btn.innerHTML = '<i class="fas fa-expand"></i> Fullscreen';
+    }
+}
 
 function loadCharts() {
     const backtestSelect = document.getElementById('backtestSelect');
@@ -128,236 +501,601 @@ function loadCharts() {
     // Show loading state
     document.getElementById('chartsSection').style.display = 'none';
     document.getElementById('noDataMessage').style.display = 'none';
+    document.getElementById('statsBar').style.display = 'none';
+    document.getElementById('loadingIndicator').style.display = 'flex';
     
-    // Fetch chart data
-    fetch(`/api/chart-data/${backtestId}/`)
-        .then(response => response.json())
+    // Fetch chart data with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+    
+    fetch(`/api/chart-data/${backtestId}/`, {
+        signal: controller.signal
+    })
+        .then(response => {
+            clearTimeout(timeoutId);
+            console.log('Response received:', response.status, response.statusText);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log('Chart data received:', data);
+            document.getElementById('loadingIndicator').style.display = 'none';
+            
             if (data.success) {
+                console.log('Data validation:', {
+                    ohlc_length: data.ohlc_data ? data.ohlc_data.length : 0,
+                    signals_length: data.signals ? data.signals.length : 0,
+                    indicators: data.indicators
+                });
+                
+                // Validate data before processing
+                const hasValidOhlc = data.ohlc_data && data.ohlc_data.length > 0;
+                const hasValidSignals = data.signals && data.signals.length > 0;
+                const hasValidIndicators = data.indicators && 
+                    ((data.indicators.macd && data.indicators.macd.length > 0) ||
+                     (data.indicators.ma && data.indicators.ma.length > 0));
+                
+                console.log('Validation results:', {hasValidOhlc, hasValidSignals, hasValidIndicators});
+                
+                if (!hasValidOhlc && !hasValidSignals && !hasValidIndicators) {
+                    console.log('No valid data found, showing no data message');
+                    document.getElementById('noDataMessage').style.display = 'block';
+                    return;
+                }
+                
                 currentChartData = data;
+                
+                if (hasValidOhlc || hasValidSignals) {
+                    updateStatsBar(data);
+                    document.getElementById('statsBar').style.display = 'flex';
+                }
+                
+                console.log('Starting chart rendering...');
                 renderCharts(data);
                 document.getElementById('chartsSection').style.display = 'block';
+                
             } else {
+                console.error('API returned error:', data.message);
                 document.getElementById('noDataMessage').style.display = 'block';
-                alert('Error loading chart data: ' + data.message);
+                alert('Error loading chart data: ' + (data.message || 'Unknown error'));
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Network Error:', error);
+            console.error('Error stack:', error.stack);
+            document.getElementById('loadingIndicator').style.display = 'none';
             document.getElementById('noDataMessage').style.display = 'block';
-            alert('An error occurred while loading chart data');
+            
+            // Show more detailed error message
+            let errorMsg = 'Network error occurred while loading chart data.';
+            if (error.message.includes('404')) {
+                errorMsg = 'Chart data endpoint not found. Please check if the backtest exists.';
+            } else if (error.message.includes('500')) {
+                errorMsg = 'Server error occurred. Please check the server logs.';
+            }
+            
+            alert(errorMsg + ' Please check your connection and try again.');
         });
 }
 
+function updateStatsBar(data) {
+    const signals = data.signals || [];
+    const buySignals = signals.filter(s => s.signal_type === 'BUY').length;
+    const sellSignals = signals.filter(s => s.signal_type === 'SELL').length;
+    const totalTrades = Math.min(buySignals, sellSignals);
+    
+    // Calculate P&L (simplified calculation)
+    let totalPnL = 0;
+    let profitTrades = 0;
+    let lossTrades = 0;
+    
+    const buys = signals.filter(s => s.signal_type === 'BUY').sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    const sells = signals.filter(s => s.signal_type === 'SELL').sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    
+    for (let i = 0; i < Math.min(buys.length, sells.length); i++) {
+        const buyPrice = buys[i].price;
+        const sellPrice = sells[i].price;
+        const pnl = sellPrice - buyPrice;
+        totalPnL += pnl;
+        
+        if (pnl > 0) profitTrades++;
+        else lossTrades++;
+    }
+    
+    const winRate = totalTrades > 0 ? ((profitTrades / totalTrades) * 100).toFixed(1) : 0;
+    
+    document.getElementById('totalTrades').textContent = totalTrades;
+    document.getElementById('profitTrades').textContent = profitTrades;
+    document.getElementById('lossTrades').textContent = lossTrades;
+    document.getElementById('winRate').textContent = winRate + '%';
+    document.getElementById('totalPnL').textContent = '₹' + totalPnL.toFixed(2);
+    
+    // Color coding for P&L
+    const pnlElement = document.getElementById('totalPnL');
+    pnlElement.style.color = totalPnL >= 0 ? '#7ee787' : '#ff7b72';
+}
+
 function renderCharts(data) {
-    renderCandlestickChart(data.ohlc_data);
-    renderSignalsChart(data.ohlc_data, data.signals);
-    renderIndicatorsChart(data.indicators);
+    try {
+        // Add loading states
+        document.getElementById('candlestickChart').innerHTML = '<div class="chart-loading"><div class="spinner"></div>Rendering OHLC chart...</div>';
+        document.getElementById('signalsChart').innerHTML = '<div class="chart-loading"><div class="spinner"></div>Rendering signals chart...</div>';
+        document.getElementById('indicatorsChart').innerHTML = '<div class="chart-loading"><div class="spinner"></div>Rendering indicators chart...</div>';
+        
+        // Render charts with error handling
+        setTimeout(() => {
+            try {
+                renderCandlestickChart(data.ohlc_data);
+            } catch (error) {
+                console.error('Error rendering candlestick chart:', error);
+                document.getElementById('candlestickChart').innerHTML = '<div class="chart-error"><i class="fas fa-exclamation-triangle"></i> Error rendering OHLC chart</div>';
+            }
+        }, 100);
+        
+        setTimeout(() => {
+            try {
+                renderSignalsChart(data.ohlc_data, data.signals);
+            } catch (error) {
+                console.error('Error rendering signals chart:', error);
+                document.getElementById('signalsChart').innerHTML = '<div class="chart-error"><i class="fas fa-exclamation-triangle"></i> Error rendering signals chart</div>';
+            }
+        }, 200);
+        
+        setTimeout(() => {
+            try {
+                renderIndicatorsChart(data.indicators);
+            } catch (error) {
+                console.error('Error rendering indicators chart:', error);
+                document.getElementById('indicatorsChart').innerHTML = '<div class="chart-error"><i class="fas fa-exclamation-triangle"></i> Error rendering indicators chart</div>';
+            }
+            
+            // Add chart interactivity after all charts are rendered
+            setTimeout(() => {
+                addChartInteractivity();
+            }, 500);
+        }, 300);
+        
+    } catch (error) {
+        console.error('Error in renderCharts:', error);
+        alert('An error occurred while rendering the charts. Please try again.');
+    }
 }
 
 function renderCandlestickChart(ohlcData) {
+    // Filter out invalid data points - less restrictive validation
+    const validData = ohlcData.filter(d => 
+        d && d.date && 
+        d.open != null && d.high != null && d.low != null && d.close != null &&
+        !isNaN(d.open) && !isNaN(d.high) && !isNaN(d.low) && !isNaN(d.close) &&
+        d.open > 0 && d.high > 0 && d.low > 0 && d.close > 0
+    );
+    
+    console.log(`OHLC Data: Total ${ohlcData.length}, Valid ${validData.length}`);
+    
+    if (validData.length === 0) {
+        document.getElementById('candlestickChart').innerHTML = '<div class="chart-empty"><i class="fas fa-chart-bar"></i><br>No valid OHLC data available<br><small>Total records: ' + ohlcData.length + '</small></div>';
+        return;
+    }
+
     const trace = {
-        x: ohlcData.map(d => d.date),
-        close: ohlcData.map(d => d.close),
+        x: validData.map(d => d.date),
+        close: validData.map(d => d.close),
         decreasing: {line: {color: '#ff7b72'}},
-        high: ohlcData.map(d => d.high),
+        high: validData.map(d => d.high),
         increasing: {line: {color: '#7ee787'}},
         line: {color: 'rgba(31,119,180,1)'},
-        low: ohlcData.map(d => d.low),
-        open: ohlcData.map(d => d.open),
+        low: validData.map(d => d.low),
+        open: validData.map(d => d.open),
         type: 'candlestick',
         xaxis: 'x',
-        yaxis: 'y'
+        yaxis: 'y',
+        name: 'OHLC',
+        hovertemplate: '<b>%{x}</b><br>' +
+                      'Open: ₹%{open:.2f}<br>' +
+                      'High: ₹%{high:.2f}<br>' +
+                      'Low: ₹%{low:.2f}<br>' +
+                      'Close: ₹%{close:.2f}<extra></extra>'
     };
+
+    // Calculate price range for better y-axis scaling
+    const allPrices = validData.flatMap(d => [d.open, d.high, d.low, d.close]);
+    const minPrice = Math.min(...allPrices);
+    const maxPrice = Math.max(...allPrices);
+    const priceRange = maxPrice - minPrice;
+    const padding = priceRange * 0.05; // 5% padding
 
     const layout = {
         dragmode: 'zoom',
         margin: {
-            r: 10,
-            t: 25,
-            b: 40,
-            l: 60
+            r: 20,
+            t: 40,
+            b: 80,
+            l: 80
         },
         showlegend: false,
         xaxis: {
             autorange: true,
             domain: [0, 1],
-            range: [ohlcData[0]?.date, ohlcData[ohlcData.length - 1]?.date],
-            rangeslider: {range: [ohlcData[0]?.date, ohlcData[ohlcData.length - 1]?.date]},
-            title: 'Date',
+            range: [validData[0]?.date, validData[validData.length - 1]?.date],
+            rangeslider: {
+                range: [validData[0]?.date, validData[validData.length - 1]?.date],
+                bgcolor: 'rgba(13, 17, 23, 0.8)',
+                bordercolor: '#30363d',
+                borderwidth: 1,
+                thickness: 0.15
+            },
+            title: {
+                text: 'Date',
+                font: { size: 14, color: '#c9d1d9' }
+            },
             type: 'date',
             gridcolor: '#30363d',
-            color: '#c9d1d9'
+            color: '#c9d1d9',
+            tickfont: { size: 12 },
+            spikethickness: 2,
+            spikecolor: '#58a6ff',
+            spikemode: 'across',
+            spikesnap: 'cursor'
         },
         yaxis: {
-            autorange: true,
+            autorange: false,
             domain: [0, 1],
-            range: [Math.min(...ohlcData.map(d => d.low)), Math.max(...ohlcData.map(d => d.high))],
+            range: [minPrice - padding, maxPrice + padding],
             type: 'linear',
-            title: 'Price',
+            title: {
+                text: 'Price (₹)',
+                font: { size: 14, color: '#c9d1d9' }
+            },
             gridcolor: '#30363d',
-            color: '#c9d1d9'
+            color: '#c9d1d9',
+            tickfont: { size: 12 },
+            spikethickness: 2,
+            spikecolor: '#58a6ff',
+            spikemode: 'across',
+            spikesnap: 'cursor'
         },
         plot_bgcolor: 'rgba(13, 17, 23, 0.8)',
         paper_bgcolor: 'rgba(13, 17, 23, 0.8)',
         font: {
-            color: '#c9d1d9'
-        }
+            color: '#c9d1d9',
+            family: 'Arial, sans-serif',
+            size: 12
+        },
+        hovermode: 'x'
     };
 
-    Plotly.newPlot('candlestickChart', [trace], layout, {responsive: true});
+    const config = {
+        responsive: true,
+        displayModeBar: true,
+        modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d'],
+        displaylogo: false,
+        scrollZoom: true
+    };
+
+    Plotly.newPlot('candlestickChart', [trace], layout, config);
 }
 
 function renderSignalsChart(ohlcData, signals) {
-    // Price line
+    // Filter and validate OHLC data - less restrictive
+    const validOhlcData = ohlcData.filter(d => 
+        d && d.date && d.close != null && !isNaN(d.close) && d.close > 0
+    );
+    
+    // Filter and validate signals
+    const validSignals = signals.filter(s => 
+        s && s.timestamp && s.price != null && !isNaN(s.price) && s.signal_type && s.price > 0
+    );
+    
+    console.log(`Signals Data: OHLC ${validOhlcData.length}, Signals ${validSignals.length}`);
+    
+    if (validOhlcData.length === 0) {
+        document.getElementById('signalsChart').innerHTML = '<div class="chart-empty"><i class="fas fa-signal"></i><br>No valid price data available<br><small>Total OHLC: ' + ohlcData.length + ', Signals: ' + signals.length + '</small></div>';
+        return;
+    }
+
+    // Price line with better styling
     const priceTrace = {
-        x: ohlcData.map(d => d.date),
-        y: ohlcData.map(d => d.close),
+        x: validOhlcData.map(d => d.date),
+        y: validOhlcData.map(d => d.close),
         type: 'scatter',
         mode: 'lines',
         name: 'Close Price',
-        line: {color: '#58a6ff', width: 2}
+        line: {
+            color: '#58a6ff', 
+            width: 2,
+            shape: 'linear'
+        },
+        connectgaps: true, // This connects gaps in data
+        hovertemplate: '<b>%{x}</b><br>Price: ₹%{y:.2f}<extra></extra>'
     };
+
+    const traces = [priceTrace];
 
     // Buy signals
-    const buySignals = signals.filter(s => s.signal_type === 'BUY');
-    const buyTrace = {
-        x: buySignals.map(s => s.timestamp),
-        y: buySignals.map(s => s.price),
-        type: 'scatter',
-        mode: 'markers',
-        name: 'Buy Signals',
-        marker: {
-            color: '#7ee787',
-            size: 10,
-            symbol: 'triangle-up'
-        }
-    };
+    const buySignals = validSignals.filter(s => s.signal_type === 'BUY');
+    if (buySignals.length > 0) {
+        const buyTrace = {
+            x: buySignals.map(s => s.timestamp),
+            y: buySignals.map(s => s.price),
+            type: 'scatter',
+            mode: 'markers',
+            name: 'Buy Signals',
+            marker: {
+                color: '#7ee787',
+                size: 14,
+                symbol: 'triangle-up',
+                line: { color: '#238636', width: 2 }
+            },
+            hovertemplate: '<b>Buy Signal</b><br>Date: %{x}<br>Price: ₹%{y:.2f}<br>Confidence: ' + 
+                         buySignals.map(s => s.confidence || 'N/A').join('<br>Confidence: ') + '<extra></extra>'
+        };
+        traces.push(buyTrace);
+    }
 
     // Sell signals
-    const sellSignals = signals.filter(s => s.signal_type === 'SELL');
-    const sellTrace = {
-        x: sellSignals.map(s => s.timestamp),
-        y: sellSignals.map(s => s.price),
-        type: 'scatter',
-        mode: 'markers',
-        name: 'Sell Signals',
-        marker: {
-            color: '#ff7b72',
-            size: 10,
-            symbol: 'triangle-down'
-        }
-    };
+    const sellSignals = validSignals.filter(s => s.signal_type === 'SELL');
+    if (sellSignals.length > 0) {
+        const sellTrace = {
+            x: sellSignals.map(s => s.timestamp),
+            y: sellSignals.map(s => s.price),
+            type: 'scatter',
+            mode: 'markers',
+            name: 'Sell Signals',
+            marker: {
+                color: '#ff7b72',
+                size: 14,
+                symbol: 'triangle-down',
+                line: { color: '#da3633', width: 2 }
+            },
+            hovertemplate: '<b>Sell Signal</b><br>Date: %{x}<br>Price: ₹%{y:.2f}<br>Confidence: ' + 
+                          sellSignals.map(s => s.confidence || 'N/A').join('<br>Confidence: ') + '<extra></extra>'
+        };
+        traces.push(sellTrace);
+    }
+
+    // Calculate price range for better scaling
+    const allPrices = validOhlcData.map(d => d.close).concat(validSignals.map(s => s.price));
+    const minPrice = Math.min(...allPrices);
+    const maxPrice = Math.max(...allPrices);
+    const priceRange = maxPrice - minPrice;
+    const padding = priceRange * 0.05;
 
     const layout = {
         title: '',
+        margin: {
+            r: 20,
+            t: 20,
+            b: 60,
+            l: 80
+        },
         xaxis: {
             title: 'Date',
             type: 'date',
             gridcolor: '#30363d',
-            color: '#c9d1d9'
+            color: '#c9d1d9',
+            tickfont: { size: 11 },
+            spikethickness: 2,
+            spikecolor: '#58a6ff',
+            spikemode: 'across',
+            spikesnap: 'cursor'
         },
         yaxis: {
-            title: 'Price',
+            title: 'Price (₹)',
             gridcolor: '#30363d',
-            color: '#c9d1d9'
+            color: '#c9d1d9',
+            tickfont: { size: 11 },
+            range: [minPrice - padding, maxPrice + padding],
+            spikethickness: 2,
+            spikecolor: '#58a6ff',
+            spikemode: 'across',
+            spikesnap: 'cursor'
         },
         plot_bgcolor: 'rgba(13, 17, 23, 0.8)',
         paper_bgcolor: 'rgba(13, 17, 23, 0.8)',
         font: {
-            color: '#c9d1d9'
+            color: '#c9d1d9',
+            family: 'Arial, sans-serif',
+            size: 11
         },
         legend: {
-            bgcolor: 'rgba(13, 17, 23, 0.8)',
+            bgcolor: 'rgba(13, 17, 23, 0.9)',
             bordercolor: '#30363d',
-            borderwidth: 1
-        }
+            borderwidth: 1,
+            font: { size: 10 },
+            x: 0.02,
+            y: 0.98
+        },
+        hovermode: 'x unified'
     };
 
-    Plotly.newPlot('signalsChart', [priceTrace, buyTrace, sellTrace], layout, {responsive: true});
+    const config = {
+        responsive: true,
+        displayModeBar: true,
+        modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d'],
+        displaylogo: false,
+        scrollZoom: true
+    };
+
+    Plotly.newPlot('signalsChart', traces, layout, config);
 }
 
 function renderIndicatorsChart(indicators) {
     const traces = [];
+    let hasValidData = false;
 
-    // MACD Line
-    if (indicators.macd) {
-        traces.push({
-            x: indicators.macd.map(d => d.date),
-            y: indicators.macd.map(d => d.macd),
-            type: 'scatter',
-            mode: 'lines',
-            name: 'MACD',
-            line: {color: '#58a6ff', width: 2},
-            yaxis: 'y'
-        });
+    // MACD indicators with data validation
+    if (indicators.macd && indicators.macd.length > 0) {
+        const validMacdData = indicators.macd.filter(d => 
+            d && d.date && 
+            d.macd != null && !isNaN(d.macd) &&
+            d.signal != null && !isNaN(d.signal) &&
+            d.histogram != null && !isNaN(d.histogram)
+        );
 
-        traces.push({
-            x: indicators.macd.map(d => d.date),
-            y: indicators.macd.map(d => d.signal),
-            type: 'scatter',
-            mode: 'lines',
-            name: 'MACD Signal',
-            line: {color: '#f7cc47', width: 2},
-            yaxis: 'y'
-        });
+        if (validMacdData.length > 0) {
+            hasValidData = true;
 
-        traces.push({
-            x: indicators.macd.map(d => d.date),
-            y: indicators.macd.map(d => d.histogram),
-            type: 'bar',
-            name: 'MACD Histogram',
-            marker: {color: '#7c3aed'},
-            yaxis: 'y'
-        });
+            // MACD Line
+            traces.push({
+                x: validMacdData.map(d => d.date),
+                y: validMacdData.map(d => d.macd),
+                type: 'scatter',
+                mode: 'lines',
+                name: 'MACD',
+                line: {color: '#58a6ff', width: 2, shape: 'linear'},
+                connectgaps: true,
+                yaxis: 'y',
+                hovertemplate: '<b>MACD</b><br>Date: %{x}<br>Value: %{y:.4f}<extra></extra>'
+            });
+
+            // MACD Signal Line
+            traces.push({
+                x: validMacdData.map(d => d.date),
+                y: validMacdData.map(d => d.signal),
+                type: 'scatter',
+                mode: 'lines',
+                name: 'MACD Signal',
+                line: {color: '#f7cc47', width: 2, shape: 'linear'},
+                connectgaps: true,
+                yaxis: 'y',
+                hovertemplate: '<b>Signal</b><br>Date: %{x}<br>Value: %{y:.4f}<extra></extra>'
+            });
+
+            // MACD Histogram
+            traces.push({
+                x: validMacdData.map(d => d.date),
+                y: validMacdData.map(d => d.histogram),
+                type: 'bar',
+                name: 'MACD Histogram',
+                marker: {
+                    color: validMacdData.map(d => d.histogram >= 0 ? '#7ee787' : '#ff7b72'),
+                    opacity: 0.7,
+                    line: {width: 0}
+                },
+                yaxis: 'y',
+                hovertemplate: '<b>Histogram</b><br>Date: %{x}<br>Value: %{y:.4f}<extra></extra>'
+            });
+        }
     }
 
-    // Moving Average
-    if (indicators.ma) {
-        traces.push({
-            x: indicators.ma.map(d => d.date),
-            y: indicators.ma.map(d => d.value),
-            type: 'scatter',
-            mode: 'lines',
-            name: 'Moving Average (5)',
-            line: {color: '#2ea043', width: 2},
-            yaxis: 'y2'
-        });
+    // Moving Average with data validation
+    if (indicators.ma && indicators.ma.length > 0) {
+        const validMaData = indicators.ma.filter(d => 
+            d && d.date && d.value != null && !isNaN(d.value)
+        );
+
+        if (validMaData.length > 0) {
+            hasValidData = true;
+
+            traces.push({
+                x: validMaData.map(d => d.date),
+                y: validMaData.map(d => d.value),
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Moving Average (5)',
+                line: {color: '#2ea043', width: 2, shape: 'linear'},
+                connectgaps: true,
+                yaxis: 'y2',
+                hovertemplate: '<b>MA(5)</b><br>Date: %{x}<br>Price: ₹%{y:.2f}<extra></extra>'
+            });
+        }
+    }
+
+    // If no valid data, show message
+    if (!hasValidData) {
+        document.getElementById('indicatorsChart').innerHTML = '<div class="text-center text-muted p-4">No valid indicator data available</div>';
+        return;
+    }
+
+    // Calculate ranges for better axis scaling
+    let macdRange = [0, 0];
+    let priceRange = [0, 0];
+
+    if (indicators.macd && indicators.macd.length > 0) {
+        const macdValues = indicators.macd.flatMap(d => [d.macd, d.signal, d.histogram]).filter(v => v != null && !isNaN(v));
+        if (macdValues.length > 0) {
+            macdRange = [Math.min(...macdValues), Math.max(...macdValues)];
+            const rangePadding = (macdRange[1] - macdRange[0]) * 0.1;
+            macdRange = [macdRange[0] - rangePadding, macdRange[1] + rangePadding];
+        }
+    }
+
+    if (indicators.ma && indicators.ma.length > 0) {
+        const priceValues = indicators.ma.map(d => d.value).filter(v => v != null && !isNaN(v));
+        if (priceValues.length > 0) {
+            priceRange = [Math.min(...priceValues), Math.max(...priceValues)];
+            const rangePadding = (priceRange[1] - priceRange[0]) * 0.05;
+            priceRange = [priceRange[0] - rangePadding, priceRange[1] + rangePadding];
+        }
     }
 
     const layout = {
         title: '',
+        margin: {
+            r: 80,
+            t: 20,
+            b: 60,
+            l: 80
+        },
         xaxis: {
             title: 'Date',
             type: 'date',
             gridcolor: '#30363d',
-            color: '#c9d1d9'
+            color: '#c9d1d9',
+            tickfont: { size: 11 },
+            spikethickness: 2,
+            spikecolor: '#58a6ff',
+            spikemode: 'across',
+            spikesnap: 'cursor'
         },
         yaxis: {
             title: 'MACD',
             side: 'left',
             gridcolor: '#30363d',
-            color: '#c9d1d9'
+            color: '#c9d1d9',
+            tickfont: { size: 11 },
+            range: macdRange[0] !== macdRange[1] ? macdRange : null,
+            zeroline: true,
+            zerolinecolor: '#58a6ff',
+            zerolinewidth: 1
         },
         yaxis2: {
-            title: 'Price / MA',
+            title: 'Price / MA (₹)',
             side: 'right',
             overlaying: 'y',
-            color: '#c9d1d9'
+            color: '#c9d1d9',
+            tickfont: { size: 11 },
+            range: priceRange[0] !== priceRange[1] ? priceRange : null
         },
         plot_bgcolor: 'rgba(13, 17, 23, 0.8)',
         paper_bgcolor: 'rgba(13, 17, 23, 0.8)',
         font: {
-            color: '#c9d1d9'
+            color: '#c9d1d9',
+            family: 'Arial, sans-serif',
+            size: 11
         },
         legend: {
-            bgcolor: 'rgba(13, 17, 23, 0.8)',
+            bgcolor: 'rgba(13, 17, 23, 0.9)',
             bordercolor: '#30363d',
-            borderwidth: 1
-        }
+            borderwidth: 1,
+            font: { size: 10 },
+            x: 0.02,
+            y: 0.98
+        },
+        hovermode: 'x unified'
     };
 
-    Plotly.newPlot('indicatorsChart', traces, layout, {responsive: true});
+    const config = {
+        responsive: true,
+        displayModeBar: true,
+        modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d'],
+        displaylogo: false,
+        scrollZoom: true
+    };
+
+    Plotly.newPlot('indicatorsChart', traces, layout, config);
 }
 
 // Load charts on page load if there's only one backtest
@@ -369,6 +1107,17 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (backtestSelect.options.length === 1) {
         document.getElementById('noDataMessage').style.display = 'block';
     }
+});
+
+// Handle window resize
+window.addEventListener('resize', function() {
+    setTimeout(() => {
+        if (currentChartData) {
+            Plotly.Plots.resize('candlestickChart');
+            Plotly.Plots.resize('signalsChart');
+            Plotly.Plots.resize('indicatorsChart');
+        }
+    }, 100);
 });
 </script>
 {% endblock %}

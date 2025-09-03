@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Data - Zerodha Kite API</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+{% extends 'base.html' %}
+
+{% block title %}Trading Strategy - Zerodha Automation{% endblock %}
+
+{% block extra_css %}
+ <style>
         body { 
             background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0d1117 100%);
             min-height: 100vh;
@@ -289,22 +286,9 @@
             transform: scale(1.1);
         }
     </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'index' %}">
-                <i class="fas fa-chart-line me-2"></i>Kite Stock Data
-            </a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}"><i class="fas fa-home me-1"></i>Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'data_view' %}"><i class="fas fa-database me-1"></i>Data</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'settings' %}"><i class="fas fa-cog me-1"></i>Settings</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+{% endblock %}
+
+{% block content %}
 
     <div class="container mt-4">
         <!-- Messages -->
@@ -582,6 +566,9 @@
         {% endif %}
     </div>
 
+  {% endblock %}
+
+{% block extra_js %}  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Table sorting functionality
@@ -836,5 +823,4 @@
         }, 300000); // 5 minutes
         {% endif %}
     </script>
-</body>
-</html>
+{% endblock %}
