@@ -269,27 +269,15 @@ class KiteDataService:
         Fetch historical data by symbol name
         Converts symbol to instrument token and fetches data
         """
-        # Nifty 50 symbol to instrument token mapping
-        NIFTY50_TOKENS = {
-            'RELIANCE': 738561, 'TCS': 2953217, 'HDFCBANK': 341249, 'BHARTIARTL': 2714625,
-            'ICICIBANK': 1270529, 'INFY': 408065, 'HINDUNILVR': 356865, 'SBIN': 779521,
-            'LT': 2939649, 'ITC': 424961, 'KOTAKBANK': 492033, 'BAJFINANCE': 81153,
-            'ASIANPAINT': 60417, 'MARUTI': 2815745, 'HCLTECH': 1850625, 'AXISBANK': 54273,
-            'TITAN': 897537, 'SUNPHARMA': 857857, 'WIPRO': 3787777, 'ULTRACEMCO': 2952193,
-            'NESTLEIND': 4598529, 'POWERGRID': 3834113, 'NTPC': 2977281, 'TATAMOTORS': 884737,
-            'JSWSTEEL': 3001089, 'M&M': 519937, 'TECHM': 3465729, 'INDUSINDBK': 1346049,
-            'BAJAJFINSV': 4268801, 'BRITANNIA': 140033, 'ONGC': 633601, 'ADANIENT': 3861249,
-            'TATASTEEL': 895745, 'COALINDIA': 5215745, 'CIPLA': 177665, 'DRREDDY': 225537,
-            'EICHERMOT': 232961, 'HINDALCO': 348929, 'GRASIM': 315393, 'BPCL': 134657,
-            'BAJAJ-AUTO': 4267265, 'ADANIPORTS': 3861761, 'APOLLOHOSP': 41729, 'HEROMOTOCO': 345089,
-            'DIVISLAB': 3050241, 'SBILIFE': 5582849, 'SHRIRAMFIN': 4306689, 'HDFCLIFE': 119553,
-            'LTIM': 11483906, 'TRENT': 1964545
-        }
+        # Import the trading symbols from forms
+        from .forms import TRADING_SYMBOLS
         
         # Get instrument token for symbol
-        instrument_token = NIFTY50_TOKENS.get(symbol.upper())
-        if not instrument_token:
-            raise ValueError(f"Symbol {symbol} not found in supported stocks")
+        symbol_info = TRADING_SYMBOLS.get(symbol.upper())
+        if not symbol_info:
+            raise ValueError(f"Symbol {symbol} not found in supported trading instruments")
+        
+        instrument_token = symbol_info['token']
         
         # Convert string dates to datetime
         from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")

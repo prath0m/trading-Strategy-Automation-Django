@@ -3,7 +3,69 @@
 {% block title %}Trading Strategy - Zerodha Automation{% endblock %}
 
 {% block extra_css %}
-
+<style>
+    .symbol-select-container {
+        position: relative;
+    }
+    
+    .symbol-category {
+        display: inline-block;
+        background: #007bff;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        margin-left: 0.5rem;
+    }
+    
+    .symbol-category.index {
+        background: #28a745;
+    }
+    
+    .symbol-category.large-cap {
+        background: #007bff;
+    }
+    
+    .symbol-category.mid-cap {
+        background: #ffc107;
+        color: #000;
+    }
+    
+    .symbol-category.small-cap {
+        background: #dc3545;
+    }
+    
+    .symbol-category.etf {
+        background: #6f42c1;
+    }
+    
+    .popular-symbols {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .popular-symbol-btn {
+        background: #e9ecef;
+        border: 1px solid #ced4da;
+        border-radius: 20px;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .popular-symbol-btn:hover {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+    
+    #symbol-select {
+        font-family: 'Courier New', monospace;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -91,9 +153,15 @@
                                 <div class="row mb-4">
                                     <div class="col-md-6">
                                         <label for="{{ fetch_form.symbol.id_for_label }}" class="form-label">
-                                            <i class="fas fa-chart-line me-1"></i>Stock Symbol
+                                            <i class="fas fa-chart-line me-1"></i>Trading Symbol
                                         </label>
-                                        {{ fetch_form.symbol }}
+                                        <div class="symbol-select-container">
+                                            {{ fetch_form.symbol }}
+                                            <div class="form-text">
+                                                <i class="fas fa-info-circle me-1"></i>
+                                                Available: Indices (Nifty 50, Bank Nifty), Large/Mid/Small Cap Stocks, ETFs
+                                            </div>
+                                        </div>
                                         {% if fetch_form.symbol.help_text %}
                                             <div class="form-text">{{ fetch_form.symbol.help_text }}</div>
                                         {% endif %}
@@ -210,7 +278,7 @@
                                     <tr>
                                         <td><strong class="text-primary">{{ file.symbol }}</strong></td>
                                         <td>
-                                            <small>{{ file.from_date }} to {{ file.to_date }}</small>
+                                            <small class="text-muted">{{ file.from_date }} to {{ file.to_date }}</small>
                                         </td>
                                         <td>
                                             <span class="badge bg-secondary">{{ file.interval }}</span>
@@ -273,6 +341,32 @@
                 });
             }
         });
+
+        function selectSymbol(symbol) {
+            const symbolSelect = document.getElementById('symbol-select');
+            if (symbolSelect) {
+                symbolSelect.value = symbol;
+                
+                // Add visual feedback
+                const clickedBtn = event.target.closest('.popular-symbol-btn');
+                if (clickedBtn) {
+                    const buttons = document.querySelectorAll('.popular-symbol-btn');
+                    buttons.forEach(btn => {
+                        btn.style.background = '#e9ecef';
+                        btn.style.color = '';
+                    });
+                    
+                    clickedBtn.style.background = '#28a745';
+                    clickedBtn.style.color = 'white';
+                    
+                    // Reset after animation
+                    setTimeout(() => {
+                        clickedBtn.style.background = '#e9ecef';
+                        clickedBtn.style.color = '';
+                    }, 2000);
+                }
+            }
+        }
 
         function checkAuthStatus() {
             fetch('/test-connection/')

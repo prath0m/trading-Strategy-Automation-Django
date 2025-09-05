@@ -73,6 +73,9 @@
                 <p class="text-muted">{{ backtest.symbol }} - {{ backtest.from_date }} to {{ backtest.to_date }}</p>
             </div>
             <div class="col-auto">
+                <a href="{% url 'export_backtest' backtest.id %}" class="btn btn-success me-2">
+                    <i class="fas fa-file-excel me-2"></i>Export to Excel
+                </a>
                 <a href="{% url 'backtest_view' %}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i>Back to List
                 </a>
@@ -206,8 +209,11 @@
                                 <td>{{ backtest.total_trades }}</td>
                                 <td>{{ backtest.win_rate|floatformat:1 }}%</td>
                                 <td>
-                                    <a href="{% url 'backtest_view' %}?id={{ backtest.id }}" class="btn btn-sm btn-outline-primary">
+                                    <a href="{% url 'backtest_view' %}?id={{ backtest.id }}" class="btn btn-sm btn-outline-primary me-1">
                                         <i class="fas fa-eye me-1"></i>View
+                                    </a>
+                                    <a href="{% url 'export_backtest' backtest.id %}" class="btn btn-sm btn-success">
+                                        <i class="fas fa-file-excel me-1"></i>Excel
                                     </a>
                                 </td>
                             </tr>

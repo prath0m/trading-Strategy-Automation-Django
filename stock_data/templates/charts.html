@@ -363,6 +363,63 @@
 let currentChartData = null;
 let isHorizontalLayout = true;
 
+// Helper function to check if a timestamp is within trading hours
+function isTradingHour(dateString) {
+    const date = new Date(dateString);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const timeInMinutes = hours * 60 + minutes;
+    
+    // Indian stock market trading hours: 9:15 AM to 3:30 PM (IST)
+    const marketOpenMinutes = 9 * 60 + 15;  // 9:15 AM
+    const marketCloseMinutes = 15 * 60 + 30; // 3:30 PM
+    
+    // Also check if it's a weekday (Monday = 1, Sunday = 0)
+    const dayOfWeek = date.getDay();
+    const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
+    
+    return isWeekday && timeInMinutes >= marketOpenMinutes && timeInMinutes <= marketCloseMinutes;
+}
+
+// Helper function to format datetime for display
+function formatDateTime(dateString) {
+    const date = new Date(dateString);
+    const options = {
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    };
+    return date.toLocaleDateString('en-US', options);
+}
+
+// Helper function to create index-to-date mapping for signals
+function mapSignalsToIndices(signals, ohlcData) {
+    return signals.map(signal => {
+        // Find the closest OHLC data point for this signal
+        const signalTime = new Date(signal.timestamp);
+        let closestIndex = -1;
+        let minTimeDiff = Infinity;
+        
+        ohlcData.forEach((ohlc, index) => {
+            if (isTradingHour(ohlc.date)) {
+                const ohlcTime = new Date(ohlc.date);
+                const timeDiff = Math.abs(signalTime - ohlcTime);
+                if (timeDiff < minTimeDiff) {
+                    minTimeDiff = timeDiff;
+                    closestIndex = index;
+                }
+            }
+        });
+        
+        return {
+            ...signal,
+            mappedIndex: closestIndex
+        };
+    }).filter(signal => signal.mappedIndex !== -1);
+}
+
 // Utility function to synchronize chart zoom across all charts
 function synchronizeChartZoom() {
     if (!currentChartData) return;
@@ -620,10 +677,7 @@ function updateStatsBar(data) {
 function renderCharts(data) {
     try {
         // Add loading states
-        document.getElementById('candlestickChart').innerHTML = '<div class="chart-loading"><div class="spinner"></div>Rendering OHLC chart...</div>';
-        document.getElementById('signalsChart').innerHTML = '<div class="chart-loading"><div class="spinner"></div>Rendering signals chart...</div>';
-        document.getElementById('indicatorsChart').innerHTML = '<div class="chart-loading"><div class="spinner"></div>Rendering indicators chart...</div>';
-        
+    
         // Render charts with error handling
         setTimeout(() => {
             try {
@@ -664,12 +718,13 @@ function renderCharts(data) {
 }
 
 function renderCandlestickChart(ohlcData) {
-    // Filter out invalid data points - less restrictive validation
+    // Filter out invalid data points and non-trading hours
     const validData = ohlcData.filter(d => 
         d && d.date && 
         d.open != null && d.high != null && d.low != null && d.close != null &&
         !isNaN(d.open) && !isNaN(d.high) && !isNaN(d.low) && !isNaN(d.close) &&
-        d.open > 0 && d.high > 0 && d.low > 0 && d.close > 0
+        d.open > 0 && d.high > 0 && d.low > 0 && d.close > 0 &&
+        isTradingHour(d.date) // Filter out non-trading hours
     );
     
     console.log(`OHLC Data: Total ${ohlcData.length}, Valid ${validData.length}`);
@@ -680,7 +735,7 @@ function renderCandlestickChart(ohlcData) {
     }
 
     const trace = {
-        x: validData.map(d => d.date),
+        x: validData.map((d, index) => index), // Use index instead of date for continuous display
         close: validData.map(d => d.close),
         decreasing: {line: {color: '#ff7b72'}},
         high: validData.map(d => d.high),
@@ -692,7 +747,8 @@ function renderCandlestickChart(ohlcData) {
         xaxis: 'x',
         yaxis: 'y',
         name: 'OHLC',
-        hovertemplate: '<b>%{x}</b><br>' +
+        text: validData.map(d => formatDateTime(d.date)), // Store original datetime for hover
+        hovertemplate: '<b>%{text}</b><br>' +
                       'Open: ₹%{open:.2f}<br>' +
                       'High: ₹%{high:.2f}<br>' +
                       'Low: ₹%{low:.2f}<br>' +
@@ -706,6 +762,17 @@ function renderCandlestickChart(ohlcData) {
     const priceRange = maxPrice - minPrice;
     const padding = priceRange * 0.05; // 5% padding
 
+    // Create custom tick labels for x-axis (showing time at regular intervals)
+    const tickvals = [];
+    const ticktext = [];
+    const totalPoints = validData.length;
+    const tickInterval = Math.max(1, Math.floor(totalPoints / 10)); // Show ~10 labels
+    
+    for (let i = 0; i < totalPoints; i += tickInterval) {
+        tickvals.push(i);
+        ticktext.push(formatDateTime(validData[i].date));
+    }
+
     const layout = {
         dragmode: 'zoom',
         margin: {
@@ -718,22 +785,16 @@ function renderCandlestickChart(ohlcData) {
         xaxis: {
             autorange: true,
             domain: [0, 1],
-            range: [validData[0]?.date, validData[validData.length - 1]?.date],
-            rangeslider: {
-                range: [validData[0]?.date, validData[validData.length - 1]?.date],
-                bgcolor: 'rgba(13, 17, 23, 0.8)',
-                bordercolor: '#30363d',
-                borderwidth: 1,
-                thickness: 0.15
-            },
             title: {
-                text: 'Date',
+                text: 'Trading Sessions (Non-trading hours excluded)',
                 font: { size: 14, color: '#c9d1d9' }
             },
-            type: 'date',
+            tickvals: tickvals,
+            ticktext: ticktext,
+            tickangle: -45,
             gridcolor: '#30363d',
             color: '#c9d1d9',
-            tickfont: { size: 12 },
+            tickfont: { size: 10 },
             spikethickness: 2,
             spikecolor: '#58a6ff',
             spikemode: 'across',
@@ -778,9 +839,9 @@ function renderCandlestickChart(ohlcData) {
 }
 
 function renderSignalsChart(ohlcData, signals) {
-    // Filter and validate OHLC data - less restrictive
+    // Filter and validate OHLC data for trading hours only
     const validOhlcData = ohlcData.filter(d => 
-        d && d.date && d.close != null && !isNaN(d.close) && d.close > 0
+        d && d.date && d.close != null && !isNaN(d.close) && d.close > 0 && isTradingHour(d.date)
     );
     
     // Filter and validate signals
@@ -795,9 +856,12 @@ function renderSignalsChart(ohlcData, signals) {
         return;
     }
 
-    // Price line with better styling
+    // Map signals to continuous indices
+    const mappedSignals = mapSignalsToIndices(validSignals, validOhlcData);
+
+    // Price line with continuous indices
     const priceTrace = {
-        x: validOhlcData.map(d => d.date),
+        x: validOhlcData.map((d, index) => index),
         y: validOhlcData.map(d => d.close),
         type: 'scatter',
         mode: 'lines',
@@ -807,17 +871,18 @@ function renderSignalsChart(ohlcData, signals) {
             width: 2,
             shape: 'linear'
         },
-        connectgaps: true, // This connects gaps in data
-        hovertemplate: '<b>%{x}</b><br>Price: ₹%{y:.2f}<extra></extra>'
+        connectgaps: true,
+        text: validOhlcData.map(d => formatDateTime(d.date)),
+        hovertemplate: '<b>%{text}</b><br>Price: ₹%{y:.2f}<extra></extra>'
     };
 
     const traces = [priceTrace];
 
     // Buy signals
-    const buySignals = validSignals.filter(s => s.signal_type === 'BUY');
+    const buySignals = mappedSignals.filter(s => s.signal_type === 'BUY');
     if (buySignals.length > 0) {
         const buyTrace = {
-            x: buySignals.map(s => s.timestamp),
+            x: buySignals.map(s => s.mappedIndex),
             y: buySignals.map(s => s.price),
             type: 'scatter',
             mode: 'markers',
@@ -828,17 +893,18 @@ function renderSignalsChart(ohlcData, signals) {
                 symbol: 'triangle-up',
                 line: { color: '#238636', width: 2 }
             },
-            hovertemplate: '<b>Buy Signal</b><br>Date: %{x}<br>Price: ₹%{y:.2f}<br>Confidence: ' + 
-                         buySignals.map(s => s.confidence || 'N/A').join('<br>Confidence: ') + '<extra></extra>'
+            text: buySignals.map(s => formatDateTime(s.timestamp)),
+            hovertemplate: '<b>Buy Signal</b><br>Date: %{text}<br>Price: ₹%{y:.2f}<br>Confidence: ' + 
+                         buySignals.map(s => (s.confidence * 100).toFixed(0) + '%').join('<br>Confidence: ') + '<extra></extra>'
         };
         traces.push(buyTrace);
     }
 
     // Sell signals
-    const sellSignals = validSignals.filter(s => s.signal_type === 'SELL');
+    const sellSignals = mappedSignals.filter(s => s.signal_type === 'SELL');
     if (sellSignals.length > 0) {
         const sellTrace = {
-            x: sellSignals.map(s => s.timestamp),
+            x: sellSignals.map(s => s.mappedIndex),
             y: sellSignals.map(s => s.price),
             type: 'scatter',
             mode: 'markers',
@@ -849,8 +915,9 @@ function renderSignalsChart(ohlcData, signals) {
                 symbol: 'triangle-down',
                 line: { color: '#da3633', width: 2 }
             },
-            hovertemplate: '<b>Sell Signal</b><br>Date: %{x}<br>Price: ₹%{y:.2f}<br>Confidence: ' + 
-                          sellSignals.map(s => s.confidence || 'N/A').join('<br>Confidence: ') + '<extra></extra>'
+            text: sellSignals.map(s => formatDateTime(s.timestamp)),
+            hovertemplate: '<b>Sell Signal</b><br>Date: %{text}<br>Price: ₹%{y:.2f}<br>Confidence: ' + 
+                          sellSignals.map(s => (s.confidence * 100).toFixed(0) + '%').join('<br>Confidence: ') + '<extra></extra>'
         };
         traces.push(sellTrace);
     }
@@ -862,6 +929,17 @@ function renderSignalsChart(ohlcData, signals) {
     const priceRange = maxPrice - minPrice;
     const padding = priceRange * 0.05;
 
+    // Create custom tick labels for x-axis
+    const tickvals = [];
+    const ticktext = [];
+    const totalPoints = validOhlcData.length;
+    const tickInterval = Math.max(1, Math.floor(totalPoints / 8)); // Show ~8 labels
+    
+    for (let i = 0; i < totalPoints; i += tickInterval) {
+        tickvals.push(i);
+        ticktext.push(formatDateTime(validOhlcData[i].date));
+    }
+
     const layout = {
         title: '',
         margin: {
@@ -871,11 +949,13 @@ function renderSignalsChart(ohlcData, signals) {
             l: 80
         },
         xaxis: {
-            title: 'Date',
-            type: 'date',
+            title: 'Trading Sessions (Continuous)',
+            tickvals: tickvals,
+            ticktext: ticktext,
+            tickangle: -45,
             gridcolor: '#30363d',
             color: '#c9d1d9',
-            tickfont: { size: 11 },
+            tickfont: { size: 10 },
             spikethickness: 2,
             spikecolor: '#58a6ff',
             spikemode: 'across',
@@ -924,22 +1004,25 @@ function renderSignalsChart(ohlcData, signals) {
 function renderIndicatorsChart(indicators) {
     const traces = [];
     let hasValidData = false;
+    let continuousIndex = [];
 
-    // MACD indicators with data validation
+    // MACD indicators with data validation and trading hours filtering
     if (indicators.macd && indicators.macd.length > 0) {
         const validMacdData = indicators.macd.filter(d => 
             d && d.date && 
             d.macd != null && !isNaN(d.macd) &&
             d.signal != null && !isNaN(d.signal) &&
-            d.histogram != null && !isNaN(d.histogram)
+            d.histogram != null && !isNaN(d.histogram) &&
+            isTradingHour(d.date)
         );
 
         if (validMacdData.length > 0) {
             hasValidData = true;
+            continuousIndex = validMacdData.map((d, index) => index);
 
             // MACD Line
             traces.push({
-                x: validMacdData.map(d => d.date),
+                x: continuousIndex,
                 y: validMacdData.map(d => d.macd),
                 type: 'scatter',
                 mode: 'lines',
@@ -947,12 +1030,13 @@ function renderIndicatorsChart(indicators) {
                 line: {color: '#58a6ff', width: 2, shape: 'linear'},
                 connectgaps: true,
                 yaxis: 'y',
-                hovertemplate: '<b>MACD</b><br>Date: %{x}<br>Value: %{y:.4f}<extra></extra>'
+                text: validMacdData.map(d => formatDateTime(d.date)),
+                hovertemplate: '<b>MACD</b><br>Date: %{text}<br>Value: %{y:.4f}<extra></extra>'
             });
 
             // MACD Signal Line
             traces.push({
-                x: validMacdData.map(d => d.date),
+                x: continuousIndex,
                 y: validMacdData.map(d => d.signal),
                 type: 'scatter',
                 mode: 'lines',
@@ -960,12 +1044,13 @@ function renderIndicatorsChart(indicators) {
                 line: {color: '#f7cc47', width: 2, shape: 'linear'},
                 connectgaps: true,
                 yaxis: 'y',
-                hovertemplate: '<b>Signal</b><br>Date: %{x}<br>Value: %{y:.4f}<extra></extra>'
+                text: validMacdData.map(d => formatDateTime(d.date)),
+                hovertemplate: '<b>Signal</b><br>Date: %{text}<br>Value: %{y:.4f}<extra></extra>'
             });
 
             // MACD Histogram
             traces.push({
-                x: validMacdData.map(d => d.date),
+                x: continuousIndex,
                 y: validMacdData.map(d => d.histogram),
                 type: 'bar',
                 name: 'MACD Histogram',
@@ -975,22 +1060,24 @@ function renderIndicatorsChart(indicators) {
                     line: {width: 0}
                 },
                 yaxis: 'y',
-                hovertemplate: '<b>Histogram</b><br>Date: %{x}<br>Value: %{y:.4f}<extra></extra>'
+                text: validMacdData.map(d => formatDateTime(d.date)),
+                hovertemplate: '<b>Histogram</b><br>Date: %{text}<br>Value: %{y:.4f}<extra></extra>'
             });
         }
     }
 
-    // Moving Average with data validation
+    // Moving Average with data validation and trading hours filtering
     if (indicators.ma && indicators.ma.length > 0) {
         const validMaData = indicators.ma.filter(d => 
-            d && d.date && d.value != null && !isNaN(d.value)
+            d && d.date && d.value != null && !isNaN(d.value) && isTradingHour(d.date)
         );
 
         if (validMaData.length > 0) {
             hasValidData = true;
+            const maIndices = validMaData.map((d, index) => index);
 
             traces.push({
-                x: validMaData.map(d => d.date),
+                x: maIndices,
                 y: validMaData.map(d => d.value),
                 type: 'scatter',
                 mode: 'lines',
@@ -998,7 +1085,8 @@ function renderIndicatorsChart(indicators) {
                 line: {color: '#2ea043', width: 2, shape: 'linear'},
                 connectgaps: true,
                 yaxis: 'y2',
-                hovertemplate: '<b>MA(5)</b><br>Date: %{x}<br>Price: ₹%{y:.2f}<extra></extra>'
+                text: validMaData.map(d => formatDateTime(d.date)),
+                hovertemplate: '<b>MA(5)</b><br>Date: %{text}<br>Price: ₹%{y:.2f}<extra></extra>'
             });
         }
     }
@@ -1031,6 +1119,23 @@ function renderIndicatorsChart(indicators) {
         }
     }
 
+    // Create custom tick labels for x-axis based on available data
+    const tickvals = [];
+    const ticktext = [];
+    const totalPoints = continuousIndex.length;
+    const tickInterval = Math.max(1, Math.floor(totalPoints / 8));
+    
+    const referenceData = indicators.macd && indicators.macd.length > 0 ? 
+        indicators.macd.filter(d => d && d.date && isTradingHour(d.date)) :
+        indicators.ma.filter(d => d && d.date && isTradingHour(d.date));
+    
+    for (let i = 0; i < totalPoints; i += tickInterval) {
+        tickvals.push(i);
+        if (referenceData[i]) {
+            ticktext.push(formatDateTime(referenceData[i].date));
+        }
+    }
+
     const layout = {
         title: '',
         margin: {
@@ -1040,11 +1145,13 @@ function renderIndicatorsChart(indicators) {
             l: 80
         },
         xaxis: {
-            title: 'Date',
-            type: 'date',
+            title: 'Trading Sessions (Continuous)',
+            tickvals: tickvals,
+            ticktext: ticktext,
+            tickangle: -45,
             gridcolor: '#30363d',
             color: '#c9d1d9',
-            tickfont: { size: 11 },
+            tickfont: { size: 10 },
             spikethickness: 2,
             spikecolor: '#58a6ff',
             spikemode: 'across',

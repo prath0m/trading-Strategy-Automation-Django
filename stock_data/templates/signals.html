@@ -107,7 +107,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <form method="GET" class="row g-3">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label">Symbol</label>
                         <select name="symbol" class="form-select">
                             <option value="">All Symbols</option>
@@ -118,7 +118,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label">Strategy</label>
                         <select name="strategy" class="form-select">
                             <option value="">All Strategies</option>
@@ -129,10 +129,22 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-md-4 d-flex align-items-end">
+                    <div class="col-md-3 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary w-100">
                             <i class="fas fa-filter me-2"></i>Filter
                         </button>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        {% if selected_symbol %}
+                        <a href="{% url 'export_strategy_data' %}?symbol={{ selected_symbol }}{% if selected_strategy %}&strategy={{ selected_strategy }}{% endif %}" 
+                           class="btn btn-success w-100">
+                            <i class="fas fa-file-excel me-2"></i>Export to Excel
+                        </a>
+                        {% else %}
+                        <button type="button" class="btn btn-outline-secondary w-100" disabled>
+                            <i class="fas fa-file-excel me-2"></i>Select Symbol to Export
+                        </button>
+                        {% endif %}
                     </div>
                 </form>
             </div>

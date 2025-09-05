@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
+from django.db.models import Avg, Min, Max, Count
 from .models import APICredentials, TradingSignal, TradingStrategy, StrategyBacktest
 from .forms import APICredentialsForm, AuthenticationForm, StockDataFetchForm
 from .services import KiteDataService
@@ -11,6 +12,8 @@ import json
 import logging
 from datetime import datetime, timedelta
 import os
+import pandas as pd
+from io import BytesIO
 
 logger = logging.getLogger(__name__)
 
@@ -633,3 +636,364 @@ def chart_data_api(request, backtest_id):
             'success': False,
             'message': f'Error generating chart data: {str(e)}'
         }, status=500)
+
+
+def export_strategy_data_to_excel(request):
+    """Export strategy data with signals and backtest results to Excel"""
+    try:
+        # Get filters from request
+        symbol = request.GET.get('symbol')
+        strategy_id = request.GET.get('strategy')
+        backtest_id = request.GET.get('backtest')
+        
+        if not symbol:
+            messages.error(request, 'Symbol is required for export')
+            return redirect('signals_view')
+        
+        # Create Excel workbook with multiple sheets
+        output = BytesIO()
+        
+        with pd.ExcelWriter(output, engine='openpyxl') as writer:
+            # Sheet 1: Trading Signals
+            signals_query = TradingSignal.objects.filter(symbol=symbol)
+            if strategy_id:
+                signals_query = signals_query.filter(strategy_id=strategy_id)
+                
+            signals = signals_query.order_by('timestamp')
+            
+            if signals.exists():
+                signals_data = []
+                for signal in signals:
+                    try:
+                        indicators = signal.indicators if signal.indicators else {}
+                        # Convert timezone-aware datetimes to naive datetimes for Excel compatibility
+                        timestamp_naive = signal.timestamp.replace(tzinfo=None) if signal.timestamp else None
+                        created_at_naive = signal.created_at.replace(tzinfo=None) if signal.created_at else None
+                        
+                        signals_data.append({
+                            'Timestamp': timestamp_naive,
+                            'Symbol': signal.symbol,
+                            'Strategy': signal.strategy.name if signal.strategy else '',
+                            'Signal_Type': signal.signal_type,
+                            'Price': float(signal.price) if signal.price else 0.0,
+                            'Confidence': float(signal.confidence) if signal.confidence else 0.0,
+                            'MA_5': float(indicators.get('MA_5', 0)) if indicators.get('MA_5') else '',
+                            'MACD': float(indicators.get('MACD', 0)) if indicators.get('MACD') else '',
+                            'MACD_Signal': float(indicators.get('MACD_Signal', 0)) if indicators.get('MACD_Signal') else '',
+                            'MACD_Histogram': float(indicators.get('MACD_Histogram', 0)) if indicators.get('MACD_Histogram') else '',
+                            'Close_Price': float(indicators.get('close', 0)) if indicators.get('close') else '',
+                            'Volume': int(indicators.get('volume', 0)) if indicators.get('volume') else '',
+                            'Created_At': created_at_naive
+                        })
+                    except (ValueError, TypeError, AttributeError) as e:
+                        logger.warning(f"Error processing signal {signal.id}: {e}")
+                        continue
+                
+                if signals_data:
+                    signals_df = pd.DataFrame(signals_data)
+                    signals_df.to_excel(writer, sheet_name='Trading_Signals', index=False)
+                else:
+                    # Create empty sheet if no valid signals
+                    empty_df = pd.DataFrame({'Message': ['No valid signals found']})
+                    empty_df.to_excel(writer, sheet_name='Trading_Signals', index=False)
+            
+            # Sheet 2: Backtest Results
+            backtests_query = StrategyBacktest.objects.filter(symbol=symbol)
+            if strategy_id:
+                backtests_query = backtests_query.filter(strategy_id=strategy_id)
+            if backtest_id:
+                backtests_query = backtests_query.filter(id=backtest_id)
+                
+            backtests = backtests_query.order_by('-created_at')
+            
+            if backtests.exists():
+                backtest_data = []
+                for backtest in backtests:
+                    try:
+                        results_data = backtest.results_data if backtest.results_data else {}
+                        # Convert timezone-aware datetime to naive datetime for Excel compatibility
+                        created_at_naive = backtest.created_at.replace(tzinfo=None) if backtest.created_at else None
+                        
+                        backtest_data.append({
+                            'Backtest_ID': backtest.id,
+                            'Symbol': backtest.symbol,
+                            'Strategy': backtest.strategy.name,
+                            'From_Date': backtest.from_date,
+                            'To_Date': backtest.to_date,
+                            'Total_Trades': backtest.total_trades,
+                            'Winning_Trades': backtest.winning_trades,
+                            'Losing_Trades': backtest.losing_trades,
+                            'Win_Rate_%': float(results_data.get('win_rate', 0)),
+                            'Total_Return_%': float(backtest.total_return),
+                            'Strategy_Return_%': float(backtest.strategy_return),
+                            'Market_Return_%': float(backtest.market_return),
+                            'Buy_Signals_Count': backtest.buy_signals_count,
+                            'Sell_Signals_Count': backtest.sell_signals_count,
+                            'Max_Drawdown_%': float(results_data.get('max_drawdown', 0)),
+                            'Sharpe_Ratio': float(results_data.get('sharpe_ratio', 0)),
+                            'Created_At': created_at_naive
+                        })
+                    except (ValueError, TypeError, AttributeError) as e:
+                        logger.warning(f"Error processing backtest {backtest.id}: {e}")
+                        continue
+                
+                if backtest_data:
+                    backtest_df = pd.DataFrame(backtest_data)
+                    backtest_df.to_excel(writer, sheet_name='Backtest_Results', index=False)
+                else:
+                    # Create empty sheet if no valid backtests
+                    empty_df = pd.DataFrame({'Message': ['No valid backtest results found']})
+                    empty_df.to_excel(writer, sheet_name='Backtest_Results', index=False)
+            
+            # Sheet 3: Signal Summary
+            signal_summary = []
+            buy_signals = signals.filter(signal_type='BUY')
+            sell_signals = signals.filter(signal_type='SELL')
+            hold_signals = signals.filter(signal_type='HOLD')
+            
+            # Use Django aggregation
+            buy_stats = buy_signals.aggregate(
+                count=Count('id'),
+                avg_price=Avg('price'),
+                avg_confidence=Avg('confidence'),
+                min_price=Min('price'),
+                max_price=Max('price')
+            )
+            
+            sell_stats = sell_signals.aggregate(
+                count=Count('id'),
+                avg_price=Avg('price'),
+                avg_confidence=Avg('confidence'),
+                min_price=Min('price'),
+                max_price=Max('price')
+            )
+            
+            signal_summary.append({
+                'Signal_Type': 'BUY',
+                'Count': buy_stats['count'] or 0,
+                'Avg_Price': buy_stats['avg_price'] or 0,
+                'Avg_Confidence': buy_stats['avg_confidence'] or 0,
+                'Min_Price': buy_stats['min_price'] or 0,
+                'Max_Price': buy_stats['max_price'] or 0
+            })
+            
+            signal_summary.append({
+                'Signal_Type': 'SELL',
+                'Count': sell_stats['count'] or 0,
+                'Avg_Price': sell_stats['avg_price'] or 0,
+                'Avg_Confidence': sell_stats['avg_confidence'] or 0,
+                'Min_Price': sell_stats['min_price'] or 0,
+                'Max_Price': sell_stats['max_price'] or 0
+            })
+            
+            if hold_signals.exists():
+                hold_stats = hold_signals.aggregate(
+                    count=Count('id'),
+                    avg_price=Avg('price'),
+                    avg_confidence=Avg('confidence'),
+                    min_price=Min('price'),
+                    max_price=Max('price')
+                )
+                
+                signal_summary.append({
+                    'Signal_Type': 'HOLD',
+                    'Count': hold_stats['count'] or 0,
+                    'Avg_Price': hold_stats['avg_price'] or 0,
+                    'Avg_Confidence': hold_stats['avg_confidence'] or 0,
+                    'Min_Price': hold_stats['min_price'] or 0,
+                    'Max_Price': hold_stats['max_price'] or 0
+                })
+            
+            summary_df = pd.DataFrame(signal_summary)
+            summary_df.to_excel(writer, sheet_name='Signal_Summary', index=False)
+            
+            # Sheet 4: Strategy Performance Comparison (if multiple strategies)
+            if not strategy_id:
+                all_backtests = StrategyBacktest.objects.filter(symbol=symbol)
+                if all_backtests.exists():
+                    performance_data = []
+                    for backtest in all_backtests:
+                        results_data = backtest.results_data if backtest.results_data else {}
+                        performance_data.append({
+                            'Strategy': backtest.strategy.name,
+                            'Period': f"{backtest.from_date} to {backtest.to_date}",
+                            'Total_Return_%': backtest.total_return,
+                            'Win_Rate_%': results_data.get('win_rate', 0),
+                            'Total_Trades': backtest.total_trades,
+                            'Profit_Factor': results_data.get('profit_factor', 0),
+                            'Max_Drawdown_%': results_data.get('max_drawdown', 0)
+                        })
+                    
+                    performance_df = pd.DataFrame(performance_data)
+                    performance_df.to_excel(writer, sheet_name='Performance_Comparison', index=False)
+        
+        # Prepare response
+        output.seek(0)
+        
+        # Generate filename
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        strategy_name = ""
+        if strategy_id:
+            try:
+                strategy = TradingStrategy.objects.get(id=strategy_id)
+                strategy_name = f"_{strategy.name}"
+            except TradingStrategy.DoesNotExist:
+                pass
+        
+        filename = f"Strategy_Data_{symbol}{strategy_name}_{timestamp}.xlsx"
+        
+        response = HttpResponse(
+            output.read(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        
+        return response
+        
+    except Exception as e:
+        logger.error(f"Error exporting strategy data to Excel: {e}", exc_info=True)
+        messages.error(request, f'Error exporting data: {str(e)}')
+        return redirect('signals_view')
+
+
+def export_backtest_to_excel(request, backtest_id):
+    """Export specific backtest results with detailed analysis to Excel"""
+    try:
+        backtest = StrategyBacktest.objects.get(id=backtest_id)
+        
+        # Get related signals
+        signals = TradingSignal.objects.filter(
+            symbol=backtest.symbol,
+            strategy=backtest.strategy,
+            timestamp__gte=backtest.from_date,
+            timestamp__lte=backtest.to_date
+        ).order_by('timestamp')
+        
+        output = BytesIO()
+        
+        with pd.ExcelWriter(output, engine='openpyxl') as writer:
+            # Sheet 1: Backtest Overview
+            overview_data = [{
+                'Metric': 'Symbol',
+                'Value': backtest.symbol
+            }, {
+                'Metric': 'Strategy',
+                'Value': backtest.strategy.name
+            }, {
+                'Metric': 'Period',
+                'Value': f"{backtest.from_date} to {backtest.to_date}"
+            }, {
+                'Metric': 'Total Trades',
+                'Value': backtest.total_trades
+            }, {
+                'Metric': 'Winning Trades',
+                'Value': backtest.winning_trades
+            }, {
+                'Metric': 'Losing Trades',
+                'Value': backtest.losing_trades
+            }, {
+                'Metric': 'Win Rate (%)',
+                'Value': (backtest.winning_trades / backtest.total_trades * 100) if backtest.total_trades > 0 else 0
+            }, {
+                'Metric': 'Total Return (%)',
+                'Value': backtest.total_return
+            }, {
+                'Metric': 'Strategy Return (%)',
+                'Value': backtest.strategy_return
+            }, {
+                'Metric': 'Market Return (%)',
+                'Value': backtest.market_return
+            }, {
+                'Metric': 'Buy Signals Count',
+                'Value': backtest.buy_signals_count
+            }, {
+                'Metric': 'Sell Signals Count',
+                'Value': backtest.sell_signals_count
+            }]
+            
+            overview_df = pd.DataFrame(overview_data)
+            overview_df.to_excel(writer, sheet_name='Backtest_Overview', index=False)
+            
+            # Sheet 2: Trade Signals
+            if signals.exists():
+                signals_data = []
+                trade_number = 1
+                for signal in signals:
+                    try:
+                        indicators = signal.indicators if signal.indicators else {}
+                        # Convert timezone-aware datetime to naive datetime for Excel compatibility
+                        timestamp_naive = signal.timestamp.replace(tzinfo=None) if signal.timestamp else None
+                        
+                        signals_data.append({
+                            'Trade_Number': trade_number if signal.signal_type == 'BUY' else '',
+                            'Timestamp': timestamp_naive,
+                            'Signal_Type': signal.signal_type,
+                            'Price': float(signal.price) if signal.price else 0.0,
+                            'Confidence': float(signal.confidence) if signal.confidence else 0.0,
+                            'MA_5': float(indicators.get('MA_5', 0)) if indicators.get('MA_5') else '',
+                            'MACD': float(indicators.get('MACD', 0)) if indicators.get('MACD') else '',
+                            'MACD_Signal': float(indicators.get('MACD_Signal', 0)) if indicators.get('MACD_Signal') else '',
+                            'MACD_Histogram': float(indicators.get('MACD_Histogram', 0)) if indicators.get('MACD_Histogram') else '',
+                            'Volume': int(indicators.get('volume', 0)) if indicators.get('volume') else '',
+                            'Profit_Loss': '',  # Will be calculated separately
+                            'Profit_Loss_%': ''
+                        })
+                        if signal.signal_type == 'BUY':
+                            trade_number += 1
+                    except (ValueError, TypeError, AttributeError) as e:
+                        logger.warning(f"Error processing signal {signal.id}: {e}")
+                        continue
+                
+                if signals_data:
+                    signals_df = pd.DataFrame(signals_data)
+                    
+                    # Calculate profit/loss for matched buy-sell pairs
+                    buy_signals_data = [s for s in signals_data if s['Signal_Type'] == 'BUY']
+                    sell_signals_data = [s for s in signals_data if s['Signal_Type'] == 'SELL']
+                    
+                    for i, buy in enumerate(buy_signals_data):
+                        if i < len(sell_signals_data):
+                            sell = sell_signals_data[i]
+                            try:
+                                profit_loss = float(sell['Price']) - float(buy['Price'])
+                                profit_loss_pct = (profit_loss / float(buy['Price'])) * 100 if float(buy['Price']) > 0 else 0
+                                
+                                # Update the sell signal row with profit/loss
+                                for idx, row in signals_df.iterrows():
+                                    if (str(row['Timestamp']) == str(sell['Timestamp']) and 
+                                        row['Signal_Type'] == 'SELL' and
+                                        abs(float(row['Price']) - float(sell['Price'])) < 0.01):  # Use small tolerance for float comparison
+                                        signals_df.at[idx, 'Profit_Loss'] = profit_loss
+                                        signals_df.at[idx, 'Profit_Loss_%'] = profit_loss_pct
+                                        break
+                            except (ValueError, TypeError) as e:
+                                logger.warning(f"Error calculating profit/loss for trade {i}: {e}")
+                                continue
+                    
+                    signals_df.to_excel(writer, sheet_name='Trade_Signals', index=False)
+                else:
+                    # Create empty sheet if no valid signals
+                    empty_df = pd.DataFrame({'Message': ['No valid signals found']})
+                    empty_df.to_excel(writer, sheet_name='Trade_Signals', index=False)
+        
+        # Prepare response
+        output.seek(0)
+        
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"Backtest_{backtest.symbol}_{backtest.strategy.name}_{timestamp}.xlsx"
+        
+        response = HttpResponse(
+            output.read(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        
+        return response
+        
+    except StrategyBacktest.DoesNotExist:
+        messages.error(request, 'Backtest not found')
+        return redirect('backtest_view')
+    except Exception as e:
+        logger.error(f"Error exporting backtest to Excel: {e}", exc_info=True)
+        messages.error(request, f'Error exporting backtest: {str(e)}')
+        return redirect('backtest_view')

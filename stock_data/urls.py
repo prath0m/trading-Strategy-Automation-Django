@@ -16,4 +16,8 @@ urlpatterns = [
     path('execute-strategy/', views.execute_strategy, name='execute_strategy'),
     path('test-connection/', views.test_connection, name='test_connection'),
     path('api/chart-data/<int:backtest_id>/', views.chart_data_api, name='chart_data_api'),
+    
+    # Export endpoints
+    path('export/strategy-data/', views.export_strategy_data_to_excel, name='export_strategy_data'),
+    path('export/backtest/<int:backtest_id>/', views.export_backtest_to_excel, name='export_backtest'),
 ]
