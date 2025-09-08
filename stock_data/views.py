@@ -481,51 +481,42 @@ def chart_data_api(request, backtest_id):
     """API endpoint to get chart data for a specific backtest"""
     try:
         backtest = StrategyBacktest.objects.get(id=backtest_id)
-        
-        # Get signals for this backtest
+        logger.info(f"chart_data_api: Loaded backtest {backtest_id} for symbol {backtest.symbol}")
+
         signals = TradingSignal.objects.filter(
             symbol=backtest.symbol,
             timestamp__gte=backtest.from_date,
             timestamp__lte=backtest.to_date
         ).order_by('timestamp')
-        
-        # Load OHLC data from the original data file
+        logger.info(f"chart_data_api: Found {signals.count()} signals for backtest {backtest_id}")
+
         kite_service = KiteDataService()
         available_files = kite_service.list_available_data_files()
-        
+
         ohlc_data = []
         indicators_data = {
             'macd': [],
             'ma': []
         }
-        
-        # Find the data file for this backtest
+
         for file_info in available_files:
             if file_info['symbol'] == backtest.symbol:
-                logger.info(f"Found matching symbol file: {file_info['filepath']}")
-                
+                logger.info(f"chart_data_api: Found matching symbol file: {file_info['filepath']}")
                 try:
                     with open(file_info['filepath'], 'r') as f:
                         file_data = json.load(f)
-                    
-                    logger.info(f"Loaded file with {len(file_data.get('data', []))} records")
-                    
-                    # Extract OHLC data with validation
+                    logger.info(f"chart_data_api: Loaded file with {len(file_data.get('data', []))} records")
+
                     for record in file_data.get('data', []):
                         if isinstance(record, dict):
                             try:
-                                # Validate and convert data
                                 open_val = float(record.get('open', 0))
                                 high_val = float(record.get('high', 0))
                                 low_val = float(record.get('low', 0))
                                 close_val = float(record.get('close', 0))
                                 volume_val = int(record.get('volume', 0))
                                 date_val = record.get('date') or record.get('timestamp')
-                                
-                                # Basic validation - only skip obviously invalid data
-                                if (date_val and open_val > 0 and high_val > 0 and 
-                                    low_val > 0 and close_val > 0):
-                                    
+                                if (date_val and open_val > 0 and high_val > 0 and low_val > 0 and close_val > 0):
                                     ohlc_data.append({
                                         'date': date_val,
                                         'open': open_val,
@@ -535,20 +526,15 @@ def chart_data_api(request, backtest_id):
                                         'volume': volume_val
                                     })
                             except (ValueError, TypeError):
-                                # Skip invalid records
                                 continue
-                    
-                    logger.info(f"Extracted {len(ohlc_data)} valid OHLC records")
-                    
-                    # Calculate indicators with improved validation
-                    if len(ohlc_data) >= 26:  # Minimum required for MACD
+                    logger.info(f"chart_data_api: Extracted {len(ohlc_data)} valid OHLC records")
+
+                    if len(ohlc_data) >= 26:
                         close_prices = [d['close'] for d in ohlc_data]
-                        
-                        # Simple Moving Average (5 period) with validation
                         for i in range(4, len(ohlc_data)):
                             try:
                                 ma_prices = close_prices[i-4:i+1]
-                                if all(p > 0 for p in ma_prices):  # Ensure all prices are valid
+                                if all(p > 0 for p in ma_prices):
                                     ma_value = sum(ma_prices) / 5
                                     indicators_data['ma'].append({
                                         'date': ohlc_data[i]['date'],
@@ -556,33 +542,21 @@ def chart_data_api(request, backtest_id):
                                     })
                             except (IndexError, ZeroDivisionError):
                                 continue
-                        
-                        # Improved MACD calculation with validation
                         for i in range(25, len(ohlc_data)):
                             try:
-                                # Calculate EMAs with validation
                                 ema12_prices = close_prices[i-11:i+1]
                                 ema26_prices = close_prices[i-25:i+1]
-                                
-                                if (all(p > 0 for p in ema12_prices) and 
-                                    all(p > 0 for p in ema26_prices)):
-                                    
+                                if (all(p > 0 for p in ema12_prices) and all(p > 0 for p in ema26_prices)):
                                     ema12 = sum(ema12_prices) / 12
                                     ema26 = sum(ema26_prices) / 26
                                     macd_line = ema12 - ema26
-                                    
-                                    # Signal line (simplified 9-period EMA of MACD)
-                                    if i > 33:  # Ensure we have enough data for signal
-                                        recent_macd = [indicators_data['macd'][j]['macd'] 
-                                                     for j in range(max(0, len(indicators_data['macd'])-8), 
-                                                                   len(indicators_data['macd']))]
+                                    if i > 33:
+                                        recent_macd = [indicators_data['macd'][j]['macd'] for j in range(max(0, len(indicators_data['macd'])-8), len(indicators_data['macd']))]
                                         recent_macd.append(macd_line)
                                         signal_line = sum(recent_macd) / len(recent_macd)
                                     else:
                                         signal_line = macd_line
-                                    
                                     histogram = macd_line - signal_line
-                                    
                                     indicators_data['macd'].append({
                                         'date': ohlc_data[i]['date'],
                                         'macd': macd_line,
@@ -591,18 +565,16 @@ def chart_data_api(request, backtest_id):
                                     })
                             except (IndexError, ZeroDivisionError, TypeError):
                                 continue
-                    
                     break
                 except Exception as e:
-                    logger.error(f"Error loading data file: {e}")
+                    logger.error(f"chart_data_api: Error loading data file: {e}")
                     continue
-        
-        # Format signals data with validation
+
         signals_data = []
         for signal in signals:
             try:
                 price_val = float(signal.price)
-                if price_val > 0:  # Only include valid prices
+                if price_val > 0:
                     signals_data.append({
                         'timestamp': signal.timestamp.isoformat(),
                         'signal_type': signal.signal_type,
@@ -611,7 +583,9 @@ def chart_data_api(request, backtest_id):
                     })
             except (ValueError, TypeError):
                 continue
-        
+
+        logger.info(f"chart_data_api: Returning {len(ohlc_data)} OHLC, {len(signals_data)} signals, {len(indicators_data['macd'])} MACD, {len(indicators_data['ma'])} MA")
+
         return JsonResponse({
             'success': True,
             'ohlc_data': ohlc_data,
@@ -624,14 +598,15 @@ def chart_data_api(request, backtest_id):
                 'strategy_name': backtest.strategy.name
             }
         })
-        
+
     except StrategyBacktest.DoesNotExist:
+        logger.error(f"chart_data_api: Backtest {backtest_id} not found")
         return JsonResponse({
             'success': False,
             'message': 'Backtest not found'
         }, status=404)
     except Exception as e:
-        logger.error(f"Error generating chart data: {e}", exc_info=True)
+        logger.error(f"chart_data_api: Error generating chart data: {e}", exc_info=True)
         return JsonResponse({
             'success': False,
             'message': f'Error generating chart data: {str(e)}'

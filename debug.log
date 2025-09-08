@@ -491,3 +491,215 @@ INFO 2025-09-05 16:44:20,593 views 97739 6195359744 Extracted 7875 valid OHLC re
 INFO 2025-09-06 05:04:58,307 views 2813 6189821952 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
 INFO 2025-09-06 05:04:58,311 views 2813 6189821952 Loaded file with 7875 records
 INFO 2025-09-06 05:04:58,314 views 2813 6189821952 Extracted 7875 valid OHLC records
+ERROR 2025-09-08 12:25:41,197 services 4330 6167228416 Error fetching historical data: Not authenticated with Kite API
+INFO 2025-09-08 12:25:41,203 services 4330 6167228416 Generated 1000 sample records
+INFO 2025-09-08 12:25:41,222 services 4330 6167228416 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_122541.json
+INFO 2025-09-08 12:25:48,206 strategy_service 4330 6167228416 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_122541.json
+INFO 2025-09-08 12:25:48,266 strategy_service 4330 6167228416 Saved 0 signals for BANKBEES
+INFO 2025-09-08 12:25:48,268 strategy_service 4330 6167228416 Saved backtest results for BANKBEES
+INFO 2025-09-08 12:25:57,549 views 4330 6167228416 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_122541.json
+INFO 2025-09-08 12:25:57,549 views 4330 6167228416 Loaded file with 1000 records
+INFO 2025-09-08 12:25:57,550 views 4330 6167228416 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:26:02,513 views 4330 6167228416 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-08 12:26:02,517 views 4330 6167228416 Loaded file with 7875 records
+INFO 2025-09-08 12:26:02,519 views 4330 6167228416 Extracted 7875 valid OHLC records
+ERROR 2025-09-08 12:26:11,005 services 4330 6167228416 Error fetching historical data: Not authenticated with Kite API
+INFO 2025-09-08 12:26:11,010 services 4330 6167228416 Generated 1000 sample records
+INFO 2025-09-08 12:26:11,030 services 4330 6167228416 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/NIFTYIT_minute_20250809_to_20250908_20250908_122611.json
+INFO 2025-09-08 12:26:24,156 strategy_service 4330 6167228416 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTYIT_minute_20250809_to_20250908_20250908_122611.json
+INFO 2025-09-08 12:26:24,199 strategy_service 4330 6167228416 Saved 0 signals for NIFTYIT
+INFO 2025-09-08 12:26:24,200 strategy_service 4330 6167228416 Saved backtest results for NIFTYIT
+INFO 2025-09-08 12:29:20,388 views 4330 6167228416 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-08 12:29:20,389 views 4330 6167228416 Processing authentication with request_token: VggmI5ItpQ...
+INFO 2025-09-08 12:29:20,389 views 4330 6167228416 Attempting to generate session...
+INFO 2025-09-08 12:29:20,500 views 4330 6167228416 Session data received: {'user_type': 'individual/res_no_nn', 'email': 'bhatikares@gmail.com', 'user_name': 'Sourabh Vidhyadhar Bhatikare', 'user_shortname': 'Sourabh', 'broker': 'ZERODHA', 'exchanges': ['BFO', 'BSE', 'NSE', 'MF', 'NFO'], 'products': ['CNC', 'NRML', 'MIS', 'BO', 'CO'], 'order_types': ['MARKET', 'LIMIT', 'SL', 'SL-M'], 'avatar_url': None, 'user_id': 'WH8704', 'api_key': 'bd53m7sxfmjy2kbz', 'access_token': 'VDHCgBPbm1IgyV3IpWF55wVc4A69L6KU', 'public_token': 'U7m8bWPh2Q9IuDVJ4dqRahR2RG1dLe1X', 'refresh_token': '', 'enctoken': 'iE0rfqQTXPbpdo5jmd0OUFYzYWsWf2Ti7s/ubIRvZJ4dh6VuAmZ/u78vUyZxGDBrpNs1T+T1tYuSoksBVPvB+H3J9xpuxdVkqNQQQav8lumlp7iNopKIgBjF7omQt98=', 'login_time': datetime.datetime(2025, 9, 8, 17, 58, 45), 'meta': {'demat_consent': 'consent'}}
+INFO 2025-09-08 12:29:20,502 views 4330 6167228416 Authentication successful for user: WH8704
+INFO 2025-09-08 12:29:25,778 services 4330 6167228416 Fetching data for token 1195265 from 2025-08-09 to 2025-09-08
+ERROR 2025-09-08 12:29:25,845 services 4330 6167228416 Error fetching historical data: invalid token
+INFO 2025-09-08 12:29:25,852 services 4330 6167228416 Generated 1000 sample records
+INFO 2025-09-08 12:29:25,872 services 4330 6167228416 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_122925.json
+INFO 2025-09-08 12:29:30,807 strategy_service 4330 6167228416 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_122925.json
+INFO 2025-09-08 12:29:30,853 strategy_service 4330 6167228416 Saved 0 signals for BANKBEES
+INFO 2025-09-08 12:29:30,855 strategy_service 4330 6167228416 Saved backtest results for BANKBEES
+INFO 2025-09-08 12:30:44,997 services 4737 6190919680 Fetching data for token 1195265 from 2025-08-09 to 2025-09-08
+ERROR 2025-09-08 12:30:45,105 services 4737 6190919680 Error fetching historical data: invalid token
+INFO 2025-09-08 12:30:45,110 services 4737 6190919680 Generated 1000 sample records
+INFO 2025-09-08 12:30:45,129 services 4737 6190919680 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_123045.json
+INFO 2025-09-08 12:31:11,890 strategy_service 4737 6190919680 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_123045.json
+INFO 2025-09-08 12:31:11,938 strategy_service 4737 6190919680 Saved 0 signals for BANKBEES
+INFO 2025-09-08 12:31:11,940 strategy_service 4737 6190919680 Saved backtest results for BANKBEES
+INFO 2025-09-08 12:38:34,275 services 6177 6205403136 Fetching data for token 1195265 from 2025-08-09 to 2025-09-08
+ERROR 2025-09-08 12:38:34,499 services 6177 6205403136 Error fetching historical data: invalid token
+INFO 2025-09-08 12:38:34,505 services 6177 6205403136 Generated 1000 sample records
+INFO 2025-09-08 12:38:34,526 services 6177 6205403136 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_123834.json
+INFO 2025-09-08 12:38:43,492 strategy_service 6177 6205403136 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_123834.json
+INFO 2025-09-08 12:38:43,550 strategy_service 6177 6205403136 Saved 6 signals for BANKBEES
+INFO 2025-09-08 12:38:43,551 strategy_service 6177 6205403136 Saved backtest results for BANKBEES
+INFO 2025-09-08 12:38:52,670 views 6177 6205403136 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_123834.json
+INFO 2025-09-08 12:38:52,672 views 6177 6205403136 Loaded file with 1000 records
+INFO 2025-09-08 12:38:52,672 views 6177 6205403136 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:39:07,501 views 6177 6205403136 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_123834.json
+INFO 2025-09-08 12:39:07,501 views 6177 6205403136 Loaded file with 1000 records
+INFO 2025-09-08 12:39:07,502 views 6177 6205403136 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:42:13,719 services 6526 6157840384 Fetching data for token 1195265 from 2025-08-06 to 2025-09-08
+ERROR 2025-09-08 12:42:13,813 services 6526 6157840384 Error fetching historical data: invalid token
+INFO 2025-09-08 12:42:13,817 services 6526 6157840384 Generated 1000 sample records
+INFO 2025-09-08 12:42:13,833 services 6526 6157840384 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250806_to_20250908_20250908_124213.json
+INFO 2025-09-08 12:45:17,776 views 7154 6161821696 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-08 12:45:17,776 views 7154 6161821696 Processing authentication with request_token: nxV6ikmuJ2...
+INFO 2025-09-08 12:45:17,776 views 7154 6161821696 Attempting to generate session...
+INFO 2025-09-08 12:45:17,867 views 7154 6161821696 Session data received: {'user_type': 'individual/res_no_nn', 'email': 'bhatikares@gmail.com', 'user_name': 'Sourabh Vidhyadhar Bhatikare', 'user_shortname': 'Sourabh', 'broker': 'ZERODHA', 'exchanges': ['BFO', 'BSE', 'NSE', 'MF', 'NFO'], 'products': ['CNC', 'NRML', 'MIS', 'BO', 'CO'], 'order_types': ['MARKET', 'LIMIT', 'SL', 'SL-M'], 'avatar_url': None, 'user_id': 'WH8704', 'api_key': 'bd53m7sxfmjy2kbz', 'access_token': 'VDHCgBPbm1IgyV3IpWF55wVc4A69L6KU', 'public_token': 'U7m8bWPh2Q9IuDVJ4dqRahR2RG1dLe1X', 'refresh_token': '', 'enctoken': 'qn9lkVFncAivILqCTH+TZDtx9WoIUnZyQuuVW+IFGg7BgCjm6cvuQnKMGRjC0xD2lSXvXD+v84+pnnDgohHYvf9bHKfrX1ractAR35HfDHi2MVIwIG1NvWMOQnTMZMc=', 'login_time': datetime.datetime(2025, 9, 8, 17, 58, 45), 'meta': {'demat_consent': 'consent'}}
+INFO 2025-09-08 12:45:17,871 views 7154 6161821696 Authentication successful for user: WH8704
+INFO 2025-09-08 12:45:29,385 services 7154 6161821696 Fetching data for token 3787777 from 2025-08-09 to 2025-09-08
+ERROR 2025-09-08 12:45:29,457 services 7154 6161821696 Error fetching historical data: invalid token
+INFO 2025-09-08 12:45:29,462 services 7154 6161821696 Generated 1000 sample records
+INFO 2025-09-08 12:45:29,478 services 7154 6161821696 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250809_to_20250908_20250908_124529.json
+INFO 2025-09-08 12:45:36,346 strategy_service 7154 6161821696 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250809_to_20250908_20250908_124529.json
+INFO 2025-09-08 12:45:36,396 strategy_service 7154 6161821696 Saved 0 signals for WIPRO
+INFO 2025-09-08 12:45:36,397 strategy_service 7154 6161821696 Saved backtest results for WIPRO
+INFO 2025-09-08 12:45:38,376 views 7154 6161821696 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250809_to_20250908_20250908_124529.json
+INFO 2025-09-08 12:45:38,378 views 7154 6161821696 Loaded file with 1000 records
+INFO 2025-09-08 12:45:38,379 views 7154 6161821696 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:45:43,478 strategy_service 7154 6161821696 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250806_to_20250908_20250908_124213.json
+INFO 2025-09-08 12:45:43,530 strategy_service 7154 6161821696 Saved 5 signals for BANKBEES
+INFO 2025-09-08 12:45:43,531 strategy_service 7154 6161821696 Saved backtest results for BANKBEES
+INFO 2025-09-08 12:45:49,869 views 7154 6161821696 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250806_to_20250908_20250908_124213.json
+INFO 2025-09-08 12:45:49,872 views 7154 6161821696 Loaded file with 1000 records
+INFO 2025-09-08 12:45:49,873 views 7154 6161821696 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:49:25,723 views 7154 6161821696 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250809_to_20250908_20250908_124529.json
+INFO 2025-09-08 12:49:25,726 views 7154 6161821696 Loaded file with 1000 records
+INFO 2025-09-08 12:49:25,726 views 7154 6161821696 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:49:32,029 strategy_service 7154 6161821696 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250809_to_20250908_20250908_124529.json
+INFO 2025-09-08 12:49:32,073 strategy_service 7154 6161821696 Saved 0 signals for WIPRO
+INFO 2025-09-08 12:49:32,075 strategy_service 7154 6161821696 Saved backtest results for WIPRO
+INFO 2025-09-08 12:54:32,459 services 7282 6134771712 Fetching data for token 1195265 from 2025-08-09 to 2025-09-08
+ERROR 2025-09-08 12:54:32,575 services 7282 6134771712 Error fetching historical data: invalid token
+INFO 2025-09-08 12:54:32,581 services 7282 6134771712 Generated 1000 sample records
+INFO 2025-09-08 12:54:32,599 services 7282 6134771712 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 12:54:37,628 strategy_service 7282 6134771712 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 12:54:37,682 strategy_service 7282 6134771712 Saved 3 signals for BANKBEES
+INFO 2025-09-08 12:54:37,683 strategy_service 7282 6134771712 Saved backtest results for BANKBEES
+INFO 2025-09-08 12:54:41,753 views 7282 6134771712 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 12:54:41,756 views 7282 6134771712 Loaded file with 1000 records
+INFO 2025-09-08 12:54:41,757 views 7282 6134771712 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:54:47,853 views 7282 6134771712 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 12:54:47,855 views 7282 6134771712 Loaded file with 1000 records
+INFO 2025-09-08 12:54:47,856 views 7282 6134771712 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:54:52,556 views 7282 6134771712 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 12:54:52,558 views 7282 6134771712 Loaded file with 1000 records
+INFO 2025-09-08 12:54:52,559 views 7282 6134771712 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:55:47,702 views 7282 6134771712 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 12:55:47,705 views 7282 6134771712 Loaded file with 1000 records
+INFO 2025-09-08 12:55:47,706 views 7282 6134771712 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:55:50,702 views 7282 6134771712 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 12:55:50,704 views 7282 6134771712 Loaded file with 1000 records
+INFO 2025-09-08 12:55:50,706 views 7282 6134771712 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:55:52,685 views 7282 6134771712 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250809_to_20250908_20250908_124529.json
+INFO 2025-09-08 12:55:52,687 views 7282 6134771712 Loaded file with 1000 records
+INFO 2025-09-08 12:55:52,688 views 7282 6134771712 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:55:54,935 views 7282 6134771712 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250809_to_20250908_20250908_124529.json
+INFO 2025-09-08 12:55:54,937 views 7282 6134771712 Loaded file with 1000 records
+INFO 2025-09-08 12:55:54,939 views 7282 6134771712 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:56:03,751 views 7282 6134771712 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250809_to_20250908_20250908_124529.json
+INFO 2025-09-08 12:56:03,754 views 7282 6134771712 Loaded file with 1000 records
+INFO 2025-09-08 12:56:03,755 views 7282 6134771712 Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:59:55,728 views 7350 6132461568 chart_data_api: Loaded backtest 4 for symbol BANKBEES
+INFO 2025-09-08 12:59:55,733 views 7350 6132461568 chart_data_api: Found 0 signals for backtest 4
+INFO 2025-09-08 12:59:55,742 views 7350 6132461568 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 12:59:55,745 views 7350 6132461568 chart_data_api: Loaded file with 1000 records
+INFO 2025-09-08 12:59:55,746 views 7350 6132461568 chart_data_api: Extracted 1000 valid OHLC records
+INFO 2025-09-08 12:59:55,752 views 7350 6132461568 chart_data_api: Returning 1000 OHLC, 0 signals, 975 MACD, 996 MA
+INFO 2025-09-08 13:00:13,193 strategy_service 7350 6132461568 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 13:00:13,246 strategy_service 7350 6132461568 Saved 3 signals for BANKBEES
+INFO 2025-09-08 13:00:13,247 strategy_service 7350 6132461568 Saved backtest results for BANKBEES
+INFO 2025-09-08 13:00:17,093 strategy_service 7350 6132461568 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250809_to_20250908_20250908_124529.json
+INFO 2025-09-08 13:00:17,134 strategy_service 7350 6132461568 Saved 0 signals for WIPRO
+INFO 2025-09-08 13:00:17,136 strategy_service 7350 6132461568 Saved backtest results for WIPRO
+INFO 2025-09-08 13:00:21,806 strategy_service 7350 6132461568 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 13:00:21,838 strategy_service 7350 6132461568 Saved 3 signals for BANKBEES
+INFO 2025-09-08 13:00:21,839 strategy_service 7350 6132461568 Saved backtest results for BANKBEES
+INFO 2025-09-08 13:00:25,844 views 7350 6132461568 chart_data_api: Loaded backtest 7 for symbol BANKBEES
+INFO 2025-09-08 13:00:25,846 views 7350 6132461568 chart_data_api: Found 0 signals for backtest 7
+INFO 2025-09-08 13:00:25,853 views 7350 6132461568 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250908_20250908_125432.json
+INFO 2025-09-08 13:00:25,855 views 7350 6132461568 chart_data_api: Loaded file with 1000 records
+INFO 2025-09-08 13:00:25,856 views 7350 6132461568 chart_data_api: Extracted 1000 valid OHLC records
+INFO 2025-09-08 13:00:25,864 views 7350 6132461568 chart_data_api: Returning 1000 OHLC, 0 signals, 975 MACD, 996 MA
+INFO 2025-09-08 13:00:37,654 services 7350 6132461568 Fetching data for token 2815745 from 2025-08-09 to 2025-09-08
+INFO 2025-09-08 13:00:38,029 services 7350 6132461568 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250809_to_20250908_20250908_130037.json
+INFO 2025-09-08 13:00:49,110 strategy_service 7350 6132461568 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250809_to_20250908_20250908_130037.json
+INFO 2025-09-08 13:00:49,263 strategy_service 7350 6132461568 Saved 40 signals for MARUTI
+INFO 2025-09-08 13:00:49,264 strategy_service 7350 6132461568 Saved backtest results for MARUTI
+INFO 2025-09-08 13:00:53,544 views 7350 6132461568 chart_data_api: Loaded backtest 8 for symbol MARUTI
+INFO 2025-09-08 13:00:53,545 views 7350 6132461568 chart_data_api: Found 39 signals for backtest 8
+INFO 2025-09-08 13:00:53,564 views 7350 6132461568 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250809_to_20250908_20250908_130037.json
+INFO 2025-09-08 13:00:53,573 views 7350 6132461568 chart_data_api: Loaded file with 7125 records
+INFO 2025-09-08 13:00:53,578 views 7350 6132461568 chart_data_api: Extracted 7125 valid OHLC records
+INFO 2025-09-08 13:00:53,602 views 7350 6132461568 chart_data_api: Returning 7125 OHLC, 39 signals, 7100 MACD, 7121 MA
+INFO 2025-09-08 13:02:08,438 services 7350 6132461568 Fetching data for token 11483906 from 2025-08-09 to 2025-09-08
+ERROR 2025-09-08 13:02:08,522 services 7350 6132461568 Error fetching historical data: invalid token
+INFO 2025-09-08 13:02:08,527 services 7350 6132461568 Generated 1000 sample records
+INFO 2025-09-08 13:02:08,549 services 7350 6132461568 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/LTIM_minute_20250809_to_20250908_20250908_130208.json
+INFO 2025-09-08 13:02:42,316 services 7350 6132461568 Fetching data for token 3675137 from 2025-08-09 to 2025-09-08
+ERROR 2025-09-08 13:02:42,386 services 7350 6132461568 Error fetching historical data: invalid token
+INFO 2025-09-08 13:02:42,391 services 7350 6132461568 Generated 1000 sample records
+INFO 2025-09-08 13:02:42,409 services 7350 6132461568 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/YESBANK_minute_20250809_to_20250908_20250908_130242.json
+INFO 2025-09-08 13:03:29,688 services 7350 6132461568 Fetching data for token 897537 from 2025-08-01 to 2025-09-02
+INFO 2025-09-08 13:03:30,044 services 7350 6132461568 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/TITAN_minute_20250801_to_20250902_20250908_130329.json
+INFO 2025-09-08 13:03:50,928 services 7350 6132461568 Fetching data for token 1195265 from 2025-08-09 to 2025-09-01
+ERROR 2025-09-08 13:03:50,999 services 7350 6132461568 Error fetching historical data: invalid token
+INFO 2025-09-08 13:03:51,004 services 7350 6132461568 Generated 1000 sample records
+INFO 2025-09-08 13:03:51,024 services 7350 6132461568 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250901_20250908_130351.json
+INFO 2025-09-08 13:04:27,600 strategy_service 7350 6132461568 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/TITAN_minute_20250801_to_20250902_20250908_130329.json
+INFO 2025-09-08 13:04:27,761 strategy_service 7350 6132461568 Saved 38 signals for TITAN
+INFO 2025-09-08 13:04:27,762 strategy_service 7350 6132461568 Saved backtest results for TITAN
+INFO 2025-09-08 13:04:40,101 views 7350 6132461568 chart_data_api: Loaded backtest 9 for symbol TITAN
+INFO 2025-09-08 13:04:40,102 views 7350 6132461568 chart_data_api: Found 38 signals for backtest 9
+INFO 2025-09-08 13:04:40,137 views 7350 6132461568 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/TITAN_minute_20250801_to_20250902_20250908_130329.json
+INFO 2025-09-08 13:04:40,144 views 7350 6132461568 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-08 13:04:40,148 views 7350 6132461568 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-08 13:04:40,170 views 7350 6132461568 chart_data_api: Returning 7875 OHLC, 38 signals, 7850 MACD, 7871 MA
+INFO 2025-09-08 13:04:44,209 views 7350 6132461568 chart_data_api: Loaded backtest 8 for symbol MARUTI
+INFO 2025-09-08 13:04:44,210 views 7350 6132461568 chart_data_api: Found 39 signals for backtest 8
+INFO 2025-09-08 13:04:44,237 views 7350 6132461568 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250809_to_20250908_20250908_130037.json
+INFO 2025-09-08 13:04:44,243 views 7350 6132461568 chart_data_api: Loaded file with 7125 records
+INFO 2025-09-08 13:04:44,246 views 7350 6132461568 chart_data_api: Extracted 7125 valid OHLC records
+INFO 2025-09-08 13:04:44,265 views 7350 6132461568 chart_data_api: Returning 7125 OHLC, 39 signals, 7100 MACD, 7121 MA
+INFO 2025-09-08 13:04:48,031 views 7350 6132461568 chart_data_api: Loaded backtest 7 for symbol BANKBEES
+INFO 2025-09-08 13:04:48,033 views 7350 6132461568 chart_data_api: Found 0 signals for backtest 7
+INFO 2025-09-08 13:04:48,061 views 7350 6132461568 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250901_20250908_130351.json
+INFO 2025-09-08 13:04:48,061 views 7350 6132461568 chart_data_api: Loaded file with 1000 records
+INFO 2025-09-08 13:04:48,062 views 7350 6132461568 chart_data_api: Extracted 1000 valid OHLC records
+INFO 2025-09-08 13:04:48,065 views 7350 6132461568 chart_data_api: Returning 1000 OHLC, 0 signals, 975 MACD, 996 MA
+INFO 2025-09-08 13:04:50,719 views 7350 6132461568 chart_data_api: Loaded backtest 6 for symbol WIPRO
+INFO 2025-09-08 13:04:50,720 views 7350 6132461568 chart_data_api: Found 0 signals for backtest 6
+INFO 2025-09-08 13:04:50,755 views 7350 6132461568 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250809_to_20250908_20250908_124529.json
+INFO 2025-09-08 13:04:50,756 views 7350 6132461568 chart_data_api: Loaded file with 1000 records
+INFO 2025-09-08 13:04:50,756 views 7350 6132461568 chart_data_api: Extracted 1000 valid OHLC records
+INFO 2025-09-08 13:04:50,760 views 7350 6132461568 chart_data_api: Returning 1000 OHLC, 0 signals, 975 MACD, 996 MA
+INFO 2025-09-08 13:04:54,518 views 7350 6132461568 chart_data_api: Loaded backtest 7 for symbol BANKBEES
+INFO 2025-09-08 13:04:54,520 views 7350 6132461568 chart_data_api: Found 0 signals for backtest 7
+INFO 2025-09-08 13:04:54,553 views 7350 6132461568 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250809_to_20250901_20250908_130351.json
+INFO 2025-09-08 13:04:54,554 views 7350 6132461568 chart_data_api: Loaded file with 1000 records
+INFO 2025-09-08 13:04:54,555 views 7350 6132461568 chart_data_api: Extracted 1000 valid OHLC records
+INFO 2025-09-08 13:04:54,559 views 7350 6132461568 chart_data_api: Returning 1000 OHLC, 0 signals, 975 MACD, 996 MA
+INFO 2025-09-08 13:04:57,467 views 7350 6132461568 chart_data_api: Loaded backtest 8 for symbol MARUTI
+INFO 2025-09-08 13:04:57,468 views 7350 6132461568 chart_data_api: Found 39 signals for backtest 8
+INFO 2025-09-08 13:04:57,502 views 7350 6132461568 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250809_to_20250908_20250908_130037.json
+INFO 2025-09-08 13:04:57,508 views 7350 6132461568 chart_data_api: Loaded file with 7125 records
+INFO 2025-09-08 13:04:57,511 views 7350 6132461568 chart_data_api: Extracted 7125 valid OHLC records
+INFO 2025-09-08 13:04:57,532 views 7350 6132461568 chart_data_api: Returning 7125 OHLC, 39 signals, 7100 MACD, 7121 MA
+INFO 2025-09-08 13:06:54,690 services 7350 6132461568 Fetching data for token 1195265 from 2025-08-30 to 2025-09-08
+ERROR 2025-09-08 13:06:54,778 services 7350 6132461568 Error fetching historical data: invalid token
+INFO 2025-09-08 13:06:54,782 services 7350 6132461568 Generated 1000 sample records
+INFO 2025-09-08 13:06:54,797 services 7350 6132461568 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250830_to_20250908_20250908_130654.json
+INFO 2025-09-08 13:07:07,040 services 7350 6132461568 Fetching data for token 256265 from 2025-08-27 to 2025-09-08
+INFO 2025-09-08 13:07:07,262 services 7350 6132461568 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250827_to_20250908_20250908_130707.json
+INFO 2025-09-08 13:07:17,216 strategy_service 7350 6132461568 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250827_to_20250908_20250908_130707.json
+INFO 2025-09-08 13:07:17,297 strategy_service 7350 6132461568 Saved 4 signals for NIFTY50
+INFO 2025-09-08 13:07:17,298 strategy_service 7350 6132461568 Saved backtest results for NIFTY50
+INFO 2025-09-08 13:07:21,585 views 7350 6132461568 chart_data_api: Loaded backtest 10 for symbol NIFTY50
+INFO 2025-09-08 13:07:21,586 views 7350 6132461568 chart_data_api: Found 4 signals for backtest 10
+INFO 2025-09-08 13:07:21,626 views 7350 6132461568 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250827_to_20250908_20250908_130707.json
+INFO 2025-09-08 13:07:21,629 views 7350 6132461568 chart_data_api: Loaded file with 3000 records
+INFO 2025-09-08 13:07:21,630 views 7350 6132461568 chart_data_api: Extracted 3000 valid OHLC records
+INFO 2025-09-08 13:07:21,639 views 7350 6132461568 chart_data_api: Returning 3000 OHLC, 4 signals, 2975 MACD, 2996 MA

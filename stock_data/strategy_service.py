@@ -56,7 +56,7 @@ class TradingStrategyService:
                 "volume": "sum"
             }).dropna()
             
-            df_1h = df.resample("1H").agg({
+            df_1h = df.resample("1h").agg({
                 "open": "first", 
                 "high": "max", 
                 "low": "min", 
@@ -74,7 +74,7 @@ class TradingStrategyService:
             
             return {
                 "15min": df_15m,
-                "1H": df_1h,
+                "1h": df_1h,
                 "1D": df_1d
             }
             
@@ -339,7 +339,7 @@ class TradingStrategyService:
             
             # Calculate indicators for 15-minute data
             df_15m = self.calculate_indicators(resampled_data["15min"])
-            df_1h = self.calculate_indicators(resampled_data["1H"])
+            df_1h = self.calculate_indicators(resampled_data["1h"])
             df_1d = self.calculate_indicators(resampled_data["1D"])
             
             # Implement strategy
