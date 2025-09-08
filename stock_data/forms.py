@@ -195,20 +195,36 @@ class StockDataFetchForm(forms.Form):
             # Check if date range is reasonable for the selected interval
             delta = to_date - from_date
             
+            # Updated limits based on Kite API behavior and practical considerations
             if interval == 'minute' and delta.days > 60:
                 raise ValidationError(
-                    "For minute-wise data, maximum date range is 60 days. "
+                    "For minute-wise data, maximum date range is 60 days due to API limitations. "
                     "Please use a smaller date range or choose a different interval."
                 )
             elif interval in ['3minute', '5minute'] and delta.days > 100:
                 raise ValidationError(
-                    f"For {interval} data, maximum date range is 100 days. "
+                    f"For {interval} data, maximum date range is 100 days due to API limitations. "
+                    "Please use a smaller date range."
+                )
+            elif interval in ['15minute', '30minute'] and delta.days > 200:
+                raise ValidationError(
+                    f"For {interval} data, maximum date range is 200 days due to API limitations. "
+                    "Please use a smaller date range."
+                )
+            elif interval == '60minute' and delta.days > 400:
+                raise ValidationError(
+                    "For hourly data, maximum date range is 400 days due to API limitations. "
                     "Please use a smaller date range."
                 )
             elif delta.days > 365:
                 raise ValidationError(
                     "Maximum date range is 365 days. Please use a smaller date range."
                 )
+            
+            # Add warning for large date ranges that might take time
+            if interval == 'minute' and delta.days > 7:
+                # Note: This doesn't raise ValidationError, just a helpful message
+                pass  # Could add a message here if needed
         
         return cleaned_data
     
