@@ -481,3 +481,13 @@ INFO 2025-09-04 18:33:21,378 views 683 6129692672 Extracted 7875 valid OHLC reco
 INFO 2025-09-04 18:35:57,345 views 683 6129692672 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
 INFO 2025-09-04 18:35:57,349 views 683 6129692672 Loaded file with 7875 records
 INFO 2025-09-04 18:35:57,351 views 683 6129692672 Extracted 7875 valid OHLC records
+INFO 2025-09-05 05:58:01,823 services 68607 6199095296 Fetching data for token 1195265 from 2025-08-06 to 2025-09-05
+ERROR 2025-09-05 05:58:01,920 services 68607 6199095296 Error fetching historical data: Incorrect `api_key` or `access_token`.
+INFO 2025-09-05 05:58:01,923 services 68607 6199095296 Generated 1000 sample records
+INFO 2025-09-05 05:58:01,934 services 68607 6199095296 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250806_to_20250905_20250905_055801.json
+INFO 2025-09-05 16:44:20,585 views 97739 6195359744 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-05 16:44:20,590 views 97739 6195359744 Loaded file with 7875 records
+INFO 2025-09-05 16:44:20,593 views 97739 6195359744 Extracted 7875 valid OHLC records
+INFO 2025-09-06 05:04:58,307 views 2813 6189821952 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+INFO 2025-09-06 05:04:58,311 views 2813 6189821952 Loaded file with 7875 records
+INFO 2025-09-06 05:04:58,314 views 2813 6189821952 Extracted 7875 valid OHLC records
