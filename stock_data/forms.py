@@ -195,33 +195,31 @@ class StockDataFetchForm(forms.Form):
             # Check if date range is reasonable for the selected interval
             delta = to_date - from_date
             
-            # Updated limits based on Kite API behavior and practical considerations
-            if interval == 'minute' and delta.days > 60:
+            # With chunked fetching, we can handle any reasonable range automatically
+            # Only block truly excessive requests that might cause system issues
+            if interval == 'minute' and delta.days > 2000:  # More than ~5.5 years
                 raise ValidationError(
-                    "For minute-wise data, maximum date range is 60 days due to API limitations. "
-                    "Please use a smaller date range or choose a different interval."
+                    "Date range is too large for minute data. Maximum recommended range is 5 years. "
+                    "Please use a smaller date range or consider daily data for very long-term analysis."
                 )
-            elif interval in ['3minute', '5minute'] and delta.days > 100:
+            elif interval in ['3minute', '5minute'] and delta.days > 2000:
                 raise ValidationError(
-                    f"For {interval} data, maximum date range is 100 days due to API limitations. "
-                    "Please use a smaller date range."
+                    f"Date range is too large for {interval} data. Maximum recommended range is 5 years."
                 )
-            elif interval in ['15minute', '30minute'] and delta.days > 200:
+            elif interval in ['15minute', '30minute'] and delta.days > 3000:
                 raise ValidationError(
-                    f"For {interval} data, maximum date range is 200 days due to API limitations. "
-                    "Please use a smaller date range."
+                    f"Date range is too large for {interval} data. Maximum recommended range is 8 years."
                 )
-            elif interval == '60minute' and delta.days > 400:
+            elif interval == '60minute' and delta.days > 5000:
                 raise ValidationError(
-                    "For hourly data, maximum date range is 400 days due to API limitations. "
-                    "Please use a smaller date range."
+                    "Date range is too large for hourly data. Maximum recommended range is 13 years."
                 )
-            elif delta.days > 365:
+            elif interval == 'day' and delta.days > 7000:
                 raise ValidationError(
-                    "Maximum date range is 365 days. Please use a smaller date range."
+                    "Date range is too large for daily data. Maximum recommended range is 19 years."
                 )
             
-            # Add warning for large date ranges that might take time
+            # No warnings or blocks for reasonable ranges - let chunking handle it automatically
             if interval == 'minute' and delta.days > 7:
                 # Note: This doesn't raise ValidationError, just a helpful message
                 pass  # Could add a message here if needed
@@ -287,15 +285,15 @@ class DataFetchForm(forms.Form):
             if to_date > date.today():
                 raise ValidationError("To date cannot be in the future")
             
-            # Check if date range is too large for minute data
+            # Allow any reasonable date range - chunking handles API limits automatically
             interval = cleaned_data.get('interval')
             if interval == 'minute':
                 delta = to_date - from_date
-                if delta.days > 60:  # More than 60 days
+                if delta.days > 2000:  # Only block truly excessive requests (5+ years)
                     raise ValidationError(
-                        "For minute-wise data, maximum date range is 60 days. "
-                        "Please use a smaller date range or choose a different interval."
+                        "Date range is too large for minute data. Maximum recommended range is 5 years."
                     )
+                # All other ranges are handled automatically by chunked fetching
         
         return cleaned_data
     

@@ -44,10 +44,11 @@ $(document).ready(function() {
             if (interval === 'minute') {
                 var diffTime = Math.abs(toDate - fromDate);
                 var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                if (diffDays > 60) {
-                    showAlert('warning', 'For minute-wise data, maximum date range is 60 days');
+                if (diffDays > 2000) {  // Only block truly excessive requests (5+ years)
+                    showAlert('warning', 'Date range is too large for minute data. Maximum recommended range is 5 years.');
                     isValid = false;
                 }
+                // All other ranges are handled automatically by chunked fetching
             }
         }
 

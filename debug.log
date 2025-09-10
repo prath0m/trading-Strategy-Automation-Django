@@ -1,0 +1,1401 @@
+INFO 2025-09-02 11:15:23,230 views 69169 6204518400 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-02 11:15:23,230 views 69169 6204518400 Processing authentication with request_token: FLYVzcnPjd...
+INFO 2025-09-02 11:15:23,230 views 69169 6204518400 Attempting to generate session...
+ERROR 2025-09-02 11:15:23,729 services 69169 6204518400 Session generation failed: Token is invalid or has expired.
+ERROR 2025-09-02 11:15:23,730 views 69169 6204518400 Authentication failed: Token is invalid or has expired.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 51, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 75, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Token is invalid or has expired.
+INFO 2025-09-02 11:15:29,057 views 69169 6204518400 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-02 11:15:29,057 views 69169 6204518400 Processing authentication with request_token: FLYVzcnPjd...
+INFO 2025-09-02 11:15:29,057 views 69169 6204518400 Attempting to generate session...
+ERROR 2025-09-02 11:15:29,388 services 69169 6204518400 Session generation failed: Token is invalid or has expired.
+ERROR 2025-09-02 11:15:29,389 views 69169 6204518400 Authentication failed: Token is invalid or has expired.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 51, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 75, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Token is invalid or has expired.
+INFO 2025-09-02 11:17:47,173 views 69169 6204518400 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-02 11:17:47,173 views 69169 6204518400 Processing authentication with request_token: n8ItarV61y...
+INFO 2025-09-02 11:17:47,173 views 69169 6204518400 Attempting to generate session...
+INFO 2025-09-02 11:17:47,605 views 69169 6204518400 Session data received: {'user_type': 'individual/res_no_nn', 'email': 'bhatikares@gmail.com', 'user_name': 'Sourabh Vidhyadhar Bhatikare', 'user_shortname': 'Sourabh', 'broker': 'ZERODHA', 'exchanges': ['NSE', 'NFO', 'BFO', 'BSE', 'MF'], 'products': ['CNC', 'NRML', 'MIS', 'BO', 'CO'], 'order_types': ['MARKET', 'LIMIT', 'SL', 'SL-M'], 'avatar_url': None, 'user_id': 'WH8704', 'api_key': 'bd53m7sxfmjy2kbz', 'access_token': 'OP125jPtFBmRR29bdoZsMDcuTy3J6v5Q', 'public_token': '7SbmT9NeoOGqhrTNR3pxQQwFsggGNVGR', 'refresh_token': '', 'enctoken': 'Ux4Z3FMuYL5hbwTRsUZ0b/actaBi6ONNXnZS7PHync7FNYH4bxv3xxuTT+398GApKLLlWYVUa+meGJ8VO+DoMVHz+fLmcFOaMQVer2xtDgDopbZXJ2usyeAYd9s7yrY=', 'login_time': datetime.datetime(2025, 9, 2, 16, 34, 37), 'meta': {'demat_consent': 'consent'}}
+INFO 2025-09-02 11:17:47,609 views 69169 6204518400 Authentication successful for user: WH8704
+ERROR 2025-09-02 11:18:11,675 views 69169 6204518400 Error fetching data: KiteDataService.fetch_historical_data() got an unexpected keyword argument 'symbol'
+INFO 2025-09-02 11:20:46,874 services 69281 6165934080 Fetching data for token 2953217 from 2025-08-26 to 2025-09-02
+INFO 2025-09-02 11:21:13,988 services 69281 6165934080 Fetching data for token 341249 from 2025-08-26 to 2025-09-02
+ERROR 2025-09-02 11:32:45,526 views 69403 6160379904 Error fetching data: KiteDataService.load_data_from_json() takes 2 positional arguments but 5 were given
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 41, in index
+    existing_data = kite_service.load_data_from_json(symbol, from_date, to_date, interval)
+TypeError: KiteDataService.load_data_from_json() takes 2 positional arguments but 5 were given
+INFO 2025-09-02 11:34:05,090 services 69576 6205370368 Fetching data for token 738561 from 2025-08-03 to 2025-09-02
+ERROR 2025-09-02 11:34:05,728 services 69576 6205370368 Error saving data to JSON: 'str' object has no attribute 'strftime'
+ERROR 2025-09-02 11:34:05,728 views 69576 6205370368 Error fetching data: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 55, in index
+    filepath = kite_service.save_data_to_json(historical_data, symbol, from_date, to_date, interval)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 407, in save_data_to_json
+    from_date_str = from_date.strftime("%Y%m%d")
+                    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'strftime'
+INFO 2025-09-02 11:34:09,641 services 69576 6205370368 Fetching data for token 408065 from 2025-08-03 to 2025-09-02
+ERROR 2025-09-02 11:34:10,382 services 69576 6205370368 Error saving data to JSON: 'str' object has no attribute 'strftime'
+ERROR 2025-09-02 11:34:10,382 views 69576 6205370368 Error fetching data: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 55, in index
+    filepath = kite_service.save_data_to_json(historical_data, symbol, from_date, to_date, interval)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 407, in save_data_to_json
+    from_date_str = from_date.strftime("%Y%m%d")
+                    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'strftime'
+INFO 2025-09-02 11:36:06,140 services 69610 6194507776 Fetching data for token 408065 from 2025-08-03 to 2025-09-02
+ERROR 2025-09-02 11:36:06,705 services 69610 6194507776 Error saving data to JSON: 'str' object has no attribute 'strftime'
+ERROR 2025-09-02 11:36:06,705 views 69610 6194507776 Error fetching data: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 69, in index
+    filepath = kite_service.save_data_to_json(historical_data, symbol, from_date, to_date, interval)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 407, in save_data_to_json
+    from_date_str = from_date.strftime("%Y%m%d")
+                    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'strftime'
+INFO 2025-09-02 11:36:10,072 services 69610 6194507776 Fetching data for token 408065 from 2025-08-03 to 2025-09-02
+ERROR 2025-09-02 11:36:10,667 services 69610 6194507776 Error saving data to JSON: 'str' object has no attribute 'strftime'
+ERROR 2025-09-02 11:36:10,667 views 69610 6194507776 Error fetching data: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 69, in index
+    filepath = kite_service.save_data_to_json(historical_data, symbol, from_date, to_date, interval)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 407, in save_data_to_json
+    from_date_str = from_date.strftime("%Y%m%d")
+                    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'strftime'
+INFO 2025-09-02 11:38:23,156 services 69659 6202798080 Fetching data for token 408065 from 2025-08-03 to 2025-09-02
+INFO 2025-09-02 11:38:23,717 services 69659 6202798080 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/INFY_minute_20250803_to_20250902_20250902_113823.json
+INFO 2025-09-02 11:38:38,715 services 69659 6202798080 Fetching data for token 408065 from 2025-08-03 to 2025-09-02
+INFO 2025-09-02 11:38:39,329 services 69659 6202798080 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/INFY_minute_20250803_to_20250902_20250902_113839.json
+INFO 2025-09-02 11:39:46,515 services 69872 6166065152 Fetching data for token 738561 from 2025-08-03 to 2025-09-02
+INFO 2025-09-02 11:39:47,128 services 69872 6166065152 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250803_to_20250902_20250902_113947.json
+INFO 2025-09-02 11:40:04,957 services 69872 6166065152 Fetching data for token 2939649 from 2025-08-01 to 2025-09-02
+INFO 2025-09-02 11:40:05,495 services 69872 6166065152 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/LT_minute_20250801_to_20250902_20250902_114005.json
+INFO 2025-09-02 15:26:58,184 services 71680 6197096448 Fetching data for token 2953217 from 2025-08-03 to 2025-09-02
+INFO 2025-09-02 15:26:58,880 services 71680 6197096448 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250803_to_20250902_20250902_152658.json
+INFO 2025-09-02 17:45:40,451 strategy_service 74297 12901707776 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250803_to_20250902_20250902_152658.json
+INFO 2025-09-02 17:45:40,603 strategy_service 74297 12901707776 Saved 20 signals for TCS
+ERROR 2025-09-02 17:45:40,604 strategy_service 74297 12901707776 Error saving backtest results: keys must be str, int, float, bool or None, not Timestamp
+ERROR 2025-09-02 17:45:40,604 strategy_service 74297 12901707776 Error running strategy: keys must be str, int, float, bool or None, not Timestamp
+INFO 2025-09-02 17:45:47,366 strategy_service 74297 12901707776 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250803_to_20250902_20250902_152658.json
+INFO 2025-09-02 17:45:47,501 strategy_service 74297 12901707776 Saved 20 signals for TCS
+ERROR 2025-09-02 17:45:47,502 strategy_service 74297 12901707776 Error saving backtest results: keys must be str, int, float, bool or None, not Timestamp
+ERROR 2025-09-02 17:45:47,502 strategy_service 74297 12901707776 Error running strategy: keys must be str, int, float, bool or None, not Timestamp
+INFO 2025-09-02 17:47:01,100 strategy_service 74297 12901707776 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/INFY_minute_20250803_to_20250902_20250902_113839.json
+INFO 2025-09-02 17:47:01,250 strategy_service 74297 12901707776 Saved 21 signals for INFY
+ERROR 2025-09-02 17:47:01,250 strategy_service 74297 12901707776 Error saving backtest results: keys must be str, int, float, bool or None, not Timestamp
+ERROR 2025-09-02 17:47:01,250 strategy_service 74297 12901707776 Error running strategy: keys must be str, int, float, bool or None, not Timestamp
+INFO 2025-09-02 17:48:44,683 strategy_service 74297 12901707776 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/INFY_minute_20250803_to_20250902_20250902_113839.json
+INFO 2025-09-02 17:48:44,831 strategy_service 74297 12901707776 Saved 21 signals for INFY
+ERROR 2025-09-02 17:48:44,831 strategy_service 74297 12901707776 Error saving backtest results: keys must be str, int, float, bool or None, not Timestamp
+ERROR 2025-09-02 17:48:44,831 strategy_service 74297 12901707776 Error running strategy: keys must be str, int, float, bool or None, not Timestamp
+INFO 2025-09-02 17:50:50,082 strategy_service 74511 6145126400 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250803_to_20250902_20250902_113947.json
+INFO 2025-09-02 17:50:50,227 strategy_service 74511 6145126400 Saved 13 signals for RELIANCE
+INFO 2025-09-02 17:50:50,228 strategy_service 74511 6145126400 Saved backtest results for RELIANCE
+INFO 2025-09-02 17:58:32,745 strategy_service 74511 6145126400 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/INFY_minute_20250803_to_20250902_20250902_113839.json
+INFO 2025-09-02 17:58:32,873 strategy_service 74511 6145126400 Saved 21 signals for INFY
+INFO 2025-09-02 17:58:32,873 strategy_service 74511 6145126400 Saved backtest results for INFY
+INFO 2025-09-02 18:08:09,118 services 74787 6133968896 Fetching data for token 2939649 from 2025-08-03 to 2025-09-02
+INFO 2025-09-02 18:08:09,731 services 74787 6133968896 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/LT_minute_20250803_to_20250902_20250902_180809.json
+INFO 2025-09-02 18:08:50,954 strategy_service 74787 6133968896 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/LT_minute_20250803_to_20250902_20250902_180809.json
+INFO 2025-09-02 18:08:51,104 strategy_service 74787 6133968896 Saved 14 signals for LT
+INFO 2025-09-02 18:08:51,105 strategy_service 74787 6133968896 Saved backtest results for LT
+INFO 2025-09-02 18:29:05,002 views 74787 6133968896 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-02 18:29:05,003 views 74787 6133968896 Processing authentication with request_token: n8ItarV61y...
+INFO 2025-09-02 18:29:05,003 views 74787 6133968896 Attempting to generate session...
+ERROR 2025-09-02 18:29:05,260 services 74787 6133968896 Session generation failed: Token is invalid or has expired.
+ERROR 2025-09-02 18:29:05,261 views 74787 6133968896 Authentication failed: Token is invalid or has expired.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 127, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 162, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Token is invalid or has expired.
+INFO 2025-09-02 18:29:17,356 views 74787 6133968896 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-02 18:29:17,356 views 74787 6133968896 Processing authentication with request_token: n8ItarV61y...
+INFO 2025-09-02 18:29:17,356 views 74787 6133968896 Attempting to generate session...
+ERROR 2025-09-02 18:29:17,591 services 74787 6133968896 Session generation failed: Token is invalid or has expired.
+ERROR 2025-09-02 18:29:17,592 views 74787 6133968896 Authentication failed: Token is invalid or has expired.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 127, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 162, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Token is invalid or has expired.
+INFO 2025-09-03 08:20:52,355 strategy_service 79358 6191525888 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250803_to_20250902_20250902_152658.json
+INFO 2025-09-03 08:20:52,502 strategy_service 79358 6191525888 Saved 20 signals for TCS
+INFO 2025-09-03 08:20:52,503 strategy_service 79358 6191525888 Saved backtest results for TCS
+INFO 2025-09-03 12:48:27,670 views 82181 6197866496 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-03 12:48:27,671 views 82181 6197866496 Processing authentication with request_token: 9ZqnJlL4Wq...
+INFO 2025-09-03 12:48:27,671 views 82181 6197866496 Attempting to generate session...
+ERROR 2025-09-03 12:48:28,230 services 82181 6197866496 Session generation failed: Token is invalid or has expired.
+ERROR 2025-09-03 12:48:28,230 views 82181 6197866496 Authentication failed: Token is invalid or has expired.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 127, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 162, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Token is invalid or has expired.
+INFO 2025-09-03 12:48:38,122 views 82181 6197866496 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-03 12:48:38,123 views 82181 6197866496 Processing authentication with request_token: 9ZqnJlL4Wq...
+INFO 2025-09-03 12:48:38,123 views 82181 6197866496 Attempting to generate session...
+ERROR 2025-09-03 12:48:38,688 services 82181 6197866496 Session generation failed: Token is invalid or has expired.
+ERROR 2025-09-03 12:48:38,688 views 82181 6197866496 Authentication failed: Token is invalid or has expired.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 127, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 162, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Token is invalid or has expired.
+INFO 2025-09-03 12:49:06,988 views 82181 6197866496 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-03 12:49:06,988 views 82181 6197866496 Processing authentication with request_token: T9ZqnJlL4W...
+INFO 2025-09-03 12:49:06,988 views 82181 6197866496 Attempting to generate session...
+ERROR 2025-09-03 12:49:07,404 services 82181 6197866496 Session generation failed: Invalid `checksum`.
+ERROR 2025-09-03 12:49:07,405 views 82181 6197866496 Authentication failed: Invalid `checksum`.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 127, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 162, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Invalid `checksum`.
+INFO 2025-09-03 12:49:16,603 views 82181 6197866496 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-03 12:49:16,603 views 82181 6197866496 Processing authentication with request_token: T9ZqnJlL4W...
+INFO 2025-09-03 12:49:16,603 views 82181 6197866496 Attempting to generate session...
+ERROR 2025-09-03 12:49:17,258 services 82181 6197866496 Session generation failed: Invalid `checksum`.
+ERROR 2025-09-03 12:49:17,258 views 82181 6197866496 Authentication failed: Invalid `checksum`.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 127, in settings
+    session_data = kite_service.generate_session(request_token)
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 162, in generate_session
+    session_data = self.kite.generate_session(
+        request_token, api_secret=self.api_secret
+    )
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 263, in generate_session
+    resp = self._post("api.token", params={
+        "api_key": self.api_key,
+        "request_token": request_token,
+        "checksum": checksum
+    })
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 865, in _post
+    return self._request(route, "POST", url_args=url_args, params=params, is_json=is_json, query_params=query_params)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/kiteconnect/connect.py", line 937, in _request
+    raise exp(data["message"], code=r.status_code)
+kiteconnect.exceptions.TokenException: Invalid `checksum`.
+INFO 2025-09-03 12:51:16,290 views 82181 6197866496 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-03 12:51:16,290 views 82181 6197866496 Processing authentication with request_token: 6ImNiRVIhQ...
+INFO 2025-09-03 12:51:16,291 views 82181 6197866496 Attempting to generate session...
+INFO 2025-09-03 12:51:16,637 views 82181 6197866496 Session data received: {'user_type': 'individual/res_no_nn', 'email': 'bhatikares@gmail.com', 'user_name': 'Sourabh Vidhyadhar Bhatikare', 'user_shortname': 'Sourabh', 'broker': 'ZERODHA', 'exchanges': ['BFO', 'BSE', 'NSE', 'MF', 'NFO'], 'products': ['CNC', 'NRML', 'MIS', 'BO', 'CO'], 'order_types': ['MARKET', 'LIMIT', 'SL', 'SL-M'], 'avatar_url': None, 'user_id': 'WH8704', 'api_key': 'bd53m7sxfmjy2kbz', 'access_token': 'GyIT5cppuFHtrjLdN3IbieJzhzlL36ka', 'public_token': 'N0h72qhWwudx9f6VXwt6JFYiGdrhNbmn', 'refresh_token': '', 'enctoken': 'Oq8uxmuEvxip64OOTcVd2u89vDSPVGaHXgtGgAMXjzlyH+BXxWLt3N0NyM7belC5NEDJ89sTGx+41X0M/emwAzoTmFugmEvBylhwf8SJo80l84SkYFRQMljbVdZgkDk=', 'login_time': datetime.datetime(2025, 9, 3, 18, 18, 11), 'meta': {'demat_consent': 'consent'}}
+INFO 2025-09-03 12:51:16,639 views 82181 6197866496 Authentication successful for user: WH8704
+INFO 2025-09-03 12:52:57,717 services 82181 6197866496 Fetching data for token 2815745 from 2025-08-28 to 2025-09-03
+INFO 2025-09-03 12:52:58,285 services 82181 6197866496 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250828_to_20250903_20250903_125258.json
+INFO 2025-09-03 12:53:20,893 strategy_service 82181 6197866496 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250828_to_20250903_20250903_125258.json
+INFO 2025-09-03 12:53:20,978 strategy_service 82181 6197866496 Saved 9 signals for MARUTI
+INFO 2025-09-03 12:53:20,979 strategy_service 82181 6197866496 Saved backtest results for MARUTI
+INFO 2025-09-03 12:59:22,863 services 82181 6197866496 Fetching data for token 3787777 from 2025-08-04 to 2025-09-03
+ERROR 2025-09-03 12:59:23,359 services 82181 6197866496 Error fetching historical data: invalid token
+INFO 2025-09-03 12:59:23,366 services 82181 6197866496 Generated 1000 sample records
+INFO 2025-09-03 12:59:23,388 services 82181 6197866496 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250804_to_20250903_20250903_125923.json
+INFO 2025-09-03 12:59:40,609 strategy_service 82181 6197866496 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250804_to_20250903_20250903_125923.json
+INFO 2025-09-03 12:59:40,665 strategy_service 82181 6197866496 Saved 5 signals for WIPRO
+INFO 2025-09-03 12:59:40,666 strategy_service 82181 6197866496 Saved backtest results for WIPRO
+INFO 2025-09-03 13:45:45,278 services 82181 6197866496 Fetching data for token 2953217 from 2025-08-04 to 2025-09-03
+INFO 2025-09-03 13:45:47,161 services 82181 6197866496 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-03 13:45:58,877 strategy_service 82181 6197866496 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-03 13:45:59,034 strategy_service 82181 6197866496 Saved 20 signals for TCS
+INFO 2025-09-03 13:45:59,035 strategy_service 82181 6197866496 Saved backtest results for TCS
+INFO 2025-09-03 14:24:58,507 strategy_service 82181 6197866496 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-03 14:24:58,659 strategy_service 82181 6197866496 Saved 20 signals for TCS
+INFO 2025-09-03 14:24:58,660 strategy_service 82181 6197866496 Saved backtest results for TCS
+INFO 2025-09-03 14:29:38,658 services 85009 6129594368 Fetching data for token 738561 from 2025-08-04 to 2025-09-03
+INFO 2025-09-03 14:29:39,352 services 85009 6129594368 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:29:51,437 strategy_service 85009 6129594368 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:29:51,593 strategy_service 85009 6129594368 Saved 21 signals for RELIANCE
+INFO 2025-09-03 14:29:51,594 strategy_service 85009 6129594368 Saved backtest results for RELIANCE
+INFO 2025-09-03 14:31:07,860 views 85096 6136934400 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:31:07,865 views 85096 6136934400 Loaded file with 7875 records
+INFO 2025-09-03 14:31:49,864 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:31:49,869 views 85115 6158626816 Loaded file with 7875 records
+INFO 2025-09-03 14:31:49,871 views 85115 6158626816 Extracted 7875 valid OHLC records
+INFO 2025-09-03 14:32:29,467 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-03 14:32:29,472 views 85115 6158626816 Loaded file with 7875 records
+INFO 2025-09-03 14:32:29,474 views 85115 6158626816 Extracted 7875 valid OHLC records
+INFO 2025-09-03 14:32:36,822 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:32:36,827 views 85115 6158626816 Loaded file with 7875 records
+INFO 2025-09-03 14:32:36,830 views 85115 6158626816 Extracted 7875 valid OHLC records
+INFO 2025-09-03 14:33:22,481 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-03 14:33:22,487 views 85115 6158626816 Loaded file with 7875 records
+INFO 2025-09-03 14:33:22,489 views 85115 6158626816 Extracted 7875 valid OHLC records
+INFO 2025-09-03 14:33:41,310 views 85115 6158626816 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-03 14:33:41,315 views 85115 6158626816 Loaded file with 7875 records
+INFO 2025-09-03 14:33:41,317 views 85115 6158626816 Extracted 7875 valid OHLC records
+INFO 2025-09-03 15:14:22,904 services 86096 6160478208 Fetching data for token 348929 from 2025-08-04 to 2025-09-03
+INFO 2025-09-03 15:14:23,549 services 86096 6160478208 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-03 15:14:56,343 strategy_service 86096 6160478208 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-03 15:14:56,503 strategy_service 86096 6160478208 Saved 23 signals for HINDALCO
+INFO 2025-09-03 15:14:56,504 strategy_service 86096 6160478208 Saved backtest results for HINDALCO
+INFO 2025-09-03 15:15:46,352 views 86096 6160478208 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-03 15:15:46,356 views 86096 6160478208 Loaded file with 7875 records
+INFO 2025-09-03 15:15:46,359 views 86096 6160478208 Extracted 7875 valid OHLC records
+INFO 2025-09-03 15:16:09,033 views 86096 6160478208 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-03 15:16:09,038 views 86096 6160478208 Loaded file with 7875 records
+INFO 2025-09-03 15:16:09,040 views 86096 6160478208 Extracted 7875 valid OHLC records
+INFO 2025-09-04 17:40:03,282 views 96337 6161821696 Auth form submission - Form valid: True, Credentials exist: True
+INFO 2025-09-04 17:40:03,284 views 96337 6161821696 Processing authentication with request_token: kmS2IamkGr...
+INFO 2025-09-04 17:40:03,284 views 96337 6161821696 Attempting to generate session...
+INFO 2025-09-04 17:40:03,392 views 96337 6161821696 Session data received: {'user_type': 'individual/res_no_nn', 'email': 'bhatikares@gmail.com', 'user_name': 'Sourabh Vidhyadhar Bhatikare', 'user_shortname': 'Sourabh', 'broker': 'ZERODHA', 'exchanges': ['BFO', 'BSE', 'NSE', 'MF', 'NFO'], 'products': ['CNC', 'NRML', 'MIS', 'BO', 'CO'], 'order_types': ['MARKET', 'LIMIT', 'SL', 'SL-M'], 'avatar_url': None, 'user_id': 'WH8704', 'api_key': 'bd53m7sxfmjy2kbz', 'access_token': 'jwUO7w7E3WTd4xEu3g9zkba2E0D03GMi', 'public_token': 'Bz7fzP8ZH3J5CLOs4JfFOSplxA65x7EZ', 'refresh_token': '', 'enctoken': 'G6PWVqqd0pQYw9ke9XIsNEcX1/YoYMAZeSxk0B/PA2rYkG2b0OSQHDL7G1HCVEYzlwFPvyzHacOKvttTVMsawP/R11JuYuGjH94u81X+wgqDSOC2vYD5Z+ls4wW0rvA=', 'login_time': datetime.datetime(2025, 9, 4, 23, 9, 38), 'meta': {'demat_consent': 'consent'}}
+INFO 2025-09-04 17:40:03,395 views 96337 6161821696 Authentication successful for user: WH8704
+ERROR 2025-09-04 17:48:32,282 views 96780 6133067776 Error fetching data: Symbol NIFTY 50 not found in supported stocks
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 62, in index
+    historical_data = kite_service.fetch_historical_data_by_symbol(
+        symbol=symbol,
+    ...<2 lines>...
+        interval=interval
+    )
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 292, in fetch_historical_data_by_symbol
+    raise ValueError(f"Symbol {symbol} not found in supported stocks")
+ValueError: Symbol NIFTY 50 not found in supported stocks
+ERROR 2025-09-04 17:48:41,463 views 96780 6133067776 Error fetching data: Symbol GOLDBEES not found in supported stocks
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 62, in index
+    historical_data = kite_service.fetch_historical_data_by_symbol(
+        symbol=symbol,
+    ...<2 lines>...
+        interval=interval
+    )
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 292, in fetch_historical_data_by_symbol
+    raise ValueError(f"Symbol {symbol} not found in supported stocks")
+ValueError: Symbol GOLDBEES not found in supported stocks
+INFO 2025-09-04 17:48:50,295 services 96780 6133067776 Fetching data for token 408065 from 2025-08-05 to 2025-09-04
+INFO 2025-09-04 17:48:50,665 services 96780 6133067776 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/INFY_minute_20250805_to_20250904_20250904_174850.json
+ERROR 2025-09-04 17:52:25,988 views 96896 6169325568 Error fetching data: Symbol GOLDBEES not found in supported stocks
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 62, in index
+    historical_data = kite_service.fetch_historical_data_by_symbol(
+        symbol=symbol,
+    ...<2 lines>...
+        interval=interval
+    )
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 292, in fetch_historical_data_by_symbol
+    raise ValueError(f"Symbol {symbol} not found in supported stocks")
+ValueError: Symbol GOLDBEES not found in supported stocks
+ERROR 2025-09-04 17:52:27,737 views 96896 6169325568 Error fetching data: Symbol GOLDBEES not found in supported stocks
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 62, in index
+    historical_data = kite_service.fetch_historical_data_by_symbol(
+        symbol=symbol,
+    ...<2 lines>...
+        interval=interval
+    )
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 292, in fetch_historical_data_by_symbol
+    raise ValueError(f"Symbol {symbol} not found in supported stocks")
+ValueError: Symbol GOLDBEES not found in supported stocks
+ERROR 2025-09-04 17:52:37,304 views 96896 6169325568 Error fetching data: Symbol NIFTY50 not found in supported stocks
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 62, in index
+    historical_data = kite_service.fetch_historical_data_by_symbol(
+        symbol=symbol,
+    ...<2 lines>...
+        interval=interval
+    )
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/services.py", line 292, in fetch_historical_data_by_symbol
+    raise ValueError(f"Symbol {symbol} not found in supported stocks")
+ValueError: Symbol NIFTY50 not found in supported stocks
+INFO 2025-09-04 17:52:51,786 services 96922 6133706752 Fetching data for token 4268801 from 2025-08-05 to 2025-09-04
+INFO 2025-09-04 17:52:52,159 services 96922 6133706752 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-04 17:53:04,866 strategy_service 96922 6133706752 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-04 17:53:05,028 strategy_service 96922 6133706752 Saved 29 signals for BAJAJFINSV
+INFO 2025-09-04 17:53:05,030 strategy_service 96922 6133706752 Saved backtest results for BAJAJFINSV
+INFO 2025-09-04 17:53:11,765 views 96922 6133706752 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-04 17:53:11,770 views 96922 6133706752 Loaded file with 7875 records
+INFO 2025-09-04 17:53:11,772 views 96922 6133706752 Extracted 7875 valid OHLC records
+INFO 2025-09-04 17:53:56,209 services 96922 6133706752 Fetching data for token 256265 from 2025-08-05 to 2025-09-04
+INFO 2025-09-04 17:53:56,596 services 96922 6133706752 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+ERROR 2025-09-04 18:12:20,051 views 97593 6170619904 Error exporting backtest to Excel: Excel does not support datetimes with timezones. Please ensure that datetimes are timezone unaware before writing to Excel.
+Traceback (most recent call last):
+  File "/Users/prathameshkale/Documents/django-automation/stock_data/views.py", line 936, in export_backtest_to_excel
+    signals_df.to_excel(writer, sheet_name='Trade_Signals', index=False)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/pandas/core/generic.py", line 2436, in to_excel
+    formatter.write(
+    ~~~~~~~~~~~~~~~^
+        excel_writer,
+        ^^^^^^^^^^^^^
+    ...<6 lines>...
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/pandas/io/formats/excel.py", line 952, in write
+    writer._write_cells(
+    ~~~~~~~~~~~~~~~~~~~^
+        formatted_cells,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        freeze_panes=freeze_panes,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/pandas/io/excel/_openpyxl.py", line 486, in _write_cells
+    for cell in cells:
+                ^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/pandas/io/formats/excel.py", line 890, in get_formatted_cells
+    cell.val = self._format_value(cell.val)
+               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/prathameshkale/Documents/django-automation/venv/lib/python3.13/site-packages/pandas/io/formats/excel.py", line 607, in _format_value
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Excel does not support datetimes with timezones. Please ensure that datetimes are timezone unaware before writing to Excel.
+INFO 2025-09-04 18:17:42,247 views 683 6129692672 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-04 18:17:42,251 views 683 6129692672 Loaded file with 7875 records
+INFO 2025-09-04 18:17:42,270 views 683 6129692672 Extracted 7875 valid OHLC records
+INFO 2025-09-04 18:18:14,377 views 683 6129692672 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-04 18:18:14,381 views 683 6129692672 Loaded file with 7875 records
+INFO 2025-09-04 18:18:14,384 views 683 6129692672 Extracted 7875 valid OHLC records
+INFO 2025-09-04 18:18:26,549 strategy_service 683 6129692672 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+INFO 2025-09-04 18:18:26,706 strategy_service 683 6129692672 Saved 22 signals for NIFTY50
+INFO 2025-09-04 18:18:26,707 strategy_service 683 6129692672 Saved backtest results for NIFTY50
+INFO 2025-09-04 18:18:33,871 views 683 6129692672 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+INFO 2025-09-04 18:18:33,876 views 683 6129692672 Loaded file with 7875 records
+INFO 2025-09-04 18:18:33,878 views 683 6129692672 Extracted 7875 valid OHLC records
+INFO 2025-09-04 18:19:13,527 views 683 6129692672 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+INFO 2025-09-04 18:19:13,532 views 683 6129692672 Loaded file with 7875 records
+INFO 2025-09-04 18:19:13,536 views 683 6129692672 Extracted 7875 valid OHLC records
+INFO 2025-09-04 18:20:10,077 views 683 6129692672 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-04 18:20:10,081 views 683 6129692672 Loaded file with 7875 records
+INFO 2025-09-04 18:20:10,083 views 683 6129692672 Extracted 7875 valid OHLC records
+INFO 2025-09-04 18:32:23,496 views 683 6129692672 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+INFO 2025-09-04 18:32:23,501 views 683 6129692672 Loaded file with 7875 records
+INFO 2025-09-04 18:32:23,503 views 683 6129692672 Extracted 7875 valid OHLC records
+INFO 2025-09-04 18:33:14,012 views 683 6129692672 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-04 18:33:14,017 views 683 6129692672 Loaded file with 7875 records
+INFO 2025-09-04 18:33:14,019 views 683 6129692672 Extracted 7875 valid OHLC records
+INFO 2025-09-04 18:33:21,371 views 683 6129692672 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+INFO 2025-09-04 18:33:21,375 views 683 6129692672 Loaded file with 7875 records
+INFO 2025-09-04 18:33:21,378 views 683 6129692672 Extracted 7875 valid OHLC records
+INFO 2025-09-04 18:35:57,345 views 683 6129692672 Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-04 18:35:57,349 views 683 6129692672 Loaded file with 7875 records
+INFO 2025-09-04 18:35:57,351 views 683 6129692672 Extracted 7875 valid OHLC records
+INFO 2025-09-10 11:32:19,992 strategy_service 30490 6156382208 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 11:32:20,159 strategy_service 30490 6156382208 Saved 29 signals for BAJAJFINSV
+INFO 2025-09-10 11:32:20,160 strategy_service 30490 6156382208 Saved backtest results for BAJAJFINSV
+INFO 2025-09-10 11:32:25,075 views 30490 6156382208 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 11:32:25,077 views 30490 6156382208 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 11:32:25,143 views 30490 6156382208 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 11:32:25,147 views 30490 6156382208 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 11:32:25,149 views 30490 6156382208 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 11:32:25,165 views 30490 6156382208 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 11:33:24,108 services 30490 6156382208 Date range (30 days) within Kite limit (60 days) for minute interval. Using single fetch.
+WARNING 2025-09-10 11:33:24,109 services 30490 6156382208 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:33:24,109 services 30490 6156382208 Generating sample data from 2025-08-11 to 2025-09-10, expected ~8625 records for minute interval
+INFO 2025-09-10 11:33:24,143 services 30490 6156382208 Generated 8272 sample records for testing
+INFO 2025-09-10 11:33:24,212 services 30490 6156382208 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_113324.json
+INFO 2025-09-10 11:36:55,566 services 31181 8581046464 Fetching data for RELIANCE in 2 chunks due to Kite limits
+INFO 2025-09-10 11:36:55,566 services 31181 8581046464 Fetching chunk 1/2: 2024-01-01 00:00:00 to 2024-03-01 00:00:00
+WARNING 2025-09-10 11:36:55,566 services 31181 8581046464 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:36:55,566 services 31181 8581046464 Generating sample data from 2024-01-01 to 2024-03-01, expected ~16875 records for minute interval
+INFO 2025-09-10 11:36:55,597 services 31181 8581046464 Generated 16544 sample records for testing
+INFO 2025-09-10 11:36:55,597 services 31181 8581046464 Successfully fetched 16544 records for chunk 1
+INFO 2025-09-10 11:36:56,602 services 31181 8581046464 Fetching chunk 2/2: 2024-03-02 00:00:00 to 2024-04-01 00:00:00
+WARNING 2025-09-10 11:36:56,603 services 31181 8581046464 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:36:56,603 services 31181 8581046464 Generating sample data from 2024-03-02 to 2024-04-01, expected ~7875 records for minute interval
+INFO 2025-09-10 11:36:56,634 services 31181 8581046464 Generated 7520 sample records for testing
+INFO 2025-09-10 11:36:56,635 services 31181 8581046464 Successfully fetched 7520 records for chunk 2
+INFO 2025-09-10 11:36:57,698 services 31181 8581046464 Combined data: 24064 total records from 2/2 successful chunks
+INFO 2025-09-10 11:42:05,846 services 31726 8581046464 Smart fetch for RELIANCE: 365 days of minute data
+INFO 2025-09-10 11:42:05,846 services 31726 8581046464 Estimated 6 API calls using chunked approach
+INFO 2025-09-10 11:42:05,846 services 31726 8581046464 Using chunked fetching for optimal performance
+INFO 2025-09-10 11:42:05,846 services 31726 8581046464 Fetching data for RELIANCE in 6 chunks due to Kite limits
+INFO 2025-09-10 11:42:05,846 services 31726 8581046464 Fetching chunk 1/6: 2023-01-01 00:00:00 to 2023-03-02 00:00:00
+WARNING 2025-09-10 11:42:05,846 services 31726 8581046464 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:42:05,846 services 31726 8581046464 Generating sample data from 2023-01-01 to 2023-03-02, expected ~16500 records for minute interval
+INFO 2025-09-10 11:42:05,875 services 31726 8581046464 Generated 16168 sample records for testing
+INFO 2025-09-10 11:42:05,875 services 31726 8581046464 Successfully fetched 16168 records for chunk 1
+INFO 2025-09-10 11:42:06,881 services 31726 8581046464 Fetching chunk 2/6: 2023-03-03 00:00:00 to 2023-05-02 00:00:00
+WARNING 2025-09-10 11:42:06,881 services 31726 8581046464 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:42:06,881 services 31726 8581046464 Generating sample data from 2023-03-03 to 2023-05-02, expected ~16125 records for minute interval
+INFO 2025-09-10 11:42:06,927 services 31726 8581046464 Generated 15792 sample records for testing
+INFO 2025-09-10 11:42:06,927 services 31726 8581046464 Successfully fetched 15792 records for chunk 2
+INFO 2025-09-10 11:42:07,932 services 31726 8581046464 Fetching chunk 3/6: 2023-05-03 00:00:00 to 2023-07-02 00:00:00
+WARNING 2025-09-10 11:42:07,933 services 31726 8581046464 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:42:07,933 services 31726 8581046464 Generating sample data from 2023-05-03 to 2023-07-02, expected ~16125 records for minute interval
+INFO 2025-09-10 11:42:07,991 services 31726 8581046464 Generated 16125 sample records for testing
+INFO 2025-09-10 11:42:07,991 services 31726 8581046464 Successfully fetched 16125 records for chunk 3
+INFO 2025-09-10 11:42:08,996 services 31726 8581046464 Fetching chunk 4/6: 2023-07-03 00:00:00 to 2023-09-01 00:00:00
+WARNING 2025-09-10 11:42:08,996 services 31726 8581046464 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:42:08,997 services 31726 8581046464 Generating sample data from 2023-07-03 to 2023-09-01, expected ~16875 records for minute interval
+INFO 2025-09-10 11:42:09,066 services 31726 8581046464 Generated 16544 sample records for testing
+INFO 2025-09-10 11:42:09,067 services 31726 8581046464 Successfully fetched 16544 records for chunk 4
+INFO 2025-09-10 11:42:10,072 services 31726 8581046464 Fetching chunk 5/6: 2023-09-02 00:00:00 to 2023-11-01 00:00:00
+WARNING 2025-09-10 11:42:10,072 services 31726 8581046464 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:42:10,072 services 31726 8581046464 Generating sample data from 2023-09-02 to 2023-11-01, expected ~16125 records for minute interval
+INFO 2025-09-10 11:42:10,128 services 31726 8581046464 Generated 15792 sample records for testing
+INFO 2025-09-10 11:42:10,128 services 31726 8581046464 Successfully fetched 15792 records for chunk 5
+INFO 2025-09-10 11:42:11,133 services 31726 8581046464 Fetching chunk 6/6: 2023-11-02 00:00:00 to 2024-01-01 00:00:00
+WARNING 2025-09-10 11:42:11,134 services 31726 8581046464 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:42:11,134 services 31726 8581046464 Generating sample data from 2023-11-02 to 2024-01-01, expected ~16125 records for minute interval
+INFO 2025-09-10 11:42:11,180 services 31726 8581046464 Generated 15792 sample records for testing
+INFO 2025-09-10 11:42:11,181 services 31726 8581046464 Successfully fetched 15792 records for chunk 6
+INFO 2025-09-10 11:42:12,319 services 31726 8581046464 Combined data: 96213 total records from 6/6 successful chunks
+INFO 2025-09-10 11:42:12,321 services 31726 8581046464 Smart fetch for RELIANCE: 30 days of minute data
+INFO 2025-09-10 11:42:12,321 services 31726 8581046464 Estimated 1 API calls using single approach
+INFO 2025-09-10 11:42:12,321 services 31726 8581046464 Using single fetch (within API limits)
+INFO 2025-09-10 11:42:12,321 services 31726 8581046464 Date range (30 days) within Kite limit (60 days) for minute interval. Using single fetch.
+WARNING 2025-09-10 11:42:12,321 services 31726 8581046464 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:42:12,321 services 31726 8581046464 Generating sample data from 2024-01-01 to 2024-01-31, expected ~8625 records for minute interval
+INFO 2025-09-10 11:42:12,335 services 31726 8581046464 Generated 8272 sample records for testing
+INFO 2025-09-10 11:42:12,341 services 31726 8581046464 Smart fetch for RELIANCE: 730 days of day data
+INFO 2025-09-10 11:42:12,341 services 31726 8581046464 Estimated 1 API calls using single approach
+INFO 2025-09-10 11:42:12,341 services 31726 8581046464 Using single fetch (within API limits)
+INFO 2025-09-10 11:42:12,341 services 31726 8581046464 Date range (730 days) within Kite limit (2000 days) for day interval. Using single fetch.
+WARNING 2025-09-10 11:42:12,341 services 31726 8581046464 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:42:12,341 services 31726 8581046464 Generating sample data from 2022-01-01 to 2024-01-01, expected ~731 records for day interval
+INFO 2025-09-10 11:42:12,343 services 31726 8581046464 Generated 731 sample records for testing
+INFO 2025-09-10 11:43:46,836 services 31557 6127759360 Smart fetch for BANKBEES: 343 days of minute data
+INFO 2025-09-10 11:43:46,836 services 31557 6127759360 Estimated 6 API calls using chunked approach
+INFO 2025-09-10 11:43:46,836 services 31557 6127759360 Using chunked fetching for optimal performance
+INFO 2025-09-10 11:43:46,836 services 31557 6127759360 Fetching data for BANKBEES in 6 chunks due to Kite limits
+INFO 2025-09-10 11:43:46,836 services 31557 6127759360 Fetching chunk 1/6: 2024-10-02 00:00:00 to 2024-12-01 00:00:00
+WARNING 2025-09-10 11:43:46,836 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:43:46,836 services 31557 6127759360 Generating sample data from 2024-10-02 to 2024-12-01, expected ~16125 records for minute interval
+INFO 2025-09-10 11:43:46,888 services 31557 6127759360 Generated 16125 sample records for testing
+INFO 2025-09-10 11:43:46,888 services 31557 6127759360 Successfully fetched 16125 records for chunk 1
+INFO 2025-09-10 11:43:47,894 services 31557 6127759360 Fetching chunk 2/6: 2024-12-02 00:00:00 to 2025-01-31 00:00:00
+WARNING 2025-09-10 11:43:47,894 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:43:47,894 services 31557 6127759360 Generating sample data from 2024-12-02 to 2025-01-31, expected ~16875 records for minute interval
+INFO 2025-09-10 11:43:47,946 services 31557 6127759360 Generated 16544 sample records for testing
+INFO 2025-09-10 11:43:47,946 services 31557 6127759360 Successfully fetched 16544 records for chunk 2
+INFO 2025-09-10 11:43:48,951 services 31557 6127759360 Fetching chunk 3/6: 2025-02-01 00:00:00 to 2025-04-02 00:00:00
+WARNING 2025-09-10 11:43:48,951 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:43:48,951 services 31557 6127759360 Generating sample data from 2025-02-01 to 2025-04-02, expected ~16125 records for minute interval
+INFO 2025-09-10 11:43:49,007 services 31557 6127759360 Generated 15792 sample records for testing
+INFO 2025-09-10 11:43:49,008 services 31557 6127759360 Successfully fetched 15792 records for chunk 3
+INFO 2025-09-10 11:43:50,013 services 31557 6127759360 Fetching chunk 4/6: 2025-04-03 00:00:00 to 2025-06-02 00:00:00
+WARNING 2025-09-10 11:43:50,014 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:43:50,014 services 31557 6127759360 Generating sample data from 2025-04-03 to 2025-06-02, expected ~16125 records for minute interval
+INFO 2025-09-10 11:43:50,070 services 31557 6127759360 Generated 15792 sample records for testing
+INFO 2025-09-10 11:43:50,071 services 31557 6127759360 Successfully fetched 15792 records for chunk 4
+INFO 2025-09-10 11:43:51,076 services 31557 6127759360 Fetching chunk 5/6: 2025-06-03 00:00:00 to 2025-08-02 00:00:00
+WARNING 2025-09-10 11:43:51,076 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:43:51,077 services 31557 6127759360 Generating sample data from 2025-06-03 to 2025-08-02, expected ~16500 records for minute interval
+INFO 2025-09-10 11:43:51,131 services 31557 6127759360 Generated 16500 sample records for testing
+INFO 2025-09-10 11:43:51,131 services 31557 6127759360 Successfully fetched 16500 records for chunk 5
+INFO 2025-09-10 11:43:52,136 services 31557 6127759360 Fetching chunk 6/6: 2025-08-03 00:00:00 to 2025-09-10 00:00:00
+WARNING 2025-09-10 11:43:52,136 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:43:52,137 services 31557 6127759360 Generating sample data from 2025-08-03 to 2025-09-10, expected ~10500 records for minute interval
+INFO 2025-09-10 11:43:52,172 services 31557 6127759360 Generated 10152 sample records for testing
+INFO 2025-09-10 11:43:52,172 services 31557 6127759360 Successfully fetched 10152 records for chunk 6
+INFO 2025-09-10 11:43:53,292 services 31557 6127759360 Combined data: 90905 total records from 6/6 successful chunks
+INFO 2025-09-10 11:43:53,982 services 31557 6127759360 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20241002_to_20250910_20250910_114353.json
+INFO 2025-09-10 11:44:07,770 services 31557 6127759360 Smart fetch for BANKBEES: 280 days of minute data
+INFO 2025-09-10 11:44:07,770 services 31557 6127759360 Estimated 5 API calls using chunked approach
+INFO 2025-09-10 11:44:07,770 services 31557 6127759360 Using chunked fetching for optimal performance
+INFO 2025-09-10 11:44:07,770 services 31557 6127759360 Fetching data for BANKBEES in 5 chunks due to Kite limits
+INFO 2025-09-10 11:44:07,770 services 31557 6127759360 Fetching chunk 1/5: 2024-12-04 00:00:00 to 2025-02-02 00:00:00
+WARNING 2025-09-10 11:44:07,770 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:44:07,770 services 31557 6127759360 Generating sample data from 2024-12-04 to 2025-02-02, expected ~16125 records for minute interval
+INFO 2025-09-10 11:44:07,813 services 31557 6127759360 Generated 16125 sample records for testing
+INFO 2025-09-10 11:44:07,813 services 31557 6127759360 Successfully fetched 16125 records for chunk 1
+INFO 2025-09-10 11:44:08,818 services 31557 6127759360 Fetching chunk 2/5: 2025-02-03 00:00:00 to 2025-04-04 00:00:00
+WARNING 2025-09-10 11:44:08,818 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:44:08,819 services 31557 6127759360 Generating sample data from 2025-02-03 to 2025-04-04, expected ~16875 records for minute interval
+INFO 2025-09-10 11:44:08,867 services 31557 6127759360 Generated 16544 sample records for testing
+INFO 2025-09-10 11:44:08,867 services 31557 6127759360 Successfully fetched 16544 records for chunk 2
+INFO 2025-09-10 11:44:09,873 services 31557 6127759360 Fetching chunk 3/5: 2025-04-05 00:00:00 to 2025-06-04 00:00:00
+WARNING 2025-09-10 11:44:09,873 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:44:09,873 services 31557 6127759360 Generating sample data from 2025-04-05 to 2025-06-04, expected ~16125 records for minute interval
+INFO 2025-09-10 11:44:09,923 services 31557 6127759360 Generated 15792 sample records for testing
+INFO 2025-09-10 11:44:09,924 services 31557 6127759360 Successfully fetched 15792 records for chunk 3
+INFO 2025-09-10 11:44:10,929 services 31557 6127759360 Fetching chunk 4/5: 2025-06-05 00:00:00 to 2025-08-04 00:00:00
+WARNING 2025-09-10 11:44:10,929 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:44:10,929 services 31557 6127759360 Generating sample data from 2025-06-05 to 2025-08-04, expected ~16125 records for minute interval
+INFO 2025-09-10 11:44:10,986 services 31557 6127759360 Generated 15792 sample records for testing
+INFO 2025-09-10 11:44:10,986 services 31557 6127759360 Successfully fetched 15792 records for chunk 4
+INFO 2025-09-10 11:44:11,987 services 31557 6127759360 Fetching chunk 5/5: 2025-08-05 00:00:00 to 2025-09-10 00:00:00
+WARNING 2025-09-10 11:44:11,987 services 31557 6127759360 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:44:11,987 services 31557 6127759360 Generating sample data from 2025-08-05 to 2025-09-10, expected ~10125 records for minute interval
+INFO 2025-09-10 11:44:12,027 services 31557 6127759360 Generated 9776 sample records for testing
+INFO 2025-09-10 11:44:12,028 services 31557 6127759360 Successfully fetched 9776 records for chunk 5
+INFO 2025-09-10 11:44:13,138 services 31557 6127759360 Combined data: 74029 total records from 5/5 successful chunks
+INFO 2025-09-10 11:44:13,660 services 31557 6127759360 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20241204_to_20250910_20250910_114413.json
+INFO 2025-09-10 11:44:25,773 strategy_service 31557 6127759360 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20241204_to_20250910_20250910_114413.json
+INFO 2025-09-10 11:44:26,795 strategy_service 31557 6127759360 Saved 215 signals for BANKBEES
+INFO 2025-09-10 11:44:26,796 strategy_service 31557 6127759360 Saved backtest results for BANKBEES
+INFO 2025-09-10 11:44:34,258 views 31557 6127759360 chart_data_api: Loaded backtest 14 for symbol BANKBEES
+INFO 2025-09-10 11:44:34,260 views 31557 6127759360 chart_data_api: Found 214 signals for backtest 14
+INFO 2025-09-10 11:44:34,450 views 31557 6127759360 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20241204_to_20250910_20250910_114413.json
+INFO 2025-09-10 11:44:34,490 views 31557 6127759360 chart_data_api: Loaded file with 74029 records
+INFO 2025-09-10 11:44:34,511 views 31557 6127759360 chart_data_api: Extracted 70777 valid OHLC records
+INFO 2025-09-10 11:44:34,670 views 31557 6127759360 chart_data_api: Returning 70777 OHLC, 210 signals, 70752 MACD, 70773 MA
+INFO 2025-09-10 11:45:20,567 views 31557 6127759360 chart_data_api: Loaded backtest 14 for symbol BANKBEES
+INFO 2025-09-10 11:45:20,575 views 31557 6127759360 chart_data_api: Found 214 signals for backtest 14
+INFO 2025-09-10 11:45:20,779 views 31557 6127759360 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20241204_to_20250910_20250910_114413.json
+INFO 2025-09-10 11:45:20,819 views 31557 6127759360 chart_data_api: Loaded file with 74029 records
+INFO 2025-09-10 11:45:20,840 views 31557 6127759360 chart_data_api: Extracted 70777 valid OHLC records
+INFO 2025-09-10 11:45:20,995 views 31557 6127759360 chart_data_api: Returning 70777 OHLC, 210 signals, 70752 MACD, 70773 MA
+INFO 2025-09-10 11:56:15,257 services 33373 6183251968 Smart fetch for BANKBEES: 30 days of minute data
+INFO 2025-09-10 11:56:15,257 services 33373 6183251968 Estimated 1 API calls using single approach
+INFO 2025-09-10 11:56:15,257 services 33373 6183251968 Using single fetch (within API limits)
+INFO 2025-09-10 11:56:15,257 services 33373 6183251968 Date range (30 days) within Kite limit (60 days) for minute interval. Using single fetch.
+WARNING 2025-09-10 11:56:15,257 services 33373 6183251968 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 11:56:15,258 services 33373 6183251968 Generating sample data from 2025-08-11 to 2025-09-10, expected ~8625 records for minute interval
+INFO 2025-09-10 11:56:15,292 services 33373 6183251968 Generated 8272 sample records for testing
+INFO 2025-09-10 11:56:15,361 services 33373 6183251968 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_115615.json
+INFO 2025-09-10 12:22:09,609 views 33373 6166425600 chart_data_api: Loaded backtest 12 for symbol NIFTY50
+INFO 2025-09-10 12:22:09,614 views 33373 6166425600 chart_data_api: Found 21 signals for backtest 12
+INFO 2025-09-10 12:22:09,806 views 33373 6166425600 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+INFO 2025-09-10 12:22:09,810 views 33373 6166425600 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 12:22:09,812 views 33373 6166425600 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 12:22:09,830 views 33373 6166425600 chart_data_api: Returning 7875 OHLC, 21 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 12:30:37,996 services 33651 6129659904 Smart fetch for BANKBEES: 30 days of minute data
+INFO 2025-09-10 12:30:37,996 services 33651 6129659904 Estimated 1 API calls using single approach
+INFO 2025-09-10 12:30:37,996 services 33651 6129659904 Using single fetch (within API limits)
+INFO 2025-09-10 12:30:37,996 services 33651 6129659904 Date range (30 days) within Kite limit (60 days) for minute interval. Using single fetch.
+WARNING 2025-09-10 12:30:37,996 services 33651 6129659904 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 12:30:37,996 services 33651 6129659904 Generating sample data from 2025-08-11 to 2025-09-10, expected ~8625 records for minute interval
+INFO 2025-09-10 12:30:38,030 services 33651 6129659904 Generated 8272 sample records for testing
+INFO 2025-09-10 12:30:38,099 services 33651 6129659904 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:40:39,905 views 33651 6129659904 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 12:40:39,912 views 33651 6129659904 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 12:40:40,119 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 12:40:40,123 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 12:40:40,125 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 12:40:40,143 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 12:41:47,239 views 33651 6129659904 chart_data_api: Loaded backtest 14 for symbol BANKBEES
+INFO 2025-09-10 12:41:47,240 views 33651 6129659904 chart_data_api: Found 214 signals for backtest 14
+INFO 2025-09-10 12:41:47,443 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:41:47,447 views 33651 6129659904 chart_data_api: Loaded file with 8272 records
+INFO 2025-09-10 12:41:47,449 views 33651 6129659904 chart_data_api: Extracted 3206 valid OHLC records
+INFO 2025-09-10 12:41:47,458 views 33651 6129659904 chart_data_api: Returning 3206 OHLC, 210 signals, 3181 MACD, 3202 MA
+INFO 2025-09-10 12:42:06,379 views 33651 6129659904 chart_data_api: Loaded backtest 14 for symbol BANKBEES
+INFO 2025-09-10 12:42:06,380 views 33651 6129659904 chart_data_api: Found 214 signals for backtest 14
+INFO 2025-09-10 12:42:06,572 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:42:06,577 views 33651 6129659904 chart_data_api: Loaded file with 8272 records
+INFO 2025-09-10 12:42:06,578 views 33651 6129659904 chart_data_api: Extracted 3206 valid OHLC records
+INFO 2025-09-10 12:42:06,587 views 33651 6129659904 chart_data_api: Returning 3206 OHLC, 210 signals, 3181 MACD, 3202 MA
+INFO 2025-09-10 12:42:16,369 views 33651 6129659904 chart_data_api: Loaded backtest 14 for symbol BANKBEES
+INFO 2025-09-10 12:42:16,373 views 33651 6129659904 chart_data_api: Found 214 signals for backtest 14
+INFO 2025-09-10 12:42:16,569 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:42:16,573 views 33651 6129659904 chart_data_api: Loaded file with 8272 records
+INFO 2025-09-10 12:42:16,575 views 33651 6129659904 chart_data_api: Extracted 3206 valid OHLC records
+INFO 2025-09-10 12:42:16,583 views 33651 6129659904 chart_data_api: Returning 3206 OHLC, 210 signals, 3181 MACD, 3202 MA
+INFO 2025-09-10 12:42:20,902 views 33651 6129659904 chart_data_api: Loaded backtest 14 for symbol BANKBEES
+INFO 2025-09-10 12:42:20,903 views 33651 6129659904 chart_data_api: Found 214 signals for backtest 14
+INFO 2025-09-10 12:42:21,097 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:42:21,101 views 33651 6129659904 chart_data_api: Loaded file with 8272 records
+INFO 2025-09-10 12:42:21,103 views 33651 6129659904 chart_data_api: Extracted 3206 valid OHLC records
+INFO 2025-09-10 12:42:21,111 views 33651 6129659904 chart_data_api: Returning 3206 OHLC, 210 signals, 3181 MACD, 3202 MA
+INFO 2025-09-10 12:42:29,316 views 33651 6129659904 chart_data_api: Loaded backtest 6 for symbol WIPRO
+INFO 2025-09-10 12:42:29,319 views 33651 6129659904 chart_data_api: Found 0 signals for backtest 6
+INFO 2025-09-10 12:42:29,508 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/WIPRO_minute_20250804_to_20250903_20250903_125923.json
+INFO 2025-09-10 12:42:29,508 views 33651 6129659904 chart_data_api: Loaded file with 1000 records
+INFO 2025-09-10 12:42:29,509 views 33651 6129659904 chart_data_api: Extracted 1000 valid OHLC records
+INFO 2025-09-10 12:42:29,511 views 33651 6129659904 chart_data_api: Returning 1000 OHLC, 0 signals, 975 MACD, 996 MA
+INFO 2025-09-10 12:42:42,548 views 33651 6129659904 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 12:42:42,550 views 33651 6129659904 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 12:42:42,741 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 12:42:42,745 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 12:42:42,747 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 12:42:42,764 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 12:42:53,063 views 33651 6129659904 chart_data_api: Loaded backtest 12 for symbol NIFTY50
+INFO 2025-09-10 12:42:53,065 views 33651 6129659904 chart_data_api: Found 21 signals for backtest 12
+INFO 2025-09-10 12:42:53,247 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+INFO 2025-09-10 12:42:53,251 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 12:42:53,253 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 12:42:53,270 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 21 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 12:43:43,118 views 33651 6129659904 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 12:43:43,120 views 33651 6129659904 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 12:43:43,332 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 12:43:43,336 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 12:43:43,339 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 12:43:43,355 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 12:43:52,047 views 33651 6129659904 chart_data_api: Loaded backtest 14 for symbol BANKBEES
+INFO 2025-09-10 12:43:52,049 views 33651 6129659904 chart_data_api: Found 214 signals for backtest 14
+INFO 2025-09-10 12:43:52,227 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:43:52,231 views 33651 6129659904 chart_data_api: Loaded file with 8272 records
+INFO 2025-09-10 12:43:52,233 views 33651 6129659904 chart_data_api: Extracted 3206 valid OHLC records
+INFO 2025-09-10 12:43:52,242 views 33651 6129659904 chart_data_api: Returning 3206 OHLC, 210 signals, 3181 MACD, 3202 MA
+INFO 2025-09-10 12:44:25,550 views 33651 6129659904 chart_data_api: Loaded backtest 14 for symbol BANKBEES
+INFO 2025-09-10 12:44:25,553 views 33651 6129659904 chart_data_api: Found 214 signals for backtest 14
+INFO 2025-09-10 12:44:25,745 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:44:25,750 views 33651 6129659904 chart_data_api: Loaded file with 8272 records
+INFO 2025-09-10 12:44:25,751 views 33651 6129659904 chart_data_api: Extracted 3206 valid OHLC records
+INFO 2025-09-10 12:44:25,760 views 33651 6129659904 chart_data_api: Returning 3206 OHLC, 210 signals, 3181 MACD, 3202 MA
+INFO 2025-09-10 12:45:40,764 views 33651 6129659904 chart_data_api: Loaded backtest 14 for symbol BANKBEES
+INFO 2025-09-10 12:45:40,767 views 33651 6129659904 chart_data_api: Found 214 signals for backtest 14
+INFO 2025-09-10 12:45:40,957 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:45:40,962 views 33651 6129659904 chart_data_api: Loaded file with 8272 records
+INFO 2025-09-10 12:45:40,963 views 33651 6129659904 chart_data_api: Extracted 3206 valid OHLC records
+INFO 2025-09-10 12:45:40,972 views 33651 6129659904 chart_data_api: Returning 3206 OHLC, 210 signals, 3181 MACD, 3202 MA
+INFO 2025-09-10 12:45:56,348 strategy_service 33651 6129659904 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20241204_to_20250910_20250910_114413.json
+INFO 2025-09-10 12:45:57,551 strategy_service 33651 6129659904 Saved 215 signals for BANKBEES
+INFO 2025-09-10 12:45:57,553 strategy_service 33651 6129659904 Saved backtest results for BANKBEES
+INFO 2025-09-10 12:46:11,585 views 33651 6129659904 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 12:46:11,587 views 33651 6129659904 chart_data_api: Found 214 signals for backtest 15
+INFO 2025-09-10 12:46:11,810 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:46:11,814 views 33651 6129659904 chart_data_api: Loaded file with 8272 records
+INFO 2025-09-10 12:46:11,816 views 33651 6129659904 chart_data_api: Extracted 3206 valid OHLC records
+INFO 2025-09-10 12:46:11,824 views 33651 6129659904 chart_data_api: Returning 3206 OHLC, 210 signals, 3181 MACD, 3202 MA
+INFO 2025-09-10 12:46:53,851 views 33651 6129659904 chart_data_api: Loaded backtest 10 for symbol HINDALCO
+INFO 2025-09-10 12:46:53,853 views 33651 6129659904 chart_data_api: Found 23 signals for backtest 10
+INFO 2025-09-10 12:46:54,057 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-10 12:46:54,061 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 12:46:54,063 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 12:46:54,080 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 23 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 12:48:07,439 views 33651 6129659904 chart_data_api: Loaded backtest 8 for symbol TCS
+INFO 2025-09-10 12:48:07,441 views 33651 6129659904 chart_data_api: Found 20 signals for backtest 8
+INFO 2025-09-10 12:48:07,645 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-10 12:48:07,649 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 12:48:07,651 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 12:48:07,668 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 20 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 12:48:22,285 views 33651 6129659904 chart_data_api: Loaded backtest 5 for symbol MARUTI
+INFO 2025-09-10 12:48:22,286 views 33651 6129659904 chart_data_api: Found 8 signals for backtest 5
+INFO 2025-09-10 12:48:22,515 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250828_to_20250903_20250903_125258.json
+INFO 2025-09-10 12:48:22,516 views 33651 6129659904 chart_data_api: Loaded file with 1875 records
+INFO 2025-09-10 12:48:22,517 views 33651 6129659904 chart_data_api: Extracted 1875 valid OHLC records
+INFO 2025-09-10 12:48:22,521 views 33651 6129659904 chart_data_api: Returning 1875 OHLC, 8 signals, 1850 MACD, 1871 MA
+INFO 2025-09-10 12:49:20,447 views 33651 6129659904 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 12:49:20,450 views 33651 6129659904 chart_data_api: Found 214 signals for backtest 15
+INFO 2025-09-10 12:49:20,666 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:49:20,670 views 33651 6129659904 chart_data_api: Loaded file with 8272 records
+INFO 2025-09-10 12:49:20,672 views 33651 6129659904 chart_data_api: Extracted 3206 valid OHLC records
+INFO 2025-09-10 12:49:20,680 views 33651 6129659904 chart_data_api: Returning 3206 OHLC, 210 signals, 3181 MACD, 3202 MA
+INFO 2025-09-10 12:53:16,583 views 33651 6129659904 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 12:53:16,587 views 33651 6129659904 chart_data_api: Found 214 signals for backtest 15
+INFO 2025-09-10 12:53:16,815 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250811_to_20250910_20250910_123038.json
+INFO 2025-09-10 12:53:16,820 views 33651 6129659904 chart_data_api: Loaded file with 8272 records
+INFO 2025-09-10 12:53:16,821 views 33651 6129659904 chart_data_api: Extracted 3206 valid OHLC records
+INFO 2025-09-10 12:53:16,830 views 33651 6129659904 chart_data_api: Returning 3206 OHLC, 210 signals, 3181 MACD, 3202 MA
+INFO 2025-09-10 12:53:21,070 views 33651 6129659904 chart_data_api: Loaded backtest 12 for symbol NIFTY50
+INFO 2025-09-10 12:53:21,072 views 33651 6129659904 chart_data_api: Found 21 signals for backtest 12
+INFO 2025-09-10 12:53:21,261 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+INFO 2025-09-10 12:53:21,266 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 12:53:21,268 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 12:53:21,285 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 21 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 12:54:23,881 views 33651 6129659904 chart_data_api: Loaded backtest 9 for symbol RELIANCE
+INFO 2025-09-10 12:54:23,883 views 33651 6129659904 chart_data_api: Found 13 signals for backtest 9
+INFO 2025-09-10 12:54:24,073 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-10 12:54:24,077 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 12:54:24,079 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 12:54:24,096 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 13 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 13:00:05,816 views 33651 6129659904 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 13:00:05,820 views 33651 6129659904 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 13:00:06,038 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 13:00:06,042 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 13:00:06,045 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 13:00:06,061 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 13:03:43,107 views 33651 6129659904 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 13:03:43,110 views 33651 6129659904 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 13:03:43,322 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 13:03:43,327 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 13:03:43,329 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 13:03:43,346 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 13:06:42,349 views 33651 6129659904 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 13:06:42,351 views 33651 6129659904 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 13:06:42,568 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 13:06:42,572 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 13:06:42,574 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 13:06:42,591 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 13:06:53,356 views 33651 6129659904 chart_data_api: Loaded backtest 9 for symbol RELIANCE
+INFO 2025-09-10 13:06:53,358 views 33651 6129659904 chart_data_api: Found 13 signals for backtest 9
+INFO 2025-09-10 13:06:53,551 views 33651 6129659904 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-10 13:06:53,555 views 33651 6129659904 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 13:06:53,558 views 33651 6129659904 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 13:06:53,575 views 33651 6129659904 chart_data_api: Returning 7875 OHLC, 13 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 13:11:40,720 services 35261 6166835200 Smart fetch for BANKBEES: 8 days of minute data
+INFO 2025-09-10 13:11:40,720 services 35261 6166835200 Estimated 1 API calls using single approach
+INFO 2025-09-10 13:11:40,720 services 35261 6166835200 Using single fetch (within API limits)
+INFO 2025-09-10 13:11:40,720 services 35261 6166835200 Date range (8 days) within Kite limit (60 days) for minute interval. Using single fetch.
+WARNING 2025-09-10 13:11:40,720 services 35261 6166835200 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 13:11:40,720 services 35261 6166835200 Generating sample data from 2025-09-02 to 2025-09-10, expected ~2625 records for minute interval
+INFO 2025-09-10 13:11:40,731 services 35261 6166835200 Generated 2256 sample records for testing
+INFO 2025-09-10 13:11:40,755 services 35261 6166835200 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250902_to_20250910_20250910_131140.json
+INFO 2025-09-10 13:11:54,973 strategy_service 35261 6166835200 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250902_to_20250910_20250910_131140.json
+INFO 2025-09-10 13:11:55,035 strategy_service 35261 6166835200 Saved 3 signals for BANKBEES
+INFO 2025-09-10 13:11:55,036 strategy_service 35261 6166835200 Saved backtest results for BANKBEES
+INFO 2025-09-10 13:12:01,390 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 13:12:01,391 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 13:12:01,594 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250902_to_20250910_20250910_131140.json
+INFO 2025-09-10 13:12:01,595 views 35261 6166835200 chart_data_api: Loaded file with 2256 records
+INFO 2025-09-10 13:12:01,596 views 35261 6166835200 chart_data_api: Extracted 1722 valid OHLC records
+INFO 2025-09-10 13:12:01,600 views 35261 6166835200 chart_data_api: Returning 1722 OHLC, 0 signals, 1697 MACD, 1718 MA
+INFO 2025-09-10 13:12:29,562 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 13:12:29,563 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 13:12:29,756 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250902_to_20250910_20250910_131140.json
+INFO 2025-09-10 13:12:29,758 views 35261 6166835200 chart_data_api: Loaded file with 2256 records
+INFO 2025-09-10 13:12:29,758 views 35261 6166835200 chart_data_api: Extracted 1722 valid OHLC records
+INFO 2025-09-10 13:12:29,762 views 35261 6166835200 chart_data_api: Returning 1722 OHLC, 0 signals, 1697 MACD, 1718 MA
+INFO 2025-09-10 13:12:56,903 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 13:12:56,904 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 13:12:57,103 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250902_to_20250910_20250910_131140.json
+INFO 2025-09-10 13:12:57,104 views 35261 6166835200 chart_data_api: Loaded file with 2256 records
+INFO 2025-09-10 13:12:57,105 views 35261 6166835200 chart_data_api: Extracted 1722 valid OHLC records
+INFO 2025-09-10 13:12:57,109 views 35261 6166835200 chart_data_api: Returning 1722 OHLC, 0 signals, 1697 MACD, 1718 MA
+INFO 2025-09-10 13:13:30,625 services 35261 6166835200 Smart fetch for BANKBEES: 12 days of minute data
+INFO 2025-09-10 13:13:30,625 services 35261 6166835200 Estimated 1 API calls using single approach
+INFO 2025-09-10 13:13:30,625 services 35261 6166835200 Using single fetch (within API limits)
+INFO 2025-09-10 13:13:30,625 services 35261 6166835200 Date range (12 days) within Kite limit (60 days) for minute interval. Using single fetch.
+WARNING 2025-09-10 13:13:30,626 services 35261 6166835200 Not authenticated with Kite API, using sample data
+INFO 2025-09-10 13:13:30,626 services 35261 6166835200 Generating sample data from 2025-08-29 to 2025-09-10, expected ~3375 records for minute interval
+INFO 2025-09-10 13:13:30,641 services 35261 6166835200 Generated 3008 sample records for testing
+INFO 2025-09-10 13:13:30,679 services 35261 6166835200 Data saved to /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 13:13:37,056 strategy_service 35261 6166835200 Running strategy on file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 13:13:37,131 strategy_service 35261 6166835200 Saved 2 signals for BANKBEES
+INFO 2025-09-10 13:13:37,132 strategy_service 35261 6166835200 Saved backtest results for BANKBEES
+INFO 2025-09-10 13:13:43,640 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 13:13:43,641 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 13:13:43,840 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 13:13:43,842 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 13:13:43,842 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 13:13:43,846 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 13:14:18,395 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 13:14:18,396 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 13:14:18,584 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 13:14:18,586 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 13:14:18,587 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 13:14:18,592 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 13:19:01,455 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 13:19:01,458 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 13:19:01,672 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 13:19:01,674 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 13:19:01,674 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 13:19:01,679 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 13:19:54,688 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 13:19:54,691 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 13:19:54,910 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 13:19:54,911 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 13:19:54,912 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 13:19:54,917 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 13:21:40,686 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 13:21:40,689 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 13:21:40,902 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 13:21:40,904 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 13:21:40,905 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 13:21:40,909 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 13:30:30,163 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 13:30:30,166 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 13:30:30,382 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 13:30:30,384 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 13:30:30,385 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 13:30:30,389 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 13:32:16,912 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 13:32:16,914 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 13:32:17,120 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 13:32:17,121 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 13:32:17,122 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 13:32:17,127 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 13:39:06,296 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 13:39:06,298 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 13:39:06,568 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 13:39:06,569 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 13:39:06,570 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 13:39:06,575 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 13:44:39,512 views 35261 6166835200 chart_data_api: Loaded backtest 10 for symbol HINDALCO
+INFO 2025-09-10 13:44:39,514 views 35261 6166835200 chart_data_api: Found 23 signals for backtest 10
+INFO 2025-09-10 13:44:39,723 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-10 13:44:39,727 views 35261 6166835200 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 13:44:39,730 views 35261 6166835200 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 13:44:39,746 views 35261 6166835200 chart_data_api: Returning 7875 OHLC, 23 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:17:58,414 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:17:58,416 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:17:58,640 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:17:58,642 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:17:58,643 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:17:58,647 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:18:10,021 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:18:10,023 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:18:10,212 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:18:10,213 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:18:10,214 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:18:10,218 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:18:19,294 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:18:19,295 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:18:19,461 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:18:19,462 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:18:19,463 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:18:19,467 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:20:21,064 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:20:21,067 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:20:21,280 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:20:21,282 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:20:21,282 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:20:21,287 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:20:45,764 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:20:45,766 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:20:45,988 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:20:45,989 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:20:45,990 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:20:45,994 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:20:58,716 views 35261 6166835200 chart_data_api: Loaded backtest 9 for symbol RELIANCE
+INFO 2025-09-10 15:20:58,718 views 35261 6166835200 chart_data_api: Found 13 signals for backtest 9
+INFO 2025-09-10 15:20:58,915 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/RELIANCE_minute_20250804_to_20250903_20250903_142939.json
+INFO 2025-09-10 15:20:58,919 views 35261 6166835200 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 15:20:58,921 views 35261 6166835200 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 15:20:58,938 views 35261 6166835200 chart_data_api: Returning 7875 OHLC, 13 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:21:08,281 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:21:08,283 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:21:08,484 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:21:08,485 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:21:08,486 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:21:08,490 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:22:03,329 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:22:03,332 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:22:03,555 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:22:03,557 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:22:03,557 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:22:03,562 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:22:15,182 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:22:15,184 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:22:15,397 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:22:15,399 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:22:15,400 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:22:15,404 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:22:24,480 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:22:24,483 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:22:24,683 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:22:24,684 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:22:24,685 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:22:24,689 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:22:37,716 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:22:37,718 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:22:37,925 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:22:37,927 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:22:37,927 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:22:37,932 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:22:48,495 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:22:48,498 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:22:48,713 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:22:48,714 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:22:48,715 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:22:48,719 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:22:55,617 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:22:55,618 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:22:55,815 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:22:55,816 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:22:55,817 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:22:55,822 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:23:00,765 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:23:00,767 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:23:00,962 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:23:00,963 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:23:00,964 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:23:00,968 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:23:13,065 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:23:13,067 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:23:13,262 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:23:13,264 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:23:13,264 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:23:13,269 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:23:20,432 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:23:20,433 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:23:20,622 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:23:20,623 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:23:20,624 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:23:20,628 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:23:46,649 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:23:46,652 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:23:46,862 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:23:46,864 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:23:46,864 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:23:46,869 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:23:57,900 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:23:57,902 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:23:58,114 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:23:58,115 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:23:58,116 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:23:58,120 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:24:06,782 views 35261 6166835200 chart_data_api: Loaded backtest 12 for symbol NIFTY50
+INFO 2025-09-10 15:24:06,784 views 35261 6166835200 chart_data_api: Found 21 signals for backtest 12
+INFO 2025-09-10 15:24:06,981 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/NIFTY50_minute_20250805_to_20250904_20250904_175356.json
+INFO 2025-09-10 15:24:06,985 views 35261 6166835200 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 15:24:06,987 views 35261 6166835200 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 15:24:07,004 views 35261 6166835200 chart_data_api: Returning 7875 OHLC, 21 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:24:17,651 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:24:17,652 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:24:17,858 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:24:17,860 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:24:17,861 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:24:17,865 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:24:36,949 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:24:36,951 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:24:37,153 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:24:37,154 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:24:37,155 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:24:37,160 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:24:58,052 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:24:58,054 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:24:58,261 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:24:58,263 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:24:58,264 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:24:58,268 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:25:10,782 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:25:10,784 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:25:10,998 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:25:11,000 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:25:11,000 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:25:11,005 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:25:22,266 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:25:22,267 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:25:22,487 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:25:22,489 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:25:22,490 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:25:22,494 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:25:49,066 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:25:49,068 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:25:49,265 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:25:49,267 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:25:49,268 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:25:49,272 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:26:00,397 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:26:00,399 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:26:00,598 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:26:00,600 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:26:00,601 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:26:00,605 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:26:42,349 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:26:42,351 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:26:42,574 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:26:42,575 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:26:42,576 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:26:42,581 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:28:50,397 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:28:50,400 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:28:50,620 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:28:50,621 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:28:50,622 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:28:50,626 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:28:55,215 views 35261 6166835200 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 15:28:55,216 views 35261 6166835200 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 15:28:55,431 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 15:28:55,435 views 35261 6166835200 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 15:28:55,438 views 35261 6166835200 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 15:28:55,455 views 35261 6166835200 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:29:02,918 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:29:02,919 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:29:03,098 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:29:03,100 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:29:03,100 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:29:03,105 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:29:18,941 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:29:18,943 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:29:19,156 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:29:19,158 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:29:19,158 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:29:19,163 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:29:27,537 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:29:27,538 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:29:27,739 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:29:27,741 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:29:27,741 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:29:27,746 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:29:30,868 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:29:30,869 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:29:31,067 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:29:31,069 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:29:31,069 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:29:31,074 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:29:33,952 views 35261 6166835200 chart_data_api: Loaded backtest 3 for symbol LT
+INFO 2025-09-10 15:29:33,954 views 35261 6166835200 chart_data_api: Found 14 signals for backtest 3
+INFO 2025-09-10 15:29:34,150 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/LT_minute_20250803_to_20250902_20250902_180809.json
+INFO 2025-09-10 15:29:34,154 views 35261 6166835200 chart_data_api: Loaded file with 7500 records
+INFO 2025-09-10 15:29:34,156 views 35261 6166835200 chart_data_api: Extracted 7500 valid OHLC records
+INFO 2025-09-10 15:29:34,172 views 35261 6166835200 chart_data_api: Returning 7500 OHLC, 14 signals, 7475 MACD, 7496 MA
+INFO 2025-09-10 15:30:55,951 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:30:55,954 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:30:56,179 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:30:56,181 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:30:56,182 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:30:56,186 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:31:09,317 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:31:09,318 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:31:09,512 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:31:09,513 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:31:09,514 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:31:09,518 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:31:48,299 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:31:48,302 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:31:48,517 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:31:48,518 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:31:48,519 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:31:48,523 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:32:22,217 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:32:22,219 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:32:22,432 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:32:22,434 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:32:22,435 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:32:22,439 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:32:26,169 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:32:26,170 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:32:26,362 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:32:26,364 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:32:26,364 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:32:26,369 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:32:29,005 views 35261 6166835200 chart_data_api: Loaded backtest 10 for symbol HINDALCO
+INFO 2025-09-10 15:32:29,009 views 35261 6166835200 chart_data_api: Found 23 signals for backtest 10
+INFO 2025-09-10 15:32:29,199 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/HINDALCO_minute_20250804_to_20250903_20250903_151423.json
+INFO 2025-09-10 15:32:29,204 views 35261 6166835200 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 15:32:29,206 views 35261 6166835200 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 15:32:29,223 views 35261 6166835200 chart_data_api: Returning 7875 OHLC, 23 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:32:33,843 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:32:33,844 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:32:34,036 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:32:34,038 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:32:34,039 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:32:34,044 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:32:54,332 views 35261 6166835200 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 15:32:54,335 views 35261 6166835200 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 15:32:54,559 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 15:32:54,563 views 35261 6166835200 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 15:32:54,566 views 35261 6166835200 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 15:32:54,583 views 35261 6166835200 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:33:29,165 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:33:29,168 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:33:29,385 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:33:29,387 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:33:29,388 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:33:29,393 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:33:51,571 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:33:51,572 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:33:51,765 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:33:51,767 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:33:51,768 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:33:51,772 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:34:04,165 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:34:04,166 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:34:04,363 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:34:04,365 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:34:04,365 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:34:04,370 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:34:46,582 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:34:46,584 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:34:46,800 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:34:46,802 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:34:46,803 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:34:46,807 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:35:40,616 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:35:40,618 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:35:40,837 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:35:40,839 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:35:40,839 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:35:40,844 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:36:30,949 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:36:30,951 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:36:31,180 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:36:31,181 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:36:31,182 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:36:31,187 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:36:52,833 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:36:52,835 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:36:53,052 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:36:53,054 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:36:53,054 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:36:53,059 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:37:02,465 views 35261 6166835200 chart_data_api: Loaded backtest 17 for symbol BANKBEES
+INFO 2025-09-10 15:37:02,468 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 17
+INFO 2025-09-10 15:37:02,677 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:37:02,678 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:37:02,679 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:37:02,683 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:38:15,825 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:38:15,826 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:38:16,061 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:38:16,062 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:38:16,063 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:38:16,068 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:38:34,156 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:38:34,158 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:38:34,389 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:38:34,392 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:38:34,392 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:38:34,397 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:38:35,428 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:38:35,429 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:38:35,629 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:38:35,630 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:38:35,631 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:38:35,636 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:38:36,491 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:38:36,492 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:38:36,687 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:38:36,689 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:38:36,690 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:38:36,694 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:38:43,474 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:38:43,476 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:38:43,668 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:38:43,670 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:38:43,670 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:38:43,675 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:38:56,956 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:38:56,959 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:38:57,158 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:38:57,160 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:38:57,160 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:38:57,165 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:40:40,253 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:40:40,255 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:40:40,470 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:40:40,472 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:40:40,472 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:40:40,477 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:40:51,825 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:40:51,827 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:40:52,056 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:40:52,058 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:40:52,059 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:40:52,063 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:40:58,842 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:40:58,844 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:40:59,049 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:40:59,051 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:40:59,051 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:40:59,056 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:42:06,882 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:42:06,885 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:42:07,108 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:42:07,110 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:42:07,110 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:42:07,115 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:42:14,825 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:42:14,827 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:42:15,033 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:42:15,035 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:42:15,035 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:42:15,040 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:42:25,289 views 35261 6166835200 chart_data_api: Loaded backtest 8 for symbol TCS
+INFO 2025-09-10 15:42:25,291 views 35261 6166835200 chart_data_api: Found 20 signals for backtest 8
+INFO 2025-09-10 15:42:25,501 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/TCS_minute_20250804_to_20250903_20250903_134547.json
+INFO 2025-09-10 15:42:25,505 views 35261 6166835200 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 15:42:25,508 views 35261 6166835200 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 15:42:25,525 views 35261 6166835200 chart_data_api: Returning 7875 OHLC, 20 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:42:35,741 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:42:35,744 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:42:35,973 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:42:35,975 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:42:35,976 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:42:35,981 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:42:48,906 views 35261 6166835200 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 15:42:48,909 views 35261 6166835200 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 15:42:49,125 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 15:42:49,129 views 35261 6166835200 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 15:42:49,132 views 35261 6166835200 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 15:42:49,149 views 35261 6166835200 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:43:51,993 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:43:51,997 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:43:52,227 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:43:52,228 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:43:52,229 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:43:52,234 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:44:06,457 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:44:06,459 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:44:06,673 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:44:06,675 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:44:06,676 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:44:06,680 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:45:38,457 views 35261 6166835200 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:45:38,459 views 35261 6166835200 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:45:38,679 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:45:38,681 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:45:38,682 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:45:38,686 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:45:52,975 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:45:52,977 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:45:53,195 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:45:53,197 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:45:53,197 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:45:53,202 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:47:01,240 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:47:01,243 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:47:01,459 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:47:01,460 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:47:01,461 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:47:01,466 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:47:32,025 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:47:32,027 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:47:32,240 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:47:32,242 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:47:32,242 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:47:32,247 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:47:51,221 views 35261 6166835200 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 15:47:51,222 views 35261 6166835200 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 15:47:51,422 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 15:47:51,426 views 35261 6166835200 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 15:47:51,428 views 35261 6166835200 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 15:47:51,445 views 35261 6166835200 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:48:14,292 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:48:14,295 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:48:14,530 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:48:14,532 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:48:14,533 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:48:14,537 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:48:40,774 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:48:40,776 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:48:40,994 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:48:40,996 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:48:40,997 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:48:41,001 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:50:25,660 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:50:25,662 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:50:25,840 views 35261 6325039104 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:50:25,845 views 35261 6325039104 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:50:25,953 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:50:25,955 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:50:25,960 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:50:25,965 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:50:25,981 views 35261 6341865472 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:50:25,981 views 35261 6341865472 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:50:26,146 views 35261 6325039104 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:50:26,153 views 35261 6325039104 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:50:26,154 views 35261 6325039104 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:50:26,164 views 35261 6325039104 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:50:26,253 views 35261 6341865472 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:50:26,255 views 35261 6341865472 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:50:26,256 views 35261 6341865472 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:50:26,261 views 35261 6341865472 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:50:27,008 views 35261 6166835200 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:50:27,009 views 35261 6166835200 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:50:27,210 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:50:27,212 views 35261 6166835200 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:50:27,213 views 35261 6166835200 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:50:27,218 views 35261 6166835200 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:50:40,761 views 35261 6166835200 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 15:50:40,764 views 35261 6166835200 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 15:50:40,977 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 15:50:40,981 views 35261 6166835200 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 15:50:40,984 views 35261 6166835200 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 15:50:41,001 views 35261 6166835200 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:50:57,025 views 35261 6341865472 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:50:57,028 views 35261 6341865472 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:50:57,255 views 35261 6341865472 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:50:57,257 views 35261 6341865472 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:50:57,257 views 35261 6341865472 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:50:57,262 views 35261 6341865472 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:51:07,204 views 35261 6166835200 chart_data_api: Loaded backtest 5 for symbol MARUTI
+INFO 2025-09-10 15:51:07,207 views 35261 6166835200 chart_data_api: Found 8 signals for backtest 5
+INFO 2025-09-10 15:51:07,412 views 35261 6166835200 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/MARUTI_minute_20250828_to_20250903_20250903_125258.json
+INFO 2025-09-10 15:51:07,414 views 35261 6166835200 chart_data_api: Loaded file with 1875 records
+INFO 2025-09-10 15:51:07,414 views 35261 6166835200 chart_data_api: Extracted 1875 valid OHLC records
+INFO 2025-09-10 15:51:07,419 views 35261 6166835200 chart_data_api: Returning 1875 OHLC, 8 signals, 1850 MACD, 1871 MA
+INFO 2025-09-10 15:51:29,022 views 35261 6341865472 chart_data_api: Loaded backtest 13 for symbol BAJAJFINSV
+INFO 2025-09-10 15:51:29,024 views 35261 6341865472 chart_data_api: Found 27 signals for backtest 13
+INFO 2025-09-10 15:51:29,212 views 35261 6341865472 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BAJAJFINSV_minute_20250805_to_20250904_20250904_175252.json
+INFO 2025-09-10 15:51:29,217 views 35261 6341865472 chart_data_api: Loaded file with 7875 records
+INFO 2025-09-10 15:51:29,219 views 35261 6341865472 chart_data_api: Extracted 7875 valid OHLC records
+INFO 2025-09-10 15:51:29,236 views 35261 6341865472 chart_data_api: Returning 7875 OHLC, 27 signals, 7850 MACD, 7871 MA
+INFO 2025-09-10 15:51:59,858 views 35261 6341865472 chart_data_api: Loaded backtest 16 for symbol BANKBEES
+INFO 2025-09-10 15:51:59,861 views 35261 6341865472 chart_data_api: Found 1 signals for backtest 16
+INFO 2025-09-10 15:52:00,086 views 35261 6341865472 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:52:00,088 views 35261 6341865472 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:52:00,089 views 35261 6341865472 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:52:00,093 views 35261 6341865472 chart_data_api: Returning 1908 OHLC, 1 signals, 1883 MACD, 1904 MA
+INFO 2025-09-10 15:52:07,441 views 35261 6341865472 chart_data_api: Loaded backtest 15 for symbol BANKBEES
+INFO 2025-09-10 15:52:07,444 views 35261 6341865472 chart_data_api: Found 2 signals for backtest 15
+INFO 2025-09-10 15:52:07,661 views 35261 6341865472 chart_data_api: Found matching symbol file: /Users/prathameshkale/Documents/django-automation/data_storage/BANKBEES_minute_20250829_to_20250910_20250910_131330.json
+INFO 2025-09-10 15:52:07,663 views 35261 6341865472 chart_data_api: Loaded file with 3008 records
+INFO 2025-09-10 15:52:07,664 views 35261 6341865472 chart_data_api: Extracted 1908 valid OHLC records
+INFO 2025-09-10 15:52:07,668 views 35261 6341865472 chart_data_api: Returning 1908 OHLC, 2 signals, 1883 MACD, 1904 MA

@@ -61,8 +61,8 @@ def index(request):
                     messages.info(request, f'Data for {symbol} already exists. Showing existing data.')
                     return redirect(f'/data/?file={kite_service.get_json_filename(symbol, from_date, to_date, interval)}')
                 
-                # Fetch new data
-                historical_data = kite_service.fetch_historical_data_by_symbol(
+                # Fetch new data using smart fetching (automatically handles chunking)
+                historical_data = kite_service.fetch_historical_data_smart(
                     symbol=symbol,
                     from_date=from_date,
                     to_date=to_date,
@@ -289,8 +289,8 @@ def fetch_data_api(request):
                 'file_exists': True
             })
         
-        # Fetch new data
-        historical_data = kite_service.fetch_historical_data_by_symbol(
+        # Fetch new data using smart fetching (automatically handles chunking)
+        historical_data = kite_service.fetch_historical_data_smart(
             symbol=symbol,
             from_date=from_date,
             to_date=to_date,

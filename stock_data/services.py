@@ -17,6 +17,155 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+# Define Kite data limits based on interval
+KITE_LIMITS = {
+    'minute': 60,      # 60 days
+    '3minute': 100,    # 100 days
+    '5minute': 100,    # 100 days
+    '10minute': 100,   # 100 days
+    '15minute': 200,   # 200 days
+    '30minute': 200,   # 200 days
+    '60minute': 400,   # 400 days
+    'hour': 400,       # 400 days (alias for 60minute)
+    'day': 2000,       # 2000 days
+    'daily': 2000      # 2000 days (alias for day)
+}
+
+
+def calculate_date_chunks(from_date, to_date, interval):
+    """Calculate the number of chunks needed based on Kite limits"""
+    # Get the limit for this interval
+    limit_days = KITE_LIMITS.get(interval, 60)  # Default to 60 days if interval not found
+    
+    # Calculate total days requested
+    total_days = (to_date - from_date).days
+    
+    if total_days <= limit_days:
+        return [(from_date, to_date)]
+    
+    # Calculate chunks
+    chunks = []
+    current_start = from_date
+    
+    while current_start < to_date:
+        current_end = min(current_start + timedelta(days=limit_days), to_date)
+        chunks.append((current_start, current_end))
+        current_start = current_end + timedelta(days=1)
+    
+    return chunks
+
+
+def get_kite_limit_info(interval: str) -> Dict[str, Any]:
+    """Get information about Kite API limits for a given interval"""
+    limit_days = KITE_LIMITS.get(interval, 60)
+    return {
+        'interval': interval,
+        'limit_days': limit_days,
+        'limit_description': f"Maximum {limit_days} days per API call for {interval} data",
+        'recommended_use': "Use chunked fetching for date ranges exceeding this limit"
+    }
+
+
+def estimate_api_calls(from_date, to_date, interval: str) -> Dict[str, Any]:
+    """Estimate the number of API calls needed for a date range and interval"""
+    total_days = (to_date - from_date).days
+    limit_days = KITE_LIMITS.get(interval, 60)
+    
+    if total_days <= limit_days:
+        chunks_needed = 1
+    else:
+        chunks_needed = len(calculate_date_chunks(from_date, to_date, interval))
+    
+    return {
+        'total_days': total_days,
+        'limit_days': limit_days,
+        'chunks_needed': chunks_needed,
+        'estimated_api_calls': chunks_needed,
+        'within_single_call': total_days <= limit_days,
+        'requires_chunking': total_days > limit_days
+    }
+
+
+def fetch_and_combine_data(kite_service, symbol, from_date, to_date, interval):
+    """Fetch data in chunks and combine them"""
+    # Import the trading symbols from forms
+    from .forms import TRADING_SYMBOLS
+    
+    # Get instrument token for symbol
+    symbol_info = TRADING_SYMBOLS.get(symbol.upper())
+    if not symbol_info:
+        raise ValueError(f"Symbol {symbol} not found in supported trading instruments")
+    
+    instrument_token = symbol_info['token']
+    
+    # Calculate the chunks needed
+    date_chunks = calculate_date_chunks(from_date, to_date, interval)
+    
+    logger.info(f"Fetching data for {symbol} in {len(date_chunks)} chunks due to Kite limits")
+    
+    all_data = []
+    successful_chunks = 0
+    
+    for i, (chunk_start, chunk_end) in enumerate(date_chunks, 1):
+        try:
+            logger.info(f"Fetching chunk {i}/{len(date_chunks)}: {chunk_start} to {chunk_end}")
+            
+            # Use the service's fetch_historical_data method directly with instrument token
+            chunk_data = kite_service.fetch_historical_data(
+                instrument_token=instrument_token,
+                from_date=chunk_start,
+                to_date=chunk_end,
+                interval=interval
+            )
+            
+            if chunk_data:
+                all_data.extend(chunk_data)
+                successful_chunks += 1
+                logger.info(f"Successfully fetched {len(chunk_data)} records for chunk {i}")
+            else:
+                logger.warning(f"No data returned for chunk {i}")
+                
+        except Exception as e:
+            logger.error(f"Error fetching chunk {i} ({chunk_start} to {chunk_end}): {str(e)}")
+            # Continue with other chunks even if one fails
+            continue
+        
+        # Add delay between chunks to respect API rate limits
+        time.sleep(1)
+    
+    if not all_data:
+        raise Exception("No data could be fetched from any chunks")
+    
+    # Remove duplicates and sort by date
+    if all_data:
+        # Convert to DataFrame for easier manipulation if pandas available
+        if pd is not None:
+            df = pd.DataFrame(all_data)
+            
+            # Remove duplicates based on date/timestamp
+            if 'date' in df.columns:
+                df = df.drop_duplicates(subset=['date']).sort_values('date')
+            elif 'timestamp' in df.columns:
+                df = df.drop_duplicates(subset=['timestamp']).sort_values('timestamp')
+            
+            # Convert back to list of dictionaries
+            all_data = df.to_dict('records')
+        else:
+            # Fallback deduplication without pandas
+            seen_dates = set()
+            deduplicated_data = []
+            for record in all_data:
+                date_key = record.get('date') or record.get('timestamp')
+                if date_key not in seen_dates:
+                    seen_dates.add(date_key)
+                    deduplicated_data.append(record)
+            
+            # Sort by date
+            all_data = sorted(deduplicated_data, key=lambda x: x.get('date') or x.get('timestamp', ''))
+    
+    logger.info(f"Combined data: {len(all_data)} total records from {successful_chunks}/{len(date_chunks)} successful chunks")
+    return all_data
+
 
 class KiteDataService:
     """Service class for handling Zerodha Kite API operations and JSON storage"""
@@ -267,7 +416,7 @@ class KiteDataService:
     ) -> List[Dict[str, Any]]:
         """
         Fetch historical data by symbol name
-        Converts symbol to instrument token and fetches data
+        Converts symbol to instrument token and fetches data with proper chunking
         """
         # Import the trading symbols from forms
         from .forms import TRADING_SYMBOLS
@@ -283,45 +432,232 @@ class KiteDataService:
         from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
         to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
         
-        # Calculate date range and decide whether to use batch fetching
+        # Calculate date range in days
         date_diff = (to_date_obj - from_date_obj).days
         
-        # For minute data and large date ranges, use batch fetching
-        if interval == "minute" and date_diff > 2:  # More than 2 days
-            logger.info(f"Using batch fetching for {date_diff} days of minute data")
+        # Get the limit for this interval
+        limit_days = KITE_LIMITS.get(interval, 60)
+        
+        # Check if we need to use chunked fetching based on Kite limits
+        if date_diff > limit_days:
+            logger.info(f"Date range ({date_diff} days) exceeds Kite limit ({limit_days} days) for {interval} interval. Using chunked fetching.")
             return self.fetch_data_in_batches(
                 instrument_token=instrument_token,
                 from_date=from_date_obj,
                 to_date=to_date_obj,
-                interval=interval,
-                batch_days=2  # Fetch 2 days at a time for minute data
-            )
-        elif interval in ["3minute", "5minute", "15minute", "30minute"] and date_diff > 5:
-            logger.info(f"Using batch fetching for {date_diff} days of {interval} data")
-            return self.fetch_data_in_batches(
-                instrument_token=instrument_token,
-                from_date=from_date_obj,
-                to_date=to_date_obj,
-                interval=interval,
-                batch_days=5  # Fetch 5 days at a time for intraday intervals
-            )
-        elif interval == "60minute" and date_diff > 10:
-            logger.info(f"Using batch fetching for {date_diff} days of hourly data")
-            return self.fetch_data_in_batches(
-                instrument_token=instrument_token,
-                from_date=from_date_obj,
-                to_date=to_date_obj,
-                interval=interval,
-                batch_days=10  # Fetch 10 days at a time for hourly data
+                interval=interval
             )
         else:
-            # For smaller date ranges or daily data, use single fetch
+            # For smaller date ranges within limits, use single fetch
+            logger.info(f"Date range ({date_diff} days) within Kite limit ({limit_days} days) for {interval} interval. Using single fetch.")
             return self.fetch_historical_data(
                 instrument_token=instrument_token,
                 from_date=from_date_obj,
                 to_date=to_date_obj,
                 interval=interval
             )
+    
+    def fetch_historical_data_smart(
+        self,
+        symbol: str,
+        from_date: Union[str, datetime],
+        to_date: Union[str, datetime],
+        interval: str = "minute"
+    ) -> List[Dict[str, Any]]:
+        """
+        Smart data fetching that automatically handles any size request
+        Uses the most efficient method based on date range and interval
+        """
+        # Convert string dates to datetime if needed
+        if isinstance(from_date, str):
+            from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
+        else:
+            from_date_obj = from_date
+            
+        if isinstance(to_date, str):
+            to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
+        else:
+            to_date_obj = to_date
+        
+        # Get estimation info to determine the best approach
+        estimation = estimate_api_calls(from_date_obj, to_date_obj, interval)
+        
+        logger.info(f"Smart fetch for {symbol}: {estimation['total_days']} days of {interval} data")
+        logger.info(f"Estimated {estimation['chunks_needed']} API calls using {'chunked' if estimation['requires_chunking'] else 'single'} approach")
+        
+        # Automatically use the most efficient approach
+        if estimation['requires_chunking']:
+            logger.info("Using chunked fetching for optimal performance")
+            return self.fetch_historical_data_chunked(symbol, from_date_obj, to_date_obj, interval)
+        else:
+            logger.info("Using single fetch (within API limits)")
+            return self.fetch_historical_data_by_symbol(
+                symbol, 
+                from_date_obj.strftime("%Y-%m-%d"), 
+                to_date_obj.strftime("%Y-%m-%d"), 
+                interval
+            )
+    
+    def fetch_historical_data_chunked(
+        self,
+        symbol: str,
+        from_date: Union[str, datetime],
+        to_date: Union[str, datetime],
+        interval: str = "minute"
+    ) -> List[Dict[str, Any]]:
+        """
+        Fetch historical data using the new chunked approach with proper error handling
+        This method uses the fetch_and_combine_data function for maximum reliability
+        """
+        # Convert string dates to datetime if needed
+        if isinstance(from_date, str):
+            from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
+        else:
+            from_date_obj = from_date
+            
+        if isinstance(to_date, str):
+            to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
+        else:
+            to_date_obj = to_date
+        
+        try:
+            # Use the new fetch_and_combine_data function
+            return fetch_and_combine_data(
+                kite_service=self,
+                symbol=symbol,
+                from_date=from_date_obj,
+                to_date=to_date_obj,
+                interval=interval
+            )
+        except Exception as e:
+            logger.error(f"Error in chunked fetch for {symbol}: {str(e)}")
+            # Fallback to the existing method
+            logger.info("Falling back to existing fetch method")
+            return self.fetch_historical_data_by_symbol(
+                symbol=symbol,
+                from_date=from_date_obj.strftime("%Y-%m-%d") if hasattr(from_date_obj, 'strftime') else str(from_date_obj),
+                to_date=to_date_obj.strftime("%Y-%m-%d") if hasattr(to_date_obj, 'strftime') else str(to_date_obj),
+                interval=interval
+            )
+    
+    def get_fetch_info(
+        self, 
+        symbol: str, 
+        from_date: Union[str, datetime], 
+        to_date: Union[str, datetime], 
+        interval: str = "minute"
+    ) -> Dict[str, Any]:
+        """
+        Get information about how data will be fetched for given parameters
+        Useful for showing users what to expect before actual fetching
+        """
+        # Convert string dates to datetime if needed
+        if isinstance(from_date, str):
+            from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
+        else:
+            from_date_obj = from_date
+            
+        if isinstance(to_date, str):
+            to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
+        else:
+            to_date_obj = to_date
+        
+        # Get estimation info
+        estimation = estimate_api_calls(from_date_obj, to_date_obj, interval)
+        limit_info = get_kite_limit_info(interval)
+        
+        # Calculate expected records (rough estimation)
+        total_days = estimation['total_days']
+        if interval == "minute":
+            # Assume 6.25 hours of trading per day * 60 minutes = 375 minutes
+            expected_records = total_days * 375
+        elif interval == "day":
+            expected_records = total_days
+        elif interval == "60minute":
+            expected_records = total_days * 6  # 6 hours of trading
+        elif interval == "15minute":
+            expected_records = total_days * 25  # ~25 records per trading day
+        elif interval == "5minute":
+            expected_records = total_days * 75  # ~75 records per trading day
+        else:
+            expected_records = total_days * 100  # rough estimate
+        
+        return {
+            'symbol': symbol,
+            'from_date': from_date_obj.isoformat(),
+            'to_date': to_date_obj.isoformat(),
+            'interval': interval,
+            'estimation': estimation,
+            'limit_info': limit_info,
+            'expected_records': expected_records,
+            'fetch_strategy': 'chunked' if estimation['requires_chunking'] else 'single',
+            'estimated_time_seconds': estimation['chunks_needed'] * 2  # ~2 seconds per chunk with delays
+        }
+    
+    def validate_fetch_parameters(
+        self, 
+        symbol: str, 
+        from_date: Union[str, datetime], 
+        to_date: Union[str, datetime], 
+        interval: str = "minute"
+    ) -> Dict[str, Any]:
+        """
+        Validate fetch parameters and return any warnings or recommendations
+        """
+        warnings = []
+        recommendations = []
+        
+        # Convert string dates to datetime if needed
+        if isinstance(from_date, str):
+            from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
+        else:
+            from_date_obj = from_date
+            
+        if isinstance(to_date, str):
+            to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
+        else:
+            to_date_obj = to_date
+        
+        # Check symbol validity
+        try:
+            from .forms import TRADING_SYMBOLS
+            if symbol.upper() not in TRADING_SYMBOLS:
+                warnings.append(f"Symbol '{symbol}' not found in supported instruments")
+        except ImportError:
+            warnings.append("Could not validate symbol - forms module not available")
+        
+        # Check date range
+        if from_date_obj >= to_date_obj:
+            warnings.append("From date should be earlier than to date")
+        
+        total_days = (to_date_obj - from_date_obj).days
+        
+        # Check for very large date ranges
+        if interval == "minute" and total_days > 365:
+            warnings.append("Fetching minute data for more than 1 year may take significant time")
+            recommendations.append("Consider using hourly or daily data for long-term analysis")
+        
+        if total_days > 2000:
+            warnings.append("Date range exceeds 2000 days - this is the maximum for daily data")
+        
+        # Check interval validity
+        valid_intervals = list(KITE_LIMITS.keys())
+        if interval not in valid_intervals:
+            warnings.append(f"Invalid interval '{interval}'. Valid options: {', '.join(valid_intervals)}")
+        
+        # Get fetch info
+        fetch_info = self.get_fetch_info(symbol, from_date_obj, to_date_obj, interval)
+        
+        if fetch_info['estimation']['chunks_needed'] > 50:
+            warnings.append(f"This request will require {fetch_info['estimation']['chunks_needed']} API calls")
+            recommendations.append("Consider breaking this into smaller date ranges")
+        
+        return {
+            'valid': len(warnings) == 0,
+            'warnings': warnings,
+            'recommendations': recommendations,
+            'fetch_info': fetch_info
+        }
 
     def fetch_historical_data(
         self, 
@@ -416,26 +752,31 @@ class KiteDataService:
         from_date: datetime,
         to_date: datetime,
         interval: str = "minute",
-        batch_days: int = 2
+        batch_days: int = None
     ) -> List[Dict[str, Any]]:
         """
         Fetch historical data in batches to handle large date ranges
+        Uses proper Kite API limits based on interval
         """
+        # Use Kite limits if batch_days not specified
+        if batch_days is None:
+            batch_days = KITE_LIMITS.get(interval, 60)
+        
+        # Calculate chunks based on Kite limits
+        date_chunks = calculate_date_chunks(from_date, to_date, interval)
+        
+        logger.info(f"Starting batch fetch from {from_date.date()} to {to_date.date()} "
+                   f"with {len(date_chunks)} chunks for {interval} interval")
+        
         all_data = []
-        current_date = from_date
-        batch_count = 0
+        successful_chunks = 0
         
-        logger.info(f"Starting batch fetch from {from_date.date()} to {to_date.date()} with {batch_days} day batches")
-        
-        while current_date <= to_date:
-            batch_end_date = min(current_date + timedelta(days=batch_days), to_date)
-            batch_count += 1
-            
-            logger.info(f"Fetching batch #{batch_count}: {current_date.date()} to {batch_end_date.date()}")
+        for i, (chunk_start, chunk_end) in enumerate(date_chunks, 1):
+            logger.info(f"Fetching chunk {i}/{len(date_chunks)}: {chunk_start.date()} to {chunk_end.date()}")
             
             try:
                 batch_data = self.fetch_historical_data(
-                    instrument_token, current_date, batch_end_date, interval
+                    instrument_token, chunk_start, chunk_end, interval
                 )
                 
                 if batch_data:
@@ -445,22 +786,24 @@ class KiteDataService:
                                  if record.get('date') not in existing_dates]
                     
                     all_data.extend(new_records)
-                    logger.info(f"Batch #{batch_count}: Added {len(new_records)} new records, total: {len(all_data)}")
+                    successful_chunks += 1
+                    logger.info(f"Chunk {i}: Added {len(new_records)} new records, total: {len(all_data)}")
                 else:
-                    logger.warning(f"Batch #{batch_count}: No data received")
+                    logger.warning(f"Chunk {i}: No data received")
                     
             except Exception as e:
-                logger.error(f"Error fetching batch #{batch_count} ({current_date.date()} to {batch_end_date.date()}): {str(e)}")
-                # Continue with next batch instead of failing completely
+                logger.error(f"Error fetching chunk {i} ({chunk_start.date()} to {chunk_end.date()}): {str(e)}")
+                # Continue with next chunk instead of failing completely
                 continue
             
-            # Move to next batch
-            current_date = batch_end_date + timedelta(days=1)
-            
             # Add delay to respect API rate limits (Zerodha allows 3 requests per second)
-            time.sleep(0.5)  # 500ms delay between batches
+            time.sleep(1)  # 1 second delay between batches for safety
         
-        logger.info(f"Batch fetching completed. Total records: {len(all_data)} from {batch_count} batches")
+        if not all_data:
+            logger.error("No data could be fetched from any chunks")
+            return []
+        
+        logger.info(f"Batch fetching completed. Total records: {len(all_data)} from {successful_chunks}/{len(date_chunks)} successful chunks")
         
         # Sort data by date to ensure chronological order
         all_data.sort(key=lambda x: x.get('date', ''))
